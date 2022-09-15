@@ -1,0 +1,8 @@
+{
+    "APLE" = ".\\Apls\\apple.png",
+    "FLOR" = ".\\Flor\\flor.png",
+    "SHAPE" = ".\\Shape\\wall.png",
+    "SNAKE_HEAD" = ".\\Snake\\snakeHead.png",
+    "SNAKE_TORSO" = ".\\Snake\\snakeTorso.png"
+
+}
