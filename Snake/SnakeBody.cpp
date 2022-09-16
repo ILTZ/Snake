@@ -8,7 +8,7 @@ Snake::SnakeBody::SnakeBody(const char* _pathToHead, const char* _pathToBody) :
 	fillBody(snakeStartSize, headTPath.c_str(), torsoTPath.c_str());
 }
 
-void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd) const
+void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd) 
 {
 	for (auto& el : body)
 	{

@@ -2,7 +2,9 @@
 #define SNAKEBODY_H
 
 #include <vector>
+
 #include "SnakeParticle.h"
+#include "BaseD.h"
 
 namespace Snake
 {
@@ -14,7 +16,7 @@ namespace Snake
 		LEFT = 3
 	};
 
-	class SnakeBody
+	class SnakeBody : public BaseD
 	{
 	private:
 		std::string headTPath;
@@ -42,7 +44,7 @@ namespace Snake
 		SnakeBody& operator=(const SnakeBody&) = delete;
 
 	public:
-		void Draw(sf::RenderWindow& _wnd) const;
+		void Draw(sf::RenderWindow& _wnd) override;
 
 	public:
 		void Move();

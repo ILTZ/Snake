@@ -4,11 +4,13 @@
 #include "MainWindow.h"
 #include "SnakeBody.h"
 
+using namespace MainWin;
+
 class App final
 {
 private:
 	MainWindow wnd;
-	std::unique_ptr<Snake::SnakeBody> snake;
+	std::shared_ptr<Snake::SnakeBody> snake;
 
 public:
 	App();
