@@ -1,11 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <string>
 
+#include "BaseD.h"
 #include "Mouse.h"
 #include "Keyboard.h"
+
+
 
 class MainWindow
 {
@@ -23,6 +25,7 @@ public:
 public:
 	int Draw();
 	bool PollEvents();
+	sf::RenderWindow& get();
 
 private:
 	MS::Mouse mouse;

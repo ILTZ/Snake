@@ -34,6 +34,11 @@ void BaseDrawableCircle::SetPos(const sf::Vector2f& _newPos)
 	curPos = _newPos;
 }
 
+const sf::Vector2f& BDraw::BaseDrawableCircle::GetPos() const
+{
+	return curPos;
+}
+
 void BDraw::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
 	baseFigure->setPosition(curPos);

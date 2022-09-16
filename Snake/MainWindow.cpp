@@ -66,3 +66,8 @@ bool MainWindow::PollEvents()
 
 	return true;
 }
+
+sf::RenderWindow& MainWindow::get()
+{
+	return *wnd.get();
+}

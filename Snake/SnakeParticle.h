@@ -9,11 +9,11 @@ namespace SnakePart
 	class SnakeParticle : public BDraw::BaseDrawableCircle
 	{
 	private:
-		const std::string pathToTexture;
-		const float baseRadius = 20.f;
+		//const std::string pathToTexture;
+		//const float baseRadius = 20.f;
 
 	public:
-		SnakeParticle();
+		SnakeParticle(const char* _pathToText, float _radius = 20.f);
 		SnakeParticle(const SnakeParticle&) = delete;
 		SnakeParticle& operator=(const SnakeParticle&) = delete;
 

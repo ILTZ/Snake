@@ -2,8 +2,10 @@
 
 using namespace SnakePart;
 
-SnakeParticle::SnakeParticle() : 
-	BaseDrawableCircle(pathToTexture.c_str(), baseRadius)
+SnakeParticle::SnakeParticle(const char* _pathToText, float _radius) :
+	BaseDrawableCircle(_pathToText, _radius)
 {
 	
 }
+
+

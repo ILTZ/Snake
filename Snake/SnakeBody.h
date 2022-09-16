@@ -17,27 +17,43 @@ namespace Snake
 	class SnakeBody
 	{
 	private:
+		std::string headTPath;
+		std::string torsoTPath;
+
+	private:
+		int xDir = 0;
+		int yDir = 0;
+
+	private:
+		bool firstMove = false;
+		const int snakeStartSize = 4;
+
+	private:
 		std::vector<SmartPointer::SmartPointer<SnakePart::SnakeParticle>> body;
 
 	private:
 		int curLength = 0;
 
 	public:
-		SnakeBody();
+		SnakeBody(const char* _pathToHead, const char* _pathToBody);
 
 	public:
 		SnakeBody(const SnakeBody&) = delete;
 		SnakeBody& operator=(const SnakeBody&) = delete;
 
 	public:
-		void Draw(const sf::RenderWindow& _wnd) const;
+		void Draw(sf::RenderWindow& _wnd) const;
 
 	public:
 		void Move();
 		void SetDir(Direction _dir);
+		void GrowUp();
+		void SetPos(const sf::Vector2f& _pos);
 
 	private:
 		void clearBody();
+		void fillBody(int _count, const char* _pathToHead, const char* _pathToTorso);
+		void addTorsoSection(const char* _pathToTorso);
 	};
 }
 

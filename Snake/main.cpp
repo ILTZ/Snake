@@ -4,6 +4,16 @@
 #include "App.h"
 #include "BaseDrawable.h"
 
+#include "ConfigLoader.h"
+
+namespace ConstData
+{
+	const std::string pathToConfig = ".\\ResourcesConfigs\\Configs.json";
+}
+
+
+
+
 int main()
 {
 	try

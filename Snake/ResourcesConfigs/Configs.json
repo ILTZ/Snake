@@ -1,8 +1,8 @@
 {
-    "APLE" = ".\\Apls\\apple.png",
-    "FLOR" = ".\\Flor\\flor.png",
-    "SHAPE" = ".\\Shape\\wall.png",
-    "SNAKE_HEAD" = ".\\Snake\\snakeHead.png",
-    "SNAKE_TORSO" = ".\\Snake\\snakeTorso.png"
+    "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
+    "FLOR": ".\\ResourcesConfigs\\Flor\\flor.png",
+    "SHAPE": ".\\ResourcesConfigs\\Shape\\wall.png",
+    "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
+    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png"
 
 }

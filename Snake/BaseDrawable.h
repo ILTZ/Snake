@@ -1,15 +1,15 @@
 #ifndef BDRAW_H
 #define BDRAW_H
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "BaseD.h"
 #include "SmartPointer.h"
 
 namespace BDraw
 {
-	class BaseDrawableCircle
+	class BaseDrawableCircle : public BaseD
 	{
 	protected:
 		SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
@@ -24,7 +24,8 @@ namespace BDraw
 
 	public:
 		void SetPos(const sf::Vector2f& _newPos);
-		void Draw(sf::RenderWindow& _wnd);
+		const sf::Vector2f& GetPos() const;
+		virtual void Draw(sf::RenderWindow& _wnd) override;
 	
 	private:
 		void changeRotation(const sf::Vector2f& _newPos);
