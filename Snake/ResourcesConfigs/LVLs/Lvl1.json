@@ -1,0 +1,11 @@
+{
+    "mode":     "auto",
+    "width":    30,
+    "height":   30,
+    "startPos": [15,15],
+    "florPath": ".\\ResourcesConfigs\\Flor\\flor.png",
+    "wallPath": ".\\ResourcesConfigs\\Shape\\wall.png",
+    "waterPath":".\\ResourcesConfigs\\Water\\water.png",
+    "wallPos": "edges",
+    "waterPos":"none"
+}

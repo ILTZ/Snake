@@ -52,6 +52,9 @@ namespace Snake
 		void GrowUp();
 		void SetPos(const sf::Vector2f& _pos);
 
+	public:
+		void SetSpriteScale(int _width, int _height) override{};
+
 	private:
 		void clearBody();
 		void fillBody(int _count, const char* _pathToHead, const char* _pathToTorso);

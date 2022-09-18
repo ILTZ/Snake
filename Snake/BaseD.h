@@ -6,7 +6,11 @@
 class BaseD
 {
 public:
-	virtual void Draw(sf::RenderWindow& _wnd) = 0;
+	virtual void Draw(sf::RenderWindow& _wnd)				= 0;
+	virtual void SetSpriteScale(int _width, int _height)	= 0;
+
+	virtual ~BaseD()
+	{};
 };
 
 

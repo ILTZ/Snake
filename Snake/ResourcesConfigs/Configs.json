@@ -1,8 +1,6 @@
 {
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
-    "FLOR": ".\\ResourcesConfigs\\Flor\\flor.png",
-    "SHAPE": ".\\ResourcesConfigs\\Shape\\wall.png",
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
-    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png"
-
+    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png",
+    "LVL_PATH": ".\\ResourcesConfigs\\LVLs"
 }

@@ -23,8 +23,11 @@ namespace SmartPointer
 		
 	public:
 		T& operator*() const noexcept;
-		T* Release();
 		T* operator->()	const;
+
+	public:
+		T* Release();
+		bool IsValid();
 
 	private:
 		void clear();
@@ -82,6 +85,12 @@ namespace SmartPointer
 		obj = nullptr;
 
 		return temp;
+	}
+
+	template<class T>
+	inline bool SmartPointer<T>::IsValid()
+	{
+		return (obj ? true : false);
 	}
 
 	template<class T>

@@ -41,7 +41,10 @@ const sf::Vector2f& BDraw::BaseDrawableCircle::GetPos() const
 
 void BDraw::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
-	baseFigure->setPosition(curPos);
+	baseFigure->setPosition(sf::Vector2f(
+		curPos.x * (float)baseTexture->getSize().x - baseFigure->getOrigin().x,
+		curPos.y * (float)baseTexture->getSize().y - baseFigure->getOrigin().y)
+		);
 	_wnd.draw(*baseFigure);
 }
 

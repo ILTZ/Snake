@@ -144,7 +144,9 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="BaseDrawable.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
+    <ClCompile Include="GraphicField.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LevelConstructor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
@@ -157,7 +159,9 @@
     <ClInclude Include="BaseDrawable.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />
+    <ClInclude Include="GraphicField.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="SmartPointer.h" />

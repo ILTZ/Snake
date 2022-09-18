@@ -4,7 +4,8 @@
 
 using namespace MainWin;
 
-MainWindow::MainWindow(int _width, int _height, const std::string& _title, int32_t _style, const sf::ContextSettings& _settings)
+MainWindow::MainWindow(int _width, int _height, const std::string& _title, int32_t _style, const sf::ContextSettings& _settings) :
+	wWidth{_width}, wHeight{_height}
 {
 	wnd = std::make_unique<sf::RenderWindow>
 		(sf::VideoMode(_width, _height), _title, _style, _settings);
@@ -17,7 +18,7 @@ int MainWindow::Draw()
 	{
 		wnd->clear();
 
-		//whatDraw[Plans::SECOND_PLAN].Draw(*wnd.get());
+		whatDraw[Plans::SECOND_PLAN]->Draw(*wnd.get());
 		whatDraw[Plans::FIRST_PLAN]->Draw(*wnd.get());
 
 		wnd->display();
@@ -71,7 +72,8 @@ sf::RenderWindow& MainWindow::get()
 	return *wnd.get();
 }
 
-void MainWin::MainWindow::AddToDrowLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
+void MainWin::MainWindow::AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
 {
+	_whatDrow->SetSpriteScale(wWidth, wHeight);
 	whatDraw[_plan] = _whatDrow;
 }
