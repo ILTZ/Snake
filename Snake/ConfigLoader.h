@@ -11,10 +11,11 @@ namespace CLoader
 {
 	enum class ConfigKey
 	{
-		SNAKE_T = 0,
-		SNAKE_H = 1,
-		APLE	= 3,
-		LVL_P	= 4
+		SNAKE_T		= 0,
+		SNAKE_H		= 1,
+		APLE		= 3,
+		LVL_P		= 4,
+		RESOLUTION	= 5,
 	};
 
 	enum class LVLs
@@ -46,9 +47,10 @@ namespace CLoader
 		std::string GetPathTo(ConfigKey _key, const char* _pathToConfig = nullptr);
 		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLs _level);
 		unsigned int GetLvlCount();
+		const std::pair<unsigned int, unsigned int> GetResolution(const char* _pathToConfig = nullptr);
 
 	private:
-		void openFile(std::ifstream& _stream, const char* _newPath);
+		void openFile(std::ifstream& _stream, const char* _newPath) const;
 
 	private:
 		std::string getLvlString(LVLs _lvl);

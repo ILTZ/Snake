@@ -53,7 +53,8 @@ namespace Snake
 		void SetPos(const sf::Vector2f& _pos);
 
 	public:
-		void SetSpriteScale(int _width, int _height) override{};
+		void SetSpriteScale(unsigned int _width, unsigned int _height,
+			unsigned int _lwlW, unsigned int _lwlH) override;
 
 	private:
 		void clearBody();

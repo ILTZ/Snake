@@ -7,8 +7,10 @@ BaseDrawableCircle::BaseDrawableCircle(const char* _pathToTexture, float _radius
 	baseTexture = new sf::Texture();
 	baseTexture->loadFromFile(_pathToTexture);
 
-	baseFigure = new sf::CircleShape(_radius);
-	baseFigure->setOrigin(_radius, _radius);
+	width	= static_cast<float>(baseTexture->getSize().x);
+	height	= static_cast<float>(baseTexture->getSize().y);
+
+	baseFigure = new sf::CircleShape(width / 2.f);
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
 }
@@ -17,9 +19,11 @@ BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _other)
 {
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
+	width = static_cast<float>(baseTexture->getSize().x);
+	height = static_cast<float>(baseTexture->getSize().y);
+
 	auto _rad = _other.baseFigure->getRadius();
 	baseFigure = new sf::CircleShape(_rad);
-	baseFigure->setOrigin(_rad, _rad);
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
 }
@@ -42,10 +46,26 @@ const sf::Vector2f& BDraw::BaseDrawableCircle::GetPos() const
 void BDraw::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
 	baseFigure->setPosition(sf::Vector2f(
-		curPos.x * (float)baseTexture->getSize().x - baseFigure->getOrigin().x,
-		curPos.y * (float)baseTexture->getSize().y - baseFigure->getOrigin().y)
-		);
+		curPos.x * width,
+		curPos.y * height));
+
 	_wnd.draw(*baseFigure);
+}
+
+void BDraw::BaseDrawableCircle::SetSpriteScale(const sf::Vector2f& _newScale)
+{
+	baseFigure->setScale(_newScale);
+}
+
+void BDraw::BaseDrawableCircle::SetNewSize(const sf::Vector2f& _newSize)
+{
+	width	= _newSize.x;
+	height	= _newSize.y;
+}
+
+const sf::Vector2f BDraw::BaseDrawableCircle::GetSize() const
+{
+	return sf::Vector2f(width, height);
 }
 
 void BDraw::BaseDrawableCircle::changeRotation(const sf::Vector2f& _newPos)

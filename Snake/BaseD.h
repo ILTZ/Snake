@@ -7,7 +7,8 @@ class BaseD
 {
 public:
 	virtual void Draw(sf::RenderWindow& _wnd)				= 0;
-	virtual void SetSpriteScale(int _width, int _height)	= 0;
+	virtual void SetSpriteScale(unsigned int _width, unsigned int _height,
+		unsigned int _lwlW, unsigned int _lwlH)	= 0;
 
 	virtual ~BaseD()
 	{};

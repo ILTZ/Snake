@@ -13,8 +13,13 @@ namespace MainWin
 	enum class Plans
 	{
 		FIRST_PLAN		= 0,
-		SECOND_PLAN		= 1
+		SECOND_PLAN		= 1,
+
+		START = FIRST_PLAN,
+		END = SECOND_PLAN,
 	};
+	Plans operator++(Plans& _x);
+	Plans operator--(Plans& _x);
 
 	class MainWindow
 	{
@@ -33,7 +38,7 @@ namespace MainWin
 
 	public:
 		MainWindow(int _width = 1600, int _height = 1200, const std::string& _title = "DefaultTitle",
-			int32_t _style = sf::Style::Default, const sf::ContextSettings& _settings = sf::ContextSettings());
+			int32_t _style = sf::Style::Titlebar | sf::Style::Close, const sf::ContextSettings& _settings = sf::ContextSettings());
 
 		MainWindow(const MainWindow&) = delete;
 		MainWindow& operator=(const MainWindow&) = delete;
@@ -45,6 +50,10 @@ namespace MainWin
 
 	public:
 		void AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan);
+
+	private:
+		// Draw all of we have in drawLayout
+		void drawOther();
 
 	private:
 		MS::Mouse mouse;

@@ -11,7 +11,7 @@ using namespace MainWin;
 class App final
 {
 private:
-	MainWindow wnd;
+	std::unique_ptr<MainWindow> wnd;
 
 private:
 

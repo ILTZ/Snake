@@ -11,10 +11,10 @@ ConfigLoader::ConfigLoader(const std::string& _path) :
 	jsonKeys[ConfigKey::SNAKE_T]	= "SNAKE_TORSO";
 	jsonKeys[ConfigKey::SNAKE_H]	= "SNAKE_HEAD";
 	jsonKeys[ConfigKey::LVL_P]		= "LVL_PATH";
-
+	jsonKeys[ConfigKey::RESOLUTION] = "RESOLUTION";
 }
 
-void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPath)
+void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPath) const
 {
 	if (_newPath)
 	{
@@ -59,6 +59,8 @@ std::string CLoader::ConfigLoader::getLvlString(LVLs _lvl)
 
 std::string ConfigLoader::GetPathTo(ConfigKey _key, const char* _pathToConfig)
 {
+	assert(_key != ConfigKey::RESOLUTION);
+
 	std::ifstream f;
 	openFile(f, _pathToConfig);
 
@@ -141,6 +143,18 @@ unsigned int CLoader::ConfigLoader::GetLvlCount()
 	
 
 	return count;
+}
+
+const std::pair<unsigned int, unsigned int> CLoader::ConfigLoader::GetResolution(const char* _pathToConfig)
+{
+	std::ifstream f;
+	openFile(f, _pathToConfig);
+
+	json file = json::parse(f);
+	f.close();
+
+	return std::make_pair<unsigned int, unsigned int>
+		(file[jsonKeys[ConfigKey::RESOLUTION]][0], file[jsonKeys[ConfigKey::RESOLUTION]][1]);
 }
 
 LVLs CLoader::operator++(LVLs& _x)

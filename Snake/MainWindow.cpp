@@ -9,7 +9,6 @@ MainWindow::MainWindow(int _width, int _height, const std::string& _title, int32
 {
 	wnd = std::make_unique<sf::RenderWindow>
 		(sf::VideoMode(_width, _height), _title, _style, _settings);
-
 }
 
 int MainWindow::Draw()
@@ -18,8 +17,7 @@ int MainWindow::Draw()
 	{
 		wnd->clear();
 
-		whatDraw[Plans::SECOND_PLAN]->Draw(*wnd.get());
-		whatDraw[Plans::FIRST_PLAN]->Draw(*wnd.get());
+		drawOther();
 
 		wnd->display();
 	}
@@ -74,6 +72,24 @@ sf::RenderWindow& MainWindow::get()
 
 void MainWin::MainWindow::AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
 {
-	_whatDrow->SetSpriteScale(wWidth, wHeight);
 	whatDraw[_plan] = _whatDrow;
+}
+
+void MainWin::MainWindow::drawOther()
+{
+	for (auto i = Plans::END; i >= Plans::START; --i)
+	{
+		if (whatDraw[i].get())
+			whatDraw[i]->Draw(*wnd.get());
+	}
+}
+
+Plans MainWin::operator++(Plans& _x)
+{
+	return _x = static_cast<Plans>(std::underlying_type<Plans>::type(_x) + 1);
+}
+
+Plans MainWin::operator--(Plans& _x)
+{
+	return _x = static_cast<Plans>(std::underlying_type<Plans>::type(_x) - 1);
 }

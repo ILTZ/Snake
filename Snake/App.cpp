@@ -2,7 +2,16 @@
 
 App::App()
 {
+	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
+	// Window prop {
+	const std::pair resolution{ loader->GetResolution() };
+
+	auto style = sf::Style::Titlebar | sf::Style::Close;
+
+	wnd = std::make_unique<MainWin::MainWindow>
+		(resolution.first, resolution.second, "Snake2D", style);
+	// Window prop }
 }
 
 int App::Run()
@@ -12,12 +21,12 @@ int App::Run()
 		prepareBeforeStart();
 		while (!pause)
 		{
-			if (!wnd.PollEvents())
+			if (!wnd->PollEvents())
 				return 0;
 
 			
 
-			wnd.Draw();
+			wnd->Draw();
 		}
 	}
 
@@ -29,22 +38,32 @@ void App::prepareBeforeStart(CLoader::LVLs _level)
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
+	auto level = loader->GetLVL(_level);
+
 	auto snake = std::make_shared<Snake::SnakeBody>
 		(loader->GetPathTo(CLoader::ConfigKey::SNAKE_H).c_str(),
 			loader->GetPathTo(CLoader::ConfigKey::SNAKE_T).c_str());
 
-	auto level = loader->GetLVL(_level);
-
 	snake->SetPos(sf::Vector2f((float)level->GetConfigs().startPosX, 
 		(float)level->GetConfigs().startPosY));
 
-	prepWindow(snake, createGraphicField(level));
+	snake->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
+		level->GetConfigs().width, level->GetConfigs().height);
+
+	auto gf = createGraphicField(level);
+
+	gf->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
+		level->GetConfigs().width, level->GetConfigs().height);
+
+
+
+	prepWindow(snake, gf);
 }
 
 bool App::prepWindow(auto _snake, auto _field)
 {
-	wnd.AddToDrawLayout(_snake, Plans::FIRST_PLAN);
-	wnd.AddToDrawLayout(_field, Plans::SECOND_PLAN);
+	wnd->AddToDrawLayout(_snake, Plans::FIRST_PLAN);
+	wnd->AddToDrawLayout(_field, Plans::SECOND_PLAN);
 
 	return true;
 }

@@ -1,4 +1,5 @@
 {
+    "RESOLUTION": [1600,1200],
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
     "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png",

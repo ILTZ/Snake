@@ -14,7 +14,7 @@ GraphicField::GraphicField::Sprite::Sprite(const char* _pTt)
 
 
 GraphicField::GraphicField::GraphicField(std::shared_ptr<LVLConstructor::Level> _lvl) :
-	lWidth{_lvl->GetConfigs().width}, lHeight{_lvl->GetConfigs().height}, curLvl{_lvl}
+	curLvl{_lvl}
 {
 	sprites[LVLConstructor::LVLblock::FLOR] = Sprite(_lvl->GetConfigs().pathToFlor.c_str());
 	sprites[LVLConstructor::LVLblock::WALL] = Sprite(_lvl->GetConfigs().pathToWall.c_str());
@@ -24,9 +24,9 @@ GraphicField::GraphicField::GraphicField(std::shared_ptr<LVLConstructor::Level> 
 
 void GraphicField::GraphicField::Draw(sf::RenderWindow& _wnd)
 {
-	for (int i = 0; i < lWidth; ++i)
+	for (int i = 0; i < curLvl->GetConfigs().width; ++i)
 	{
-		for (int j = 0; j < lHeight; ++j)
+		for (int j = 0; j < curLvl->GetConfigs().height; ++j)
 		{
 			sprites[curLvl->GetBlock(i, j)].mainSprite->setPosition(
 				sprites[curLvl->GetBlock(i, j)].width * (float)i,
@@ -38,7 +38,8 @@ void GraphicField::GraphicField::Draw(sf::RenderWindow& _wnd)
 	}
 }
 
-void GraphicField::GraphicField::SetSpriteScale(const int _width, const int _height)
+void GraphicField::GraphicField::SetSpriteScale(unsigned int _width, unsigned int _height,
+	unsigned int _lwlW, unsigned int _lwlH)
 {
 	for (auto& el : sprites)
 	{
@@ -49,17 +50,14 @@ void GraphicField::GraphicField::SetSpriteScale(const int _width, const int _hei
 			// 1/4 our window(need for hud)
 			const unsigned int half = (_width / 4);
 
-			if (((el.second.width * lWidth) - static_cast<float>(_width)) < half)
+			if (((el.second.width * _lwlW) - static_cast<float>(_width)) < half)
 			{
-				const float wGpHalf = el.second.width * lWidth;
-				const float raznica = static_cast<float>(_width) - half;
-
-				deltaWidth = raznica / wGpHalf;
+				deltaWidth = (static_cast<float>(_width) - half) / 
+					(el.second.width * _lwlW);
 			}
-			if (el.second.height * lHeight > _height)
+			if (el.second.height * _lwlH > _height)
 			{
-				const float hGpHalf = el.second.height * lHeight;
-				deltaHeight = _height / hGpHalf;
+				deltaHeight = _height / (el.second.height * _lwlH);
 			}
 
 			el.second.mainSprite->setScale(deltaWidth, deltaHeight);

@@ -18,6 +18,9 @@ namespace BDraw
 
 		sf::Vector2f curPos;
 
+		float width		= 0.f;
+		float height	= 0.f;
+
 	public:
 		BaseDrawableCircle(const char* _pathToTexture, float _radius = 20.f);
 		BaseDrawableCircle(const BaseDrawableCircle& _other);
@@ -27,7 +30,10 @@ namespace BDraw
 		void SetPos(const sf::Vector2f& _newPos);
 		const sf::Vector2f& GetPos() const;
 		void Draw(sf::RenderWindow& _wnd);
-	
+		void SetSpriteScale(const sf::Vector2f& _newScale);
+		void SetNewSize(const sf::Vector2f& _newSize);
+		const sf::Vector2f GetSize() const;
+
 	private:
 		void changeRotation(const sf::Vector2f& _newPos);
 	};
