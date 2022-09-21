@@ -7,11 +7,15 @@ using json = nlohmann::json;
 ConfigLoader::ConfigLoader(const std::string& _path) :
 	pathToConf{_path}
 {
-	jsonKeys[ConfigKey::APLE]		= "APLE";
-	jsonKeys[ConfigKey::SNAKE_T]	= "SNAKE_TORSO";
-	jsonKeys[ConfigKey::SNAKE_H]	= "SNAKE_HEAD";
-	jsonKeys[ConfigKey::LVL_P]		= "LVL_PATH";
-	jsonKeys[ConfigKey::RESOLUTION] = "RESOLUTION";
+	jsonKeys[ConfigKey::APLE]			= "APLE";
+	jsonKeys[ConfigKey::SNAKE_T]		= "SNAKE_TORSO";
+	jsonKeys[ConfigKey::SNAKE_H]		= "SNAKE_HEAD";
+	jsonKeys[ConfigKey::LVL_P]			= "LVL_PATH";
+	jsonKeys[ConfigKey::RESOLUTION]		= "RESOLUTION";
+	jsonKeys[ConfigKey::BTN_PRESS]		= "BTN_PRESS";
+	jsonKeys[ConfigKey::BTN_RELEASE]	= "BTN_RELEASE";
+	jsonKeys[ConfigKey::TEXT_FONT]		= "TEXT_FONT";
+	jsonKeys[ConfigKey::HUD]			= "HUD";
 }
 
 void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPath) const

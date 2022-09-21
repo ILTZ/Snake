@@ -8,14 +8,16 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 
+
 namespace MainWin
 {
 	enum class Plans
 	{
-		FIRST_PLAN		= 0,
-		SECOND_PLAN		= 1,
+		HUD				= 0,
+		FIRST_PLAN		= 1,
+		SECOND_PLAN		= 2,
 
-		START = FIRST_PLAN,
+		START = HUD,
 		END = SECOND_PLAN,
 	};
 	Plans operator++(Plans& _x);
@@ -58,6 +60,7 @@ namespace MainWin
 	private:
 		MS::Mouse mouse;
 		KB::Keyboard kb;
+
 
 	};
 }

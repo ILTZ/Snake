@@ -4,6 +4,8 @@
 #include "MainWindow.h"
 #include "SnakeBody.h"
 #include "GraphicField.h"
+#include "HUD.h"
+
 #include "ConfigLoader.h"
 
 using namespace MainWin;
@@ -34,12 +36,14 @@ private:
 	void prepareBeforeStart(CLoader::LVLs _level = CLoader::LVLs::LVL_1);
 
 private:
-	bool prepWindow(auto _snake, auto _field);
+	bool prepWindow(auto _snake, auto _field, auto _hud);
 	bool prepLogicField(auto _snake, auto _field);
 
 
 	std::shared_ptr<Snake::SnakeBody> createSnake(const char* _pTh, const char* _pTt);
 	std::shared_ptr<GraphicField::GraphicField> createGraphicField(auto _lvl);
+	std::shared_ptr<Hud::HUD> createHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
+		const char* _pathToBtnPressed, const char* _pathToFont);
 
 };
 

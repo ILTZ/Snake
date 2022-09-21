@@ -1,6 +1,8 @@
 #include "MainWindow.h"
+#include "ConfigLoader.h"
 
 #include <SFML/Window/Event.hpp>
+
 
 using namespace MainWin;
 
@@ -9,6 +11,7 @@ MainWindow::MainWindow(int _width, int _height, const std::string& _title, int32
 {
 	wnd = std::make_unique<sf::RenderWindow>
 		(sf::VideoMode(_width, _height), _title, _style, _settings);
+
 }
 
 int MainWindow::Draw()

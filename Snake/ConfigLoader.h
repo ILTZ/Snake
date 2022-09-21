@@ -16,6 +16,10 @@ namespace CLoader
 		APLE		= 3,
 		LVL_P		= 4,
 		RESOLUTION	= 5,
+		BTN_PRESS	= 6,
+		BTN_RELEASE = 7,
+		TEXT_FONT	= 8,
+		HUD			= 9,
 	};
 
 	enum class LVLs

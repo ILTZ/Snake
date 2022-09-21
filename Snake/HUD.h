@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <string>
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Button.h"
+#include "BaseD.h"
 
 namespace Hud
 {
@@ -19,34 +20,36 @@ namespace Hud
 		GAME_OVER		= 4,
 	};
 
-	class HUD
+	class HUD : public BaseD
 	{
 	private:
 		const std::string pathToHUD;
-		const std::string pathToBtnStay;
-		const std::string pathToBtnUp;
+		const std::string pathToBtnReleased;
+		const std::string pathToBtnPressed;
 		const std::string pathToFont;
 
 	private:
 		SmartPointer::SmartPointer<sf::Texture> hud;
+		SmartPointer::SmartPointer<sf::Sprite> hudSprite;
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
 	public:
-		HUD(const char* _pathToHud, const char* _pathToBtnS, const char* _pathToBtnU, const char* _pathToFont);
+		HUD(const char* _pathToHud, const char* _pathToBtnReleased, const char* _pathToBtnPressed, const char* _pathToFont);
 
 	public:
 		HUD(const HUD&) = delete;
 		HUD& operator=(const HUD&) = delete;
 
 	public:
-		void Draw(sf::RenderWindow& _wnd, MODE _mode);
+		void Draw(sf::RenderWindow& _wnd) override;
+		void SetSpriteScale(unsigned int _width, unsigned int _height,
+			unsigned int _lwlW, unsigned int _lwlH);
 
 	public:
-
-
+		void prepButtons(MODE _mode, int _lvlCount = 0);
 
 	private:
-		void prepBtnsArr(MODE _mode);
+		void fillBtnsArr(MODE _mode, int _lvlCount = 0);
 
 	};
 }
