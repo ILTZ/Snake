@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <optional>
+
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -31,6 +33,8 @@ namespace Hud
 	private:
 		SmartPointer::SmartPointer<sf::Texture> hud;
 		SmartPointer::SmartPointer<sf::Sprite> hudSprite;
+
+	private:
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
 	public:
@@ -44,6 +48,10 @@ namespace Hud
 		void Draw(sf::RenderWindow& _wnd) override;
 		void SetSpriteScale(unsigned int _width, unsigned int _height,
 			unsigned int _lwlW, unsigned int _lwlH);
+
+	public:
+		std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> CheckButtons(float _x, float _y);
+		void RealeseButtons();
 
 	public:
 		void prepButtons(MODE _mode, int _lvlCount = 0);

@@ -53,6 +53,9 @@ namespace MainWin
 	public:
 		void AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan);
 
+		auto GetKeyboardEvent();
+		auto GetMouseEvent();
+
 	private:
 		// Draw all of we have in drawLayout
 		void drawOther();

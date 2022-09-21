@@ -145,6 +145,7 @@
     <ClCompile Include="BaseDrawable.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GraphicField.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Keyboard.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GraphicField.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Keyboard.h" />

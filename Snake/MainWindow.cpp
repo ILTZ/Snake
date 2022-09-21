@@ -29,7 +29,6 @@ int MainWindow::Draw()
 		return 0;
 	}
 
-
 	return 1;
 }
 
@@ -76,6 +75,16 @@ sf::RenderWindow& MainWindow::get()
 void MainWin::MainWindow::AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
 {
 	whatDraw[_plan] = _whatDrow;
+}
+
+auto MainWin::MainWindow::GetKeyboardEvent()
+{
+	return kb.GetEvent();
+}
+
+auto MainWin::MainWindow::GetMouseEvent()
+{
+	return mouse.GetEvent();
 }
 
 void MainWin::MainWindow::drawOther()

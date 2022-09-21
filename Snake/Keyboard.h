@@ -15,7 +15,7 @@ namespace KB
 		bool isPressed;
 	};
 
-	class Keyboard : ControlBase::ControlBase<KeyEvent>
+	class Keyboard : public ControlBase::ControlBase<KeyEvent>
 	{
 	private:
 		std::unique_ptr<sf::Keyboard> kb;

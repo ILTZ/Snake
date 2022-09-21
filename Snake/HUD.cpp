@@ -56,6 +56,29 @@ void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height, unsigne
 
 }
 
+std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> Hud::HUD::CheckButtons(float _x, float _y)
+{
+	std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> temp;
+
+	for (int i = 0; i < btns.size(); ++i)
+	{
+		if (btns[i]->GetTouch(_x, _y);)
+		{
+			temp = std::make_pair(btns[i]->GetBtnDest(), btns[i]->GetBtnMode());
+		}
+	}
+
+	return temp;
+}
+
+void Hud::HUD::RealeseButtons()
+{
+	for (auto& el : btns)
+	{
+		el->SwitchCurrentState(Buttons::BtnMode::RELEASED);
+	}
+}
+
 void Hud::HUD::prepButtons(MODE _mode, int _lvlCount)
 {
 	fillBtnsArr(_mode, _lvlCount);

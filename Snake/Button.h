@@ -71,7 +71,8 @@ namespace Buttons
 
 	public:
 		Btn GetBtnDest() const;
-		std::optional<std::pair<bool, Btn>> GetTouch(float _x, float _y);
+		BtnMode GetBtnMode() const;
+		bool GetTouch(float _x, float _y);
 
 	private:
 	};

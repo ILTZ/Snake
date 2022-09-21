@@ -41,22 +41,27 @@ Btn Buttons::Button::GetBtnDest() const
 	return whatBtn;
 }
 
-std::optional<std::pair<bool, Btn>> Buttons::Button::GetTouch(float _x, float _y)
+BtnMode Buttons::Button::GetBtnMode() const
 {
-	std::optional<std::pair<bool, Btn>> temp;
+	return curMode;
+}
 
-	auto& btn = btns[BtnMode::RELEASED].rectShape;
+bool Buttons::Button::GetTouch(float _x, float _y)
+{
+	auto& btn = btns[curMode].rectShape;
 	if (_x >= (btn->getPosition().x - (btn->getSize().x / 2.f)) &&
 		_x <= (btn->getPosition().x + (btn->getSize().x / 2.f)) &&
 		_y >= (btn->getPosition().y - (btn->getSize().y / 2.f)) &&
 		_y <= (btn->getPosition().y - (btn->getSize().y / 2.f))
 		)
 	{
-		curMode = BtnMode::PRESSED;
-		temp = std::make_pair(true, whatBtn);
+		if (curMode == BtnMode::PRESSED)
+			curMode = BtnMode::RELEASED;
+		else
+			curMode = BtnMode::PRESSED;
 	}
 
-	return temp;
+	return false;
 }
 
 Buttons::Button::BtnConf::BtnConf(const char* _pathToBtn) : mainText{new sf::Texture()}
