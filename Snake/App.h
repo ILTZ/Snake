@@ -5,6 +5,7 @@
 #include "SnakeBody.h"
 #include "GraphicField.h"
 #include "HUD.h"
+#include "EventHandler.h"
 
 #include "ConfigLoader.h"
 
@@ -14,6 +15,7 @@ class App final
 {
 private:
 	std::unique_ptr<MainWindow> wnd;
+	SmartPointer::SmartPointer<EventHandler> handler;
 
 private:
 
@@ -33,12 +35,20 @@ private:
 	bool pause		= false;
 
 private:
+	Hud::MODE currentMode;
+
+private:
 	void prepareBeforeStart(CLoader::LVLs _level = CLoader::LVLs::LVL_1);
 
 private:
-	bool prepWindow(auto _snake, auto _field, auto _hud);
+	void handleEvents();
+
+private:
+	bool prepWindow(auto _snake, auto _field);
 	bool prepLogicField(auto _snake, auto _field);
 
+	void DrawProcess();
+	void drawFormMode();
 
 	std::shared_ptr<Snake::SnakeBody> createSnake(const char* _pTh, const char* _pTt);
 	std::shared_ptr<GraphicField::GraphicField> createGraphicField(auto _lvl);

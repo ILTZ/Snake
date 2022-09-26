@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <unordered_map>
+#include <nlohmann/json.hpp>
 
 #include "LevelConstructor.h"
 
@@ -34,6 +35,25 @@ namespace CLoader
 	};
 	LVLs operator++(LVLs& _x);
 
+
+	struct SnakePaths
+	{
+		std::string pathToHead;
+		std::string pathToTorso;
+		std::string pathToAple;
+	};
+
+	struct HudConfigs
+	{
+		unsigned int width;
+		unsigned int height;
+
+		std::string pathToPressBtn;
+		std::string pathToReleaseBtn;
+		std::string pathToTextFont;
+		std::string pathToHud;
+	};
+
 	class ConfigLoader
 	{
 	private:
@@ -51,9 +71,13 @@ namespace CLoader
 		std::string GetPathTo(ConfigKey _key, const char* _pathToConfig = nullptr);
 		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLs _level);
 		unsigned int GetLvlCount();
-		const std::pair<unsigned int, unsigned int> GetResolution(const char* _pathToConfig = nullptr);
+
+	public:
+		SnakePaths GetSnakeProp(const char* _pathToConfig = nullptr);
+		HudConfigs GetHudConfigs(const char* _pathToConfig = nullptr);
 
 	private:
+		nlohmann::json getParseFile(const char* _pathToConfig = nullptr);
 		void openFile(std::ifstream& _stream, const char* _newPath) const;
 
 	private:

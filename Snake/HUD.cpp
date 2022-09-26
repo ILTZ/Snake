@@ -13,8 +13,15 @@ HUD::HUD(const char* _pathToHud, const char* _pathToBtnReleased, const char* _pa
 	prepButtons(MODE::MAIN_MENU);
 }
 
-void HUD::Draw(sf::RenderWindow& _wnd)
+void HUD::DrawHUD(sf::RenderWindow& _wnd)
 {
+	_wnd.draw(*hudSprite);
+}
+
+void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
+{
+	std::lock_guard<std::mutex> lk(defMutex);
+
 	for (int i = 0; i < btns.size(); ++i)
 	{
 		// Center of the window
@@ -23,14 +30,14 @@ void HUD::Draw(sf::RenderWindow& _wnd)
 
 		btns[i]->Draw(_wnd, sf::Vector2f(
 			x, y * static_cast<float>(i + 1)
-		));		
+		));
 	}
-
-	_wnd.draw(*hudSprite);
 }
 
-void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height, unsigned int _lwlW, unsigned int _lwlH)
+void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height)
 {
+	std::lock_guard<std::mutex> lk(defMutex);
+
 	if (hud->getSize().x > _width || hud->getSize().y > _height)
 	{
 		float xFactor = 1.f;
@@ -58,11 +65,13 @@ void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height, unsigne
 
 std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> Hud::HUD::CheckButtons(float _x, float _y)
 {
+	std::lock_guard<std::mutex> lk(defMutex);
+
 	std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> temp;
 
 	for (int i = 0; i < btns.size(); ++i)
 	{
-		if (btns[i]->GetTouch(_x, _y);)
+		if (btns[i]->GetTouch(_x, _y))
 		{
 			temp = std::make_pair(btns[i]->GetBtnDest(), btns[i]->GetBtnMode());
 		}
@@ -73,6 +82,8 @@ std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> Hud::HUD::CheckButtons
 
 void Hud::HUD::RealeseButtons()
 {
+	std::lock_guard<std::mutex> lk(defMutex);
+
 	for (auto& el : btns)
 	{
 		el->SwitchCurrentState(Buttons::BtnMode::RELEASED);
@@ -87,6 +98,8 @@ void Hud::HUD::prepButtons(MODE _mode, int _lvlCount)
 
 void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 {
+	std::lock_guard<std::mutex> lock(defMutex);
+
 	btns.clear();
 
 	switch (_mode)

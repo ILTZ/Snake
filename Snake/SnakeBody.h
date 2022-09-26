@@ -5,18 +5,12 @@
 
 #include "SnakeParticle.h"
 #include "BaseD.h"
+#include "BasePawn.h"
 
 namespace Snake
 {
-	enum class Direction
-	{
-		TOP = 0,
-		DOWN = 1,
-		RIGHT = 2,
-		LEFT = 3
-	};
 
-	class SnakeBody : public BaseD
+	class SnakeBody : public BaseD, public BaseP::BasePawn
 	{
 	private:
 		std::string headTPath;
@@ -48,7 +42,7 @@ namespace Snake
 
 	public:
 		void Move();
-		void SetDir(Direction _dir);
+		void SetDir(BaseP::Direction _dir) override;
 		void GrowUp();
 		void SetPos(const sf::Vector2f& _pos);
 

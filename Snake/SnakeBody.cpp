@@ -36,14 +36,14 @@ void Snake::SnakeBody::Move()
 	));
 }
 
-void Snake::SnakeBody::SetDir(Direction _dir)
+void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 {
 	if (!firstMove)
 		firstMove = true;
 
 	switch (_dir)
 	{
-	case Snake::Direction::TOP:
+	case BaseP::Direction::TOP:
 		if (yDir != -1 && yDir != 1)
 		{
 			yDir = 1;
@@ -51,7 +51,7 @@ void Snake::SnakeBody::SetDir(Direction _dir)
 		}
 		break;
 
-	case Snake::Direction::DOWN:
+	case BaseP::Direction::DOWN:
 		if (yDir != 1 && yDir != -1)
 		{
 			yDir = -1;
@@ -59,7 +59,7 @@ void Snake::SnakeBody::SetDir(Direction _dir)
 		}
 		break;
 
-	case Snake::Direction::RIGHT:
+	case BaseP::Direction::RIGHT:
 		if (xDir != 1 && xDir != -1)
 		{
 			xDir = 1;
@@ -67,7 +67,7 @@ void Snake::SnakeBody::SetDir(Direction _dir)
 		}
 		break;
 
-	case Snake::Direction::LEFT:
+	case BaseP::Direction::LEFT:
 		if (xDir != -1 && xDir != 1)
 		{
 			xDir = -1;

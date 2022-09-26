@@ -5,25 +5,31 @@
 #include "Mouse.h"
 
 #include "HUD.h"
-#include "SnakeBody.h"
+#include "BasePawn.h"
+
 
 class EventHandler
 {
 private:
 	std::shared_ptr<Hud::HUD>			hud;
-	std::shared_ptr<Snake::SnakeBody>	snakeBody;
+	std::shared_ptr<BaseP::BasePawn>	pawn;
 
 
 public:
-	EventHandler(auto _hud, auto _snakePawn);
+	EventHandler() = default;
+	EventHandler(std::shared_ptr<Hud::HUD> _hud, std::shared_ptr<BaseP::BasePawn> _snakePawn);
 
 public:
 	EventHandler(const EventHandler&) = delete;
 	EventHandler& operator=(const EventHandler&) = delete;
 
 public:
-	void HandleKeyEvent(const KB::KeyEvent& _keyEvent, Hud::MODE _mode);
-	void HandleMouseEvent(const MS::MouseEvent& _mouseEvent, Hud::MODE _mode);
+	void SetPawn(std::shared_ptr<BaseP::BasePawn> _pawn);
+	void SetHud(std::shared_ptr<Hud::HUD> _hud);
+
+public:
+	std::optional<Hud::MODE> HandleKeyEvent(const std::optional<KB::KeyEvent>&_keyEvent, Hud::MODE _mode);
+	std::optional<Hud::MODE> HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode);
 
 private:
 

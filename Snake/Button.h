@@ -16,7 +16,6 @@ namespace Buttons
 	{
 		PRESSED		= 0,
 		RELEASED	= 1,
-		NONE		= 2,
 	};
 
 	enum class Btn
@@ -46,8 +45,8 @@ namespace Buttons
 		{
 			TextConf(const char* _pathToFont, const std::string& _text);
 
-			SmartPointer::SmartPointer<sf::Text> btnText;
-			SmartPointer::SmartPointer<sf::Font> textFont;
+			sf::Text btnText;
+			sf::Font textFont;
 		};
 
 	private:
@@ -75,6 +74,7 @@ namespace Buttons
 		bool GetTouch(float _x, float _y);
 
 	private:
+		sf::Vector2f getBtnSizeDif(const sf::RectangleShape& _first, const sf::RectangleShape& _second);
 	};
 }
 

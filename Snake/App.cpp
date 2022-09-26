@@ -1,21 +1,31 @@
 #include "App.h"
+#include <thread>
 
-App::App()
+App::App() : currentMode{Hud::MODE::MAIN_MENU}
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
 	// Window prop {
-	const std::pair resolution{ loader->GetResolution() };
+	auto configs = loader->GetHudConfigs();
 	auto style = sf::Style::Titlebar | sf::Style::Close;
 
 	wnd = std::make_unique<MainWin::MainWindow>
-		(resolution.first, resolution.second, "Snake2D", style);
+		(configs.width, configs.height, "Snake2D", style);
 	// Window prop }
+
+	auto hud = createHUD(configs.pathToHud.c_str(), configs.pathToReleaseBtn.c_str(), 
+		configs.pathToPressBtn.c_str(), configs.pathToTextFont.c_str());
+	hud->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y);
+
+	wnd->SetHud(hud);
+
+	handler = new EventHandler();
+	handler->SetHud(hud);
 }
 
 int App::Run()
 {
-	while (isWork)
+	/*while (isWork)
 	{
 		prepareBeforeStart();
 		while (!pause)
@@ -23,12 +33,23 @@ int App::Run()
 			if (!wnd->PollEvents())
 				return 0;
 
-			
+			wnd->get().clear();
 
-			wnd->Draw();
+			wnd->DrawLayouts();
+			wnd->DrawHUD();
+			wnd->DrawButtons();
+
+			wnd->get().display();
+
 		}
-	}
+	}*/
 
+	std::jthread t([&]() {
+		handleEvents();
+		});
+
+	DrawProcess();
+	
 
 	return 1;
 }
@@ -51,18 +72,29 @@ void App::prepareBeforeStart(CLoader::LVLs _level)
 	gf->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
 		level->GetConfigs().width, level->GetConfigs().height);
 
-	auto hud = createHUD(loader->GetPathTo(CLoader::ConfigKey::HUD).c_str(), loader->GetPathTo(CLoader::ConfigKey::BTN_RELEASE).c_str(),
-		loader->GetPathTo(CLoader::ConfigKey::BTN_PRESS).c_str(), loader->GetPathTo(CLoader::ConfigKey::TEXT_FONT).c_str());
-	hud->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y, 0, 0);
-
-	prepWindow(snake, gf, hud);
+	prepWindow(snake, gf);
 }
 
-bool App::prepWindow(auto _snake, auto _field, auto _hud)
+void App::handleEvents()
+{
+	while (currentMode != Hud::MODE::EXIT)
+	{
+		auto resK = handler->HandleKeyEvent(wnd->GetKeyboardEvent(), currentMode);
+		auto resM = handler->HandleMouseEvent(wnd->GetMouseEvent(), currentMode);
+
+		if (resK.has_value())
+			currentMode = resK.value();
+
+		if (resM.has_value())
+			currentMode = resM.value();
+
+	}
+}
+
+bool App::prepWindow(auto _snake, auto _field)
 {
 	wnd->AddToDrawLayout(_snake, Plans::FIRST_PLAN);
 	wnd->AddToDrawLayout(_field, Plans::SECOND_PLAN);
-	wnd->AddToDrawLayout(_hud, Plans::HUD);
 
 	return true;
 }
@@ -70,6 +102,70 @@ bool App::prepWindow(auto _snake, auto _field, auto _hud)
 bool App::prepLogicField(auto _snake, auto _field)
 {
 	return false;
+}
+
+void App::DrawProcess()
+{
+	while (currentMode != Hud::MODE::EXIT)
+	{
+		if (!wnd->PollEvents())
+		{
+			currentMode = Hud::MODE::EXIT;
+
+			return;
+		}
+
+		drawFormMode();
+	}
+
+	
+}
+
+void App::drawFormMode()
+{
+	wnd->get().clear();
+
+	switch (currentMode)
+	{
+	case Hud::MODE::MAIN_MENU:
+		wnd->DrawButtons();
+		break;
+
+	case Hud::MODE::LVL_CHOISE:
+		wnd->DrawButtons();
+		break;
+
+	case Hud::MODE::GAME_PROCESS:
+		wnd->DrawLayouts();
+		wnd->DrawHUD();
+		break;
+
+	case Hud::MODE::GAME_PAUSE:
+		wnd->DrawLayouts();
+		wnd->DrawHUD();
+		wnd->DrawButtons();
+		break;
+
+	case Hud::MODE::GAME_OVER:
+		wnd->DrawLayouts();
+		wnd->DrawHUD();
+		wnd->DrawButtons();
+		break;
+
+	case Hud::MODE::LEADERS:
+
+		break;
+
+	case Hud::MODE::EXIT:
+		return;
+		break;
+
+	default:
+		break;
+	}
+
+	wnd->get().display();
+
 }
 
 std::shared_ptr<Snake::SnakeBody> App::createSnake(const char* _pTh, const char* _pTt)

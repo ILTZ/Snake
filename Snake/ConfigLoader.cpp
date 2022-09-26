@@ -1,5 +1,5 @@
 #include "ConfigLoader.h"
-#include <nlohmann/json.hpp>
+
 
 using namespace CLoader;
 using json = nlohmann::json;
@@ -16,6 +16,17 @@ ConfigLoader::ConfigLoader(const std::string& _path) :
 	jsonKeys[ConfigKey::BTN_RELEASE]	= "BTN_RELEASE";
 	jsonKeys[ConfigKey::TEXT_FONT]		= "TEXT_FONT";
 	jsonKeys[ConfigKey::HUD]			= "HUD";
+}
+
+nlohmann::json CLoader::ConfigLoader::getParseFile(const char* _pathToConfig)
+{
+	std::ifstream f;
+	openFile(f, _pathToConfig);
+
+	json file = json::parse(f);
+	f.close();
+
+	return file;
 }
 
 void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPath) const
@@ -149,16 +160,34 @@ unsigned int CLoader::ConfigLoader::GetLvlCount()
 	return count;
 }
 
-const std::pair<unsigned int, unsigned int> CLoader::ConfigLoader::GetResolution(const char* _pathToConfig)
+SnakePaths CLoader::ConfigLoader::GetSnakeProp(const char* _pathToConfig)
 {
-	std::ifstream f;
-	openFile(f, _pathToConfig);
+	auto file = getParseFile(_pathToConfig);
 
-	json file = json::parse(f);
-	f.close();
+	SnakePaths temp;
 
-	return std::make_pair<unsigned int, unsigned int>
-		(file[jsonKeys[ConfigKey::RESOLUTION]][0], file[jsonKeys[ConfigKey::RESOLUTION]][1]);
+	temp.pathToAple = file[jsonKeys[ConfigKey::APLE]];
+	temp.pathToHead = file[jsonKeys[ConfigKey::SNAKE_H]];
+	temp.pathToTorso = file[jsonKeys[ConfigKey::SNAKE_T]];
+
+	return temp;
+}
+
+HudConfigs CLoader::ConfigLoader::GetHudConfigs(const char* _pathToConfig)
+{
+	auto file = getParseFile(_pathToConfig);
+
+	HudConfigs temp;
+
+	temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
+	temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
+
+	temp.pathToPressBtn = file[jsonKeys[ConfigKey::BTN_PRESS]];
+	temp.pathToReleaseBtn = file[jsonKeys[ConfigKey::BTN_RELEASE]];
+	temp.pathToTextFont = file[jsonKeys[ConfigKey::TEXT_FONT]];
+	temp.pathToHud = file[jsonKeys[ConfigKey::HUD]];
+
+	return temp;
 }
 
 LVLs CLoader::operator++(LVLs& _x)

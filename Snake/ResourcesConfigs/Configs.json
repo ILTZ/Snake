@@ -1,6 +1,6 @@
 {
-    "RESOLUTION": [1600,1200],
-    "BTN_PRESS": ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed.png",
+    "RESOLUTION": [1000,1200],
+    "BTN_PRESS": ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed2.png",
     "BTN_RELEASE": ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
     "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
     "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
@@ -8,4 +8,5 @@
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
     "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png",
     "LVL_PATH": ".\\ResourcesConfigs\\LVLs"
+    
 }

@@ -160,6 +160,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="BaseD.h" />
     <ClInclude Include="BaseDrawable.h" />
+    <ClInclude Include="BasePawn.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />

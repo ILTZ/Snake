@@ -4,10 +4,10 @@
 #include <string>
 #include <unordered_map>
 
-#include "BaseD.h"
 #include "Mouse.h"
 #include "Keyboard.h"
-
+#include "HUD.h"
+#include "BaseD.h"
 
 namespace MainWin
 {
@@ -36,6 +36,7 @@ namespace MainWin
 
 	private:
 		std::unique_ptr<sf::RenderWindow>	wnd;
+		std::shared_ptr<Hud::HUD>			hud;
 		std::unordered_map<Plans, std::shared_ptr<BaseD>>	whatDraw;
 
 	public:
@@ -46,15 +47,20 @@ namespace MainWin
 		MainWindow& operator=(const MainWindow&) = delete;
 
 	public:
-		int Draw();
+		int DrawLayouts();
+		void DrawHUD();
+		void DrawButtons();
+
+	public:
 		bool PollEvents();
 		sf::RenderWindow& get();
+		void SetHud(std::shared_ptr<Hud::HUD> _hud);
 
 	public:
 		void AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan);
 
-		auto GetKeyboardEvent();
-		auto GetMouseEvent();
+		std::optional<KB::KeyEvent> GetKeyboardEvent();
+		std::optional<MS::MouseEvent> GetMouseEvent();
 
 	private:
 		// Draw all of we have in drawLayout

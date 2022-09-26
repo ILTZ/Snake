@@ -14,15 +14,11 @@ MainWindow::MainWindow(int _width, int _height, const std::string& _title, int32
 
 }
 
-int MainWindow::Draw()
+int MainWindow::DrawLayouts()
 {
 	if (wnd->isOpen())
 	{
-		wnd->clear();
-
 		drawOther();
-
-		wnd->display();
 	}
 	else
 	{
@@ -30,6 +26,22 @@ int MainWindow::Draw()
 	}
 
 	return 1;
+}
+
+void MainWin::MainWindow::DrawHUD()
+{
+	if (wnd->isOpen() && hud.get())
+	{
+		hud->DrawHUD(*wnd.get());
+	}
+}
+
+void MainWin::MainWindow::DrawButtons()
+{
+	if (wnd->isOpen() && hud.get())
+	{
+		hud->DrawButtons(*wnd.get());
+	}
 }
 
 bool MainWindow::PollEvents()
@@ -72,17 +84,22 @@ sf::RenderWindow& MainWindow::get()
 	return *wnd.get();
 }
 
+void MainWin::MainWindow::SetHud(std::shared_ptr<Hud::HUD> _hud)
+{
+	hud = _hud;
+}
+
 void MainWin::MainWindow::AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
 {
 	whatDraw[_plan] = _whatDrow;
 }
 
-auto MainWin::MainWindow::GetKeyboardEvent()
+std::optional<KB::KeyEvent> MainWin::MainWindow::GetKeyboardEvent()
 {
 	return kb.GetEvent();
 }
 
-auto MainWin::MainWindow::GetMouseEvent()
+std::optional<MS::MouseEvent> MainWin::MainWindow::GetMouseEvent()
 {
 	return mouse.GetEvent();
 }
