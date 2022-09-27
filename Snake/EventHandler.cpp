@@ -1,5 +1,6 @@
 #include "EventHandler.h"
 
+
 EventHandler::EventHandler(std::shared_ptr<Hud::HUD> _hud, std::shared_ptr<BaseP::BasePawn> _snakePawn)
 	: hud{_hud}, pawn{_snakePawn}
 {
@@ -50,6 +51,7 @@ std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<KB::Ke
 		case sf::Keyboard::Key::Escape:
 		case sf::Keyboard::Key::P:
 			temp = Hud::MODE::GAME_PAUSE;
+			hud->prepButtons(Hud::MODE::GAME_PAUSE);
 			break;
 
 		default:
@@ -59,9 +61,9 @@ std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<KB::Ke
 	return temp;
 }
 
-std::optional<Hud::MODE> EventHandler::HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode)
+std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode)
 {
-	std::optional<Hud::MODE> temp;
+	std::optional<EventHandler::HandleResult> temp;
 
 	if (!_mouseEvent.has_value() || _mode == Hud::MODE::GAME_PROCESS)
 		return temp;
@@ -79,36 +81,66 @@ std::optional<Hud::MODE> EventHandler::HandleMouseEvent(const std::optional<MS::
 
 		if (button.has_value())
 		{
+			temp = EventHandler::HandleResult();
+
 			using bMod = Buttons::Btn;
 			using hMod = Hud::MODE;
 
-			switch (button.value().first)
+			switch (button.value())
 			{
 			case bMod::START:
-				temp = Hud::MODE::LVL_CHOISE;
+				{
+					temp.value().gameMode = Hud::MODE::LVL_SELECT;
+					SmartPointer::SmartPointer<CLoader::ConfigLoader> loader 
+						= new CLoader::ConfigLoader();
+
+					hud->prepButtons(Hud::MODE::LVL_SELECT, loader->GetLvlCount());
+				}
 				break;
 
 			case bMod::EXIT:
-				temp = hMod::EXIT;
+				temp.value().gameMode = hMod::EXIT;
 				break;
 
 			case bMod::CONTINUE:
-				temp = hMod::GAME_PROCESS;
+				temp.value().gameMode = hMod::GAME_PROCESS;
 				break;
 
 			case bMod::BACK:
-				temp = hMod::MAIN_MENU;
-
-			case bMod::LEADER_BORD:
-				temp = hMod::LEADERS;
+				temp.value().gameMode = hMod::MAIN_MENU;
+				hud->prepButtons(Hud::MODE::MAIN_MENU);
 				break;
 
-			case bMod::LVL:
+			case bMod::LEADER_BORD:
+				temp.value().gameMode = hMod::LEADERS;
+				hud->prepButtons(Hud::MODE::LEADERS);
+				break;
 
+			case bMod::LVL_1:
+				temp.value().gameMode = hMod::LVL_SELECTED;
+				temp.value().lvl = CLoader::LVLs::LVL_1;
+				break;
+			case bMod::LVL_2:
+				temp.value().gameMode = hMod::LVL_SELECTED;
+				temp.value().lvl = CLoader::LVLs::LVL_2;
+				break;
+			case bMod::LVL_3:
+				temp.value().gameMode = hMod::LVL_SELECTED;
+				temp.value().lvl = CLoader::LVLs::LVL_3;
+				break;
+			case bMod::LVL_4:
+				temp.value().gameMode = hMod::LVL_SELECTED;
+				temp.value().lvl = CLoader::LVLs::LVL_4;
+				break;
+			case bMod::LVL_5:
+				temp.value().gameMode = hMod::LVL_SELECTED;
+				temp.value().lvl = CLoader::LVLs::LVL_5;
 				break;
 
 			case bMod::MAIN_MENU:
-				temp = hMod::MAIN_MENU;
+				temp.value().gameMode = hMod::MAIN_MENU;
+				hud->prepButtons(Hud::MODE::MAIN_MENU);
+
 				break;
 
 			default:

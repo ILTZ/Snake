@@ -25,7 +25,7 @@ namespace Snake
 		const int snakeStartSize = 4;
 
 	private:
-		std::vector<SmartPointer::SmartPointer<SnakePart::SnakeParticle>> body;
+		std::vector<SnakePart::SnakeParticle> body;
 
 	private:
 		int curLength = 0;
@@ -41,10 +41,11 @@ namespace Snake
 		void Draw(sf::RenderWindow& _wnd) override;
 
 	public:
-		void Move();
+		void Move() override;
 		void SetDir(BaseP::Direction _dir) override;
 		void GrowUp();
-		void SetPos(const sf::Vector2f& _pos);
+		void SetPos(const sf::Vector2u& _pos);
+		sf::Vector2u GetHeadPos() const;
 
 	public:
 		void SetSpriteScale(unsigned int _width, unsigned int _height,

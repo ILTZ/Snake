@@ -7,9 +7,17 @@
 #include "HUD.h"
 #include "BasePawn.h"
 
+#include "ConfigLoader.h"
 
 class EventHandler
 {
+public:
+	struct HandleResult
+	{
+		Hud::MODE		gameMode;
+		CLoader::LVLs   lvl;
+	};
+
 private:
 	std::shared_ptr<Hud::HUD>			hud;
 	std::shared_ptr<BaseP::BasePawn>	pawn;
@@ -29,7 +37,7 @@ public:
 
 public:
 	std::optional<Hud::MODE> HandleKeyEvent(const std::optional<KB::KeyEvent>&_keyEvent, Hud::MODE _mode);
-	std::optional<Hud::MODE> HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode);
+	std::optional<HandleResult> HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode);
 
 private:
 

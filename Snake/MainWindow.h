@@ -50,6 +50,7 @@ namespace MainWin
 		int DrawLayouts();
 		void DrawHUD();
 		void DrawButtons();
+		void Draw(BaseD& _whatDraw);
 
 	public:
 		bool PollEvents();

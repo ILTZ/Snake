@@ -1,4 +1,7 @@
 #include "App.h"
+#include "LogicField.h"
+
+#include <iostream>
 #include <thread>
 
 App::App() : currentMode{Hud::MODE::MAIN_MENU}
@@ -19,109 +22,91 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 
 	wnd->SetHud(hud);
 
-	handler = new EventHandler();
-	handler->SetHud(hud);
+	handler.SetHud(hud);
 }
 
 int App::Run()
 {
-	/*while (isWork)
-	{
-		prepareBeforeStart();
-		while (!pause)
-		{
-			if (!wnd->PollEvents())
-				return 0;
-
-			wnd->get().clear();
-
-			wnd->DrawLayouts();
-			wnd->DrawHUD();
-			wnd->DrawButtons();
-
-			wnd->get().display();
-
-		}
-	}*/
-
 	std::jthread t([&]() {
 		handleEvents();
 		});
 
-	DrawProcess();
 	
+	while (currentMode != Hud::MODE::EXIT)
+	{
+		wndProcesses();
+		if (currentMode == Hud::MODE::LVL_SELECTED)
+		{
+			auto session = getGameSession();
+			setCurMode(Hud::MODE::GAME_PROCESS);
 
-	return 1;
+			while (currentMode != Hud::MODE::MAIN_MENU && currentMode != Hud::MODE::EXIT)
+			{
+				if (!session->GameFrame(currentMode))
+				{
+					setCurMode(Hud::MODE::EXIT);
+					return 1;
+				}
+			}
+		}
+	}
+
+	return 0;
 }
 
-void App::prepareBeforeStart(CLoader::LVLs _level)
+
+std::unique_ptr<GameSession> App::getGameSession()
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
-	auto level = loader->GetLVL(_level);
+	auto level = loader->GetLVL(lvlSelected);
 
-	auto snake = std::make_shared<Snake::SnakeBody>
-		(loader->GetPathTo(CLoader::ConfigKey::SNAKE_H).c_str(),
-			loader->GetPathTo(CLoader::ConfigKey::SNAKE_T).c_str());
-	snake->SetPos(sf::Vector2f((float)level->GetConfigs().startPosX, 
-		(float)level->GetConfigs().startPosY));
-	snake->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
-		level->GetConfigs().width, level->GetConfigs().height);
+	auto snake = prepareSnake(loader->GetPathTo(CLoader::ConfigKey::SNAKE_H).c_str(),
+		loader->GetPathTo(CLoader::ConfigKey::SNAKE_T).c_str(), level);
+	handler.SetPawn(snake);
 
-	auto gf = createGraphicField(level);
-	gf->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
-		level->GetConfigs().width, level->GetConfigs().height);
+	auto gf = prepareGraphicField(level);
 
-	prepWindow(snake, gf);
+	auto lf = std::make_shared<Logic::LogicField>(level);
+
+	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf);
 }
 
 void App::handleEvents()
 {
 	while (currentMode != Hud::MODE::EXIT)
 	{
-		auto resK = handler->HandleKeyEvent(wnd->GetKeyboardEvent(), currentMode);
-		auto resM = handler->HandleMouseEvent(wnd->GetMouseEvent(), currentMode);
+		auto resK = handler.HandleKeyEvent(wnd->GetKeyboardEvent(), currentMode);
+		auto resM = handler.HandleMouseEvent(wnd->GetMouseEvent(), currentMode);
 
 		if (resK.has_value())
-			currentMode = resK.value();
+			setCurMode(resK.value());
 
 		if (resM.has_value())
-			currentMode = resM.value();
-
-	}
-}
-
-bool App::prepWindow(auto _snake, auto _field)
-{
-	wnd->AddToDrawLayout(_snake, Plans::FIRST_PLAN);
-	wnd->AddToDrawLayout(_field, Plans::SECOND_PLAN);
-
-	return true;
-}
-
-bool App::prepLogicField(auto _snake, auto _field)
-{
-	return false;
-}
-
-void App::DrawProcess()
-{
-	while (currentMode != Hud::MODE::EXIT)
-	{
-		if (!wnd->PollEvents())
 		{
-			currentMode = Hud::MODE::EXIT;
-
-			return;
+			if (resM.value().gameMode == Hud::MODE::LVL_SELECTED) 
+				lvlSelected = resM.value().lvl;
+			setCurMode(resM.value().gameMode);
 		}
-
-		drawFormMode();
 	}
-
-	
 }
 
-void App::drawFormMode()
+
+
+
+void App::wndProcesses()
+{
+	if (!wnd->PollEvents()) // .. if player press <EXIT> key on window
+	{
+		setCurMode(Hud::MODE::EXIT);
+		return;
+	}
+
+	std::lock_guard<std::mutex> lk(defMt);
+	drawMenu();
+}
+
+void App::drawMenu()
 {
 	wnd->get().clear();
 
@@ -131,29 +116,12 @@ void App::drawFormMode()
 		wnd->DrawButtons();
 		break;
 
-	case Hud::MODE::LVL_CHOISE:
-		wnd->DrawButtons();
-		break;
-
-	case Hud::MODE::GAME_PROCESS:
-		wnd->DrawLayouts();
-		wnd->DrawHUD();
-		break;
-
-	case Hud::MODE::GAME_PAUSE:
-		wnd->DrawLayouts();
-		wnd->DrawHUD();
-		wnd->DrawButtons();
-		break;
-
-	case Hud::MODE::GAME_OVER:
-		wnd->DrawLayouts();
-		wnd->DrawHUD();
+	case Hud::MODE::LVL_SELECT:
 		wnd->DrawButtons();
 		break;
 
 	case Hud::MODE::LEADERS:
-
+		wnd->DrawButtons();
 		break;
 
 	case Hud::MODE::EXIT:
@@ -168,18 +136,38 @@ void App::drawFormMode()
 
 }
 
-std::shared_ptr<Snake::SnakeBody> App::createSnake(const char* _pTh, const char* _pTt)
+std::shared_ptr<Snake::SnakeBody> App::prepareSnake(const char* _pTh, const char* _pTt, auto _lvl)
 {
-	return std::make_shared<Snake::SnakeBody>(_pTh, _pTt);
+	auto snake = std::make_shared<Snake::SnakeBody>(_pTh, _pTt);
+
+	snake->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
+		_lvl->GetConfigs().width, _lvl->GetConfigs().height);
+
+	snake->SetPos(sf::Vector2u(_lvl->GetConfigs().startPosX,
+		_lvl->GetConfigs().startPosY));
+
+	return snake;
 }
 
-std::shared_ptr<GraphicField::GraphicField> App::createGraphicField(auto _lvl)
+std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl)
 {
-	return std::make_shared<GraphicField::GraphicField>(_lvl);
+	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
+
+	gf->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
+		_lvl->GetConfigs().width, _lvl->GetConfigs().height);
+
+	return gf;
 }
 
 std::shared_ptr<Hud::HUD> App::createHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
 	const char* _pathToBtnPressed, const char* _pathToFont)
 {
 	return std::make_shared<Hud::HUD>(_pathToHud, _pathToBtnReleased, _pathToBtnPressed, _pathToFont);
+}
+
+void App::setCurMode(Hud::MODE _mode)
+{
+	std::lock_guard<std::mutex> lk(defMt);
+
+	currentMode = _mode;
 }

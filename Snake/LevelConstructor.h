@@ -43,15 +43,15 @@ namespace LVLConstructor
 
 	struct LVLConfigs
 	{
-		int width		= 0;
-		int height		= 0;
+		unsigned int width		= 0;
+		unsigned int height		= 0;
 
 		std::string pathToWall = "";
 		std::string pathToFlor = "";
 		std::string pathToWater = "";
 
-		int startPosX = 0;
-		int startPosY = 0;
+		unsigned int startPosX = 0;
+		unsigned int startPosY = 0;
 
 		AutoConstr wallPos	= AutoConstr::NONE;
 		AutoConstr waterPos = AutoConstr::NONE;

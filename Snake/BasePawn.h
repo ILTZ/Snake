@@ -16,6 +16,7 @@ namespace BaseP
 	{
 	public:
 		virtual void SetDir(BaseP::Direction _dir) = 0;
+		virtual void Move() = 0;
 	};
 }
 

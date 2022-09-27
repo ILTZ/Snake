@@ -24,9 +24,9 @@ GraphicField::GraphicField::GraphicField(std::shared_ptr<LVLConstructor::Level> 
 
 void GraphicField::GraphicField::Draw(sf::RenderWindow& _wnd)
 {
-	for (int i = 0; i < curLvl->GetConfigs().width; ++i)
+	for (unsigned int i = 0; i < curLvl->GetConfigs().width; ++i)
 	{
-		for (int j = 0; j < curLvl->GetConfigs().height; ++j)
+		for (unsigned int j = 0; j < curLvl->GetConfigs().height; ++j)
 		{
 			sprites[curLvl->GetBlock(i, j)].mainSprite->setPosition(
 				sprites[curLvl->GetBlock(i, j)].width * (float)i,

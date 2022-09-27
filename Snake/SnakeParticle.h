@@ -14,8 +14,12 @@ namespace SnakePart
 
 	public:
 		SnakeParticle(const char* _pathToText, float _radius = 20.f);
+		SnakeParticle(SnakeParticle&& _other);
+	public:
 		SnakeParticle(const SnakeParticle&) = delete;
 		SnakeParticle& operator=(const SnakeParticle&) = delete;
+
+
 
 	private:
 

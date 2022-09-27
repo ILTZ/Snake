@@ -27,7 +27,13 @@ namespace Buttons
 		LEADER_BORD	= 4,
 		MAIN_MENU	= 5,
 		LVL			= 6,
+		LVL_1 = 7,
+		LVL_2 = 8,
+		LVL_3 = 9,
+		LVL_4 = 10,
+		LVL_5 = 11,
 	};
+	Btn operator++(Btn& _x);
 
 	class Button
 	{
@@ -57,6 +63,7 @@ namespace Buttons
 		
 	public:
 		Button(Btn _wBtn, const char* _pathToU, const char* _pathToD, const char* _pathToFont, const char* _btnText = nullptr);
+		~Button();
 
 	public:
 		Button(const Button&) = delete;

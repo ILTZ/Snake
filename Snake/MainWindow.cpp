@@ -44,6 +44,11 @@ void MainWin::MainWindow::DrawButtons()
 	}
 }
 
+void MainWin::MainWindow::Draw(BaseD& _whatDraw)
+{
+	_whatDraw.Draw(*wnd.get());
+}
+
 bool MainWindow::PollEvents()
 {
 	sf::Event ev;

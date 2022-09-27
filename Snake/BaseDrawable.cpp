@@ -13,6 +13,7 @@ BaseDrawableCircle::BaseDrawableCircle(const char* _pathToTexture, float _radius
 	baseFigure = new sf::CircleShape(width / 2.f);
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
+	baseFigure->setOrigin(width / 2.f, height / 2.f);
 }
 
 BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _other)
@@ -26,19 +27,32 @@ BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _other)
 	baseFigure = new sf::CircleShape(_rad);
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
+	baseFigure->setOrigin(width / 2.f, height / 2.f);
+}
+
+BDraw::BaseDrawableCircle::BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept
+{
+	if (this != &_other)
+	{
+		baseTexture = _other.baseTexture.Release();
+		baseFigure = _other.baseFigure.Release();
+
+		width = _other.width;
+		height = _other.height;
+	}
 }
 
 BDraw::BaseDrawableCircle::~BaseDrawableCircle()
 {
 }
 
-void BaseDrawableCircle::SetPos(const sf::Vector2f& _newPos)
+void BaseDrawableCircle::SetPos(const sf::Vector2u& _newPos)
 {
 	changeRotation(_newPos);
 	curPos = _newPos;
 }
 
-const sf::Vector2f& BDraw::BaseDrawableCircle::GetPos() const
+const sf::Vector2u& BDraw::BaseDrawableCircle::GetPos() const
 {
 	return curPos;
 }
@@ -46,8 +60,8 @@ const sf::Vector2f& BDraw::BaseDrawableCircle::GetPos() const
 void BDraw::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
 	baseFigure->setPosition(sf::Vector2f(
-		curPos.x * width,
-		curPos.y * height));
+		static_cast<float>(curPos.x) * width - baseFigure->getOrigin().x,
+		static_cast<float>(curPos.y) * height - baseFigure->getOrigin().y));
 
 	_wnd.draw(*baseFigure);
 }
@@ -68,7 +82,7 @@ const sf::Vector2f BDraw::BaseDrawableCircle::GetSize() const
 	return sf::Vector2f(width, height);
 }
 
-void BDraw::BaseDrawableCircle::changeRotation(const sf::Vector2f& _newPos)
+void BDraw::BaseDrawableCircle::changeRotation(const sf::Vector2u& _newPos)
 {
 	if (_newPos.y > curPos.y)
 	{

@@ -1,4 +1,7 @@
 #include "Button.h"
+#include <iostream>
+
+#define LOG(str) {std::cout << str << std::endl;}
 
 using namespace Buttons;
 
@@ -18,6 +21,14 @@ Button::Button(Btn _wBtn, const char* _pathToU, const char* _pathToD, const char
 	else
 		text = new TextConf(_pathToFont, "NONE");
 
+}
+
+Buttons::Button::~Button()
+{
+
+#ifndef NDEBUG
+	LOG("DEstr btn");
+#endif
 }
 
 void Buttons::Button::SwitchCurrentState(BtnMode _mode)
@@ -125,4 +136,9 @@ Buttons::Button::TextConf::TextConf(const char* _pathToFont, const std::string& 
 		btnText.getGlobalBounds().width / 2.f,
 		btnText.getGlobalBounds().height);
 
+}
+
+Btn Buttons::operator++(Btn& _x)
+{
+	return _x = static_cast<Btn>(std::underlying_type<Btn>::type(_x) + 1);
 }

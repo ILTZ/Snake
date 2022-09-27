@@ -36,7 +36,7 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 
 void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height)
 {
-	std::lock_guard<std::mutex> lk(defMutex);
+	
 
 	if (hud->getSize().x > _width || hud->getSize().y > _height)
 	{
@@ -54,6 +54,7 @@ void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height)
 				static_cast<float>(hud->getSize().y);
 		}
 
+		std::lock_guard<std::mutex> lk(defMutex);
 		hudSprite->setScale(xFactor, yFactor);
 		for (auto& el : btns)
 		{
@@ -63,17 +64,15 @@ void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height)
 
 }
 
-std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> Hud::HUD::CheckButtons(float _x, float _y)
+std::optional <Buttons::Btn> Hud::HUD::CheckButtons(float _x, float _y)
 {
-	std::lock_guard<std::mutex> lk(defMutex);
-
-	std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> temp;
+	std::optional <Buttons::Btn> temp;
 
 	for (int i = 0; i < btns.size(); ++i)
 	{
 		if (btns[i]->GetTouch(_x, _y))
 		{
-			temp = std::make_pair(btns[i]->GetBtnDest(), btns[i]->GetBtnMode());
+			temp = btns[i]->GetBtnDest();
 		}
 	}
 
@@ -82,8 +81,6 @@ std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> Hud::HUD::CheckButtons
 
 void Hud::HUD::RealeseButtons()
 {
-	std::lock_guard<std::mutex> lk(defMutex);
-
 	for (auto& el : btns)
 	{
 		el->SwitchCurrentState(Buttons::BtnMode::RELEASED);
@@ -105,43 +102,64 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 	switch (_mode)
 	{
 	case Hud::MODE::MAIN_MENU:
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Start"));
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Leaderbord"));
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Exit"));
-		break;
+			{
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Start"));
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Leaderbord"));
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Exit"));
+			}
+			break;
 
-	case Hud::MODE::LVL_CHOISE:
-		for (int i = 0; i < _lvlCount; ++i)
-		{
-			btns.emplace_back(new Buttons::Button(Buttons::Btn::LVL, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-				pathToFont.c_str(),
-				(std::string("LVL_") + std::to_string(i + 1)).c_str()
-				));
-		}
-		break;
+	case Hud::MODE::LVL_SELECT:
+			{
+				Buttons::Btn tempB = Buttons::Btn::LVL_1;
+				for (int i = 0; i < _lvlCount; ++i)
+				{
+					btns.emplace_back(new Buttons::Button(tempB, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+						pathToFont.c_str(),
+						(std::string("LVL_") + std::to_string(i + 1)).c_str()
+					));
+					++tempB;
+				}
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Back"));
+			}	
+			break;
 
 	case Hud::MODE::GAME_PROCESS:
-		
-		break;
+			{
+
+			}
+			break;
+
+	case Hud::MODE::LEADERS:
+			{
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Back"));
+			}
+			break;
 
 	case Hud::MODE::GAME_PAUSE:
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Continue"));
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Main Menu"));
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Exit"));
-		break;
+			{
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Continue"));
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Main Menu"));
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Exit"));
+			}	
+			break;
 
 	case Hud::MODE::GAME_OVER:
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Main Menu"));
-		btns.emplace_back(new Buttons::Button(Buttons::Btn::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-			pathToFont.c_str(), "Exit"));
-		break;
+			{
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Main Menu"));
+				btns.emplace_back(new Buttons::Button(Buttons::Btn::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+					pathToFont.c_str(), "Exit"));
+			}	
+			break;
 
 	default:
 		break;

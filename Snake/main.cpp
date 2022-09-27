@@ -21,7 +21,4 @@ int main()
 		std::cout << _ex.what() << std::endl;
 	}
 
-
-
-	return 0;
 }

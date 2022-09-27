@@ -17,12 +17,13 @@ namespace Hud
 	enum class MODE
 	{
 		MAIN_MENU		= 0,
-		LVL_CHOISE		= 1,
-		GAME_PROCESS	= 2,
-		GAME_PAUSE		= 3,
-		GAME_OVER		= 4,
-		LEADERS			= 5,
-		EXIT			= 6,
+		LVL_SELECT		= 1,
+		LVL_SELECTED	= 2,
+		GAME_PROCESS	= 3,
+		GAME_PAUSE		= 4,
+		GAME_OVER		= 5,
+		LEADERS			= 6,
+		EXIT			= 7,
 
 	};
 
@@ -48,8 +49,8 @@ namespace Hud
 		HUD(const char* _pathToHud, const char* _pathToBtnReleased, const char* _pathToBtnPressed, const char* _pathToFont);
 
 	public:
-		HUD(const HUD&) = delete;
-		HUD& operator=(const HUD&) = delete;
+		HUD(const HUD&)				= delete;
+		HUD& operator=(const HUD&)	= delete;
 
 	public:
 		void DrawHUD(sf::RenderWindow& _wnd);
@@ -57,7 +58,7 @@ namespace Hud
 		void SetSpriteScale(unsigned int _width, unsigned int _height);
 
 	public:
-		std::optional <std::pair<Buttons::Btn, Buttons::BtnMode>> CheckButtons(float _x, float _y);
+		std::optional <Buttons::Btn> CheckButtons(float _x, float _y);
 		void RealeseButtons();
 
 	public:

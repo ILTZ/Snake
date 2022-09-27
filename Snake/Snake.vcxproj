@@ -146,15 +146,18 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GraphicField.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
+    <ClCompile Include="LogicField.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="SnakeBody.cpp" />
     <ClCompile Include="SnakeParticle.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -165,15 +168,18 @@
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="GameSession.h" />
     <ClInclude Include="GraphicField.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LevelConstructor.h" />
+    <ClInclude Include="LogicField.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="SnakeBody.h" />
     <ClInclude Include="SnakeParticle.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

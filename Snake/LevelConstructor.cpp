@@ -7,7 +7,7 @@ using namespace LVLConstructor;
 LVLConstructor::Level::Level(const LVLConfigs& _configs) :
 	configs{_configs}
 {
-	for (int i = 0; i < configs.width; ++i)
+	for (unsigned int i = 0; i < configs.width; ++i)
 	{
 		lvlMAP.push_back(std::vector<LVLblock>(configs.height));
 	}
@@ -43,9 +43,9 @@ const lvlmap& LVLConstructor::Level::GetLvlMap() const
 
 void LVLConstructor::Level::fillFlor(lvlmap& _vec)
 {
-	for (int i = 0; i < configs.width; ++i)
+	for (unsigned int i = 0; i < configs.width; ++i)
 	{
-		for (int j = 0; j < configs.height; ++j)
+		for (unsigned int j = 0; j < configs.height; ++j)
 		{
 			_vec[i][j] = LVLblock::FLOR;
 		}
@@ -57,13 +57,13 @@ void LVLConstructor::Level::fillWall(lvlmap& _vec, AutoConstr _wallPos)
 	if (_wallPos == AutoConstr::NONE)
 		return;
 
-	std::function<void(LVLblock& _b, int _i, int _j)> fillF;
+	std::function<void(LVLblock& _b, unsigned int _i, unsigned int _j)> fillF;
 
 
 	switch (_wallPos)
 	{
 	case LVLConstructor::AutoConstr::EDGES:
-		fillF = [&](LVLblock& _b, int _i, int _j)
+		fillF = [&](LVLblock& _b, unsigned int _i, unsigned int _j)
 		{
 			{
 				if ((_i == 0 || _i == configs.width - 1)
@@ -77,7 +77,7 @@ void LVLConstructor::Level::fillWall(lvlmap& _vec, AutoConstr _wallPos)
 		break;
 
 	case LVLConstructor::AutoConstr::CORNER:
-		fillF = [&](LVLblock& _b, int _i, int _j)
+		fillF = [&](LVLblock& _b, unsigned int _i, unsigned int _j)
 		{
 			if ((_i < configs.width / 3 || _i >(configs.width / 3 * 2))
 				&&
@@ -89,7 +89,7 @@ void LVLConstructor::Level::fillWall(lvlmap& _vec, AutoConstr _wallPos)
 		break;
 
 	case LVLConstructor::AutoConstr::DISCRET:
-		fillF = [&](LVLblock& _b, int _i, int _j)
+		fillF = [&](LVLblock& _b, unsigned int _i, unsigned int _j)
 		{
 			
 		};
@@ -100,9 +100,9 @@ void LVLConstructor::Level::fillWall(lvlmap& _vec, AutoConstr _wallPos)
 	}
 
 
-	for (int i = 0; i < configs.width; ++i)
+	for (unsigned int i = 0; i < configs.width; ++i)
 	{
-		for (int j = 0; j < configs.height; ++j)
+		for (unsigned int j = 0; j < configs.height; ++j)
 		{
 			fillF(_vec[i][j], i, j);
 		}
@@ -114,12 +114,12 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 	if (_waterPos == AutoConstr::NONE)
 		return;
 
-	std::function<void(lvlmap& _b, int _i, int _j)> fillW;
+	std::function<void(lvlmap& _b, unsigned int _i, unsigned int _j)> fillW;
 
 	switch (_waterPos)
 	{
 	case LVLConstructor::AutoConstr::EDGES:
-		fillW = [&](lvlmap& _b, int _i, int _j)
+		fillW = [&](lvlmap& _b, unsigned int _i, unsigned int _j)
 		{
 			if (_b[_i][_j] != LVLblock::WALL)
 			{
@@ -143,7 +143,7 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 		break;
 
 	case LVLConstructor::AutoConstr::CORNER:
-		fillW = [&](lvlmap& _b, int _i, int _j)
+		fillW = [&](lvlmap& _b, unsigned int _i, unsigned int _j)
 		{
 			if (_b[_i][_j] != LVLblock::WALL)
 			{
@@ -160,14 +160,14 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 					&&
 					(_j < configs.height / 3 || _j >(configs.height / 3 * 2)))
 				{
-					_b[_i + 1][_j + 1] = LVLblock::WATER;
+					//_b[_i + 1][_j + 1] = LVLblock::WATER;
 				}
 			}
 		};
 		break;
 
 	case LVLConstructor::AutoConstr::DISCRET:
-		fillW = [&](lvlmap& _b, int _i, int _j)
+		fillW = [&](lvlmap& _b, unsigned int _i, unsigned int _j)
 		{
 
 		};
@@ -177,9 +177,9 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 		break;
 	}
 
-	for (int i = 0; i < configs.width; ++i)
+	for (unsigned int i = 0; i < configs.width; ++i)
 	{
-		for (int j = 0; j < configs.height; ++j)
+		for (unsigned int j = 0; j < configs.height; ++j)
 		{
 			fillW(_vec, i, j);
 		}

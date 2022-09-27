@@ -12,7 +12,7 @@ void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd)
 {
 	for (auto& el : body)
 	{
-		el->Draw(_wnd);
+		el.Draw(_wnd);
 	}
 }
 
@@ -24,15 +24,15 @@ void Snake::SnakeBody::Move()
 	// From end to start of a body..
 	for (size_t i = body.size() - 1; i > 0; --i)
 	{
-		body[i]->SetPos(sf::Vector2f(
-			body[i - 1]->GetPos().x,
-			body[i - 1]->GetPos().y
+		body[i].SetPos(sf::Vector2u(
+			body[i - 1].GetPos().x,
+			body[i - 1].GetPos().y
 		));
 	}
 
-	body[0]->SetPos(sf::Vector2f(
-		body[0]->GetPos().x + static_cast<float>(xDir),
-		body[0]->GetPos().y + static_cast<float>(yDir)
+	body[0].SetPos(sf::Vector2u(
+		body[0].GetPos().x + static_cast<unsigned int>(xDir),
+		body[0].GetPos().y + static_cast<unsigned int>(yDir)
 	));
 }
 
@@ -46,7 +46,7 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 	case BaseP::Direction::TOP:
 		if (yDir != -1 && yDir != 1)
 		{
-			yDir = 1;
+			yDir = -1;
 			xDir = 0;
 		}
 		break;
@@ -54,7 +54,7 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 	case BaseP::Direction::DOWN:
 		if (yDir != 1 && yDir != -1)
 		{
-			yDir = -1;
+			yDir = 1;
 			xDir = 0;
 		}
 		break;
@@ -85,15 +85,20 @@ void Snake::SnakeBody::GrowUp()
 	addTorsoSection(torsoTPath.c_str());
 }
 
-void Snake::SnakeBody::SetPos(const sf::Vector2f& _pos)
+void Snake::SnakeBody::SetPos(const sf::Vector2u& _pos)
 {
-	for (int i = 0; i < body.size(); ++i)
+	for (unsigned int i = 0; i < body.size(); ++i)
 	{
-		body[i]->SetPos(sf::Vector2f(
+		body[i].SetPos(sf::Vector2u(
 			_pos.x,
-			_pos.y + static_cast<float>(i)
+			_pos.y + i
 		));
 	}
+}
+
+sf::Vector2u Snake::SnakeBody::GetHeadPos() const
+{
+	return sf::Vector2u(body[0].GetPos());
 }
 
 void Snake::SnakeBody::SetSpriteScale(unsigned int _width, unsigned int _height,
@@ -101,27 +106,27 @@ void Snake::SnakeBody::SetSpriteScale(unsigned int _width, unsigned int _height,
 {
 	for (auto& el : body)
 	{
-		auto size = el->GetSize();
+		auto size = el.GetSize();
 		const unsigned int half = (_width / 4);
 
 		float deltaWidth	= 1.f;
 		float deltaHeight	= 1.f;
 
-		if (((el->GetSize().x * _lwlW) - static_cast<float>(_width)) < half)
+		if (((el.GetSize().x * _lwlW) - static_cast<float>(_width)) < half)
 		{
 			deltaWidth = (static_cast<float>(_width) - half) /
-				(el->GetSize().x * _lwlW);
+				(el.GetSize().x * _lwlW);
 		}
-		if (el->GetSize().y * _lwlH > _height)
+		if (el.GetSize().y * _lwlH > _height)
 		{
-			deltaHeight = _height / (el->GetSize().y * _lwlH);
+			deltaHeight = _height / (el.GetSize().y * _lwlH);
 		}
 
-		el->SetSpriteScale(sf::Vector2f(deltaWidth, deltaHeight));
-		el->SetNewSize(sf::Vector2f
+		el.SetSpriteScale(sf::Vector2f(deltaWidth, deltaHeight));
+		el.SetNewSize(sf::Vector2f
 		(
-			el->GetSize().x * deltaWidth,
-			el->GetSize().y * deltaHeight
+			el.GetSize().x * deltaWidth,
+			el.GetSize().y * deltaHeight
 		));	
 	}
 
@@ -141,13 +146,13 @@ void Snake::SnakeBody::fillBody(int _count, const char* _pathToHead, const char*
 	{
 		if (i < 1)
 		{
-			body.emplace_back(new SnakePart::SnakeParticle(_pathToHead));
-			body.back()->SetPos(sf::Vector2f());
+			body.emplace_back(SnakePart::SnakeParticle(_pathToHead));
+			body.back().SetPos(sf::Vector2u());
 			continue;
 		}
 
-		body.emplace_back(new SnakePart::SnakeParticle(_pathToTorso));
-		body.back()->SetPos(sf::Vector2f());
+		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
+		body.back().SetPos(sf::Vector2u());
 	}
 
 }
@@ -156,9 +161,9 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 {
 	if (_pathToTorso)
 	{
-		body.emplace_back(new SnakePart::SnakeParticle(_pathToTorso));
-		body.back()->SetPos(sf::Vector2f(
-			body[body.size() - 1]->GetPos().x, 
-			body[body.size() - 1]->GetPos().y));
+		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
+		body.back().SetPos(sf::Vector2u(
+			body[body.size() - 1].GetPos().x, 
+			body[body.size() - 1].GetPos().y));
 	}
 }

@@ -6,8 +6,10 @@
 #include "GraphicField.h"
 #include "HUD.h"
 #include "EventHandler.h"
-
+#include "Timer.h"
 #include "ConfigLoader.h"
+#include "GameSession.h"
+
 
 using namespace MainWin;
 
@@ -15,10 +17,17 @@ class App final
 {
 private:
 	std::unique_ptr<MainWindow> wnd;
-	SmartPointer::SmartPointer<EventHandler> handler;
+	EventHandler handler;
 
 private:
+	Timer time;
+	Hud::MODE currentMode;
+	
+private:
+	CLoader::LVLs lvlSelected;
 
+private:
+	std::mutex defMt;
 
 public:
 	App();
@@ -31,30 +40,26 @@ public:
 	int Run();
 
 private:
-	bool isWork		= true;
-	bool pause		= false;
+	// 1 sec
+	float stepTime = 1000.f;
 
 private:
-	Hud::MODE currentMode;
-
-private:
-	void prepareBeforeStart(CLoader::LVLs _level = CLoader::LVLs::LVL_1);
+	std::unique_ptr<GameSession> getGameSession();
 
 private:
 	void handleEvents();
 
 private:
-	bool prepWindow(auto _snake, auto _field);
-	bool prepLogicField(auto _snake, auto _field);
+	void wndProcesses();
+	void drawMenu();
 
-	void DrawProcess();
-	void drawFormMode();
-
-	std::shared_ptr<Snake::SnakeBody> createSnake(const char* _pTh, const char* _pTt);
-	std::shared_ptr<GraphicField::GraphicField> createGraphicField(auto _lvl);
+	std::shared_ptr<Snake::SnakeBody> prepareSnake(const char* _pTh, const char* _pTt, auto _lvl);
+	std::shared_ptr<GraphicField::GraphicField> prepareGraphicField(auto _lvl);
 	std::shared_ptr<Hud::HUD> createHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
 		const char* _pathToBtnPressed, const char* _pathToFont);
 
+private:
+	void setCurMode(Hud::MODE _mode);
 };
 
 
