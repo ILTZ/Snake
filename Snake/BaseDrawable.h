@@ -8,9 +8,9 @@
 
 #include "SmartPointer.h"
 
-namespace BDraw
+namespace BaseDrawable
 {
-	class BaseDrawableCircle
+	class BaseDrawable
 	{
 	protected:
 		SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
@@ -18,14 +18,15 @@ namespace BDraw
 
 		sf::Vector2u curPos;
 
-		float width		= 0.f;
-		float height	= 0.f;
+		float width = 0.f;
+		float height = 0.f;
 
 	public:
-		BaseDrawableCircle(const char* _pathToTexture, float _radius = 20.f);
-		BaseDrawableCircle(const BaseDrawableCircle& _other);
-		BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept;
-		~BaseDrawableCircle();
+		BaseDrawable(const char* _pathToTexture, float _radius = 20.f);
+		BaseDrawable(const BaseDrawable& _other);
+		BaseDrawable& operator=(const BaseDrawable& _other);
+		BaseDrawable(BaseDrawable&& _other) noexcept;
+		virtual ~BaseDrawable();
 
 	public:
 		void SetPos(const sf::Vector2u& _newPos);
@@ -39,7 +40,7 @@ namespace BDraw
 		void changeRotation(const sf::Vector2u& _newPos);
 	};
 
-}
+};
 
 #endif
 

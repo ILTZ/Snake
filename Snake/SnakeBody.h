@@ -3,58 +3,68 @@
 
 #include <vector>
 
+#include "BasePlayerControlObj.h"
 #include "SnakeParticle.h"
-#include "BaseD.h"
-#include "BasePawn.h"
+
 
 namespace Snake
 {
 
-	class SnakeBody : public BaseD, public BaseP::BasePawn
+	class SnakeBody : public Base::BasePlayerControlObj
 	{
 	private:
-		std::string headTPath;
-		std::string torsoTPath;
+		const std::string headTPath;
+		const std::string torsoTPath;
 
 	private:
-		int xDir = 0;
-		int yDir = 0;
+		int		xDir		= 0;
+		int		yDir		= 0;
+		bool	firstMove	= false;
 
 	private:
-		bool firstMove = false;
-		const int snakeStartSize = 4;
+		std::vector<SnakePart::SnakeParticle>	body;
+		const unsigned int						snakeStartSize	= 4;
+
+	public:
+		SnakeBody(
+			const char* _pathToHead, 
+			const char* _pathToBody);
+
+	public:
+		SnakeBody(const SnakeBody&)					= delete;
+		SnakeBody& operator=(const SnakeBody&)		= delete;
+
+		// <Base::BasePlayerControlObj> funcs {
+	public: 
+		//<BaseD> funcs {
+		void Draw(sf::RenderWindow& _wnd)	override;
+		void SetSpriteScale(
+			unsigned int _width, 
+			unsigned int _height,
+			unsigned int _lwlW, 
+			unsigned int _lwlH)				override;//<BaseD> funcs }
+		
+		//<BasePawn> funcs {
+		void Move()								override;
+		void SetDir(BaseP::Direction _dir)		override;
+		void DoSomeSpecifyActions()				override;
+		void SetPos(const sf::Vector2u& _pos)	override;
+		sf::Vector2u const GetPos() const		override;//<BasePawn> funcs }
+		// <Base::BasePlayerControlObj> funcs }
+
+	public:
+		void				GrowUp();
+		const sf::Vector2u	GetHeadPos()						const;
+		const sf::Vector2u	GetPosOnIndex(unsigned int _pos)	const;
+		const size_t		GetCurLen()							const;
 
 	private:
-		std::vector<SnakePart::SnakeParticle> body;
-
-	private:
-		int curLength = 0;
-
-	public:
-		SnakeBody(const char* _pathToHead, const char* _pathToBody);
-
-	public:
-		SnakeBody(const SnakeBody&) = delete;
-		SnakeBody& operator=(const SnakeBody&) = delete;
-
-	public:
-		void Draw(sf::RenderWindow& _wnd) override;
-
-	public:
-		void Move() override;
-		void SetDir(BaseP::Direction _dir) override;
-		void GrowUp();
-		void SetPos(const sf::Vector2u& _pos);
-		sf::Vector2u GetHeadPos() const;
-
-	public:
-		void SetSpriteScale(unsigned int _width, unsigned int _height,
-			unsigned int _lwlW, unsigned int _lwlH) override;
-
-	private:
-		void clearBody();
-		void fillBody(int _count, const char* _pathToHead, const char* _pathToTorso);
 		void addTorsoSection(const char* _pathToTorso);
+		void clearBody();
+		void fillBody(
+			int _count, 
+			const char* _pathToHead, 
+			const char* _pathToTorso);	
 	};
 }
 

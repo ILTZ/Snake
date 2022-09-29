@@ -6,7 +6,7 @@
 
 namespace SnakePart
 {
-	class SnakeParticle : public BDraw::BaseDrawableCircle
+	class SnakeParticle : public BaseDrawable::BaseDrawable
 	{
 	private:
 		//const std::string pathToTexture;
@@ -14,10 +14,11 @@ namespace SnakePart
 
 	public:
 		SnakeParticle(const char* _pathToText, float _radius = 20.f);
-		SnakeParticle(SnakeParticle&& _other);
+		SnakeParticle(const SnakeParticle& _other);
+		SnakeParticle(SnakeParticle&& _other)				noexcept;
+
 	public:
-		SnakeParticle(const SnakeParticle&) = delete;
-		SnakeParticle& operator=(const SnakeParticle&) = delete;
+		SnakeParticle& operator=(const SnakeParticle& _other);
 
 
 

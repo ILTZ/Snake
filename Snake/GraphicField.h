@@ -30,9 +30,6 @@ namespace GraphicField
 		std::unordered_map<LVLConstructor::LVLblock, Sprite> sprites;
 
 	private:
-
-
-	private:
 		std::shared_ptr<LVLConstructor::Level> curLvl;
 
 	public:
@@ -44,12 +41,12 @@ namespace GraphicField
 
 	public:
 		void Draw(sf::RenderWindow& _wnd) override;
-
-	public:
 		void SetSpriteScale(unsigned int _width, unsigned int _height,
 			unsigned int _lwlW, unsigned int _lwlH) override;
 
 	private:
+		// no need
+		virtual void SetPos(const sf::Vector2u& _pos) override {};
 
 	};
 }

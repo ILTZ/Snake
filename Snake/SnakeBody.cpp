@@ -2,8 +2,11 @@
 
 using namespace Snake;
 
-Snake::SnakeBody::SnakeBody(const char* _pathToHead, const char* _pathToBody) :
-	headTPath{_pathToHead}, torsoTPath{_pathToBody}
+Snake::SnakeBody::SnakeBody(
+	const char* _pathToHead, 
+	const char* _pathToBody) :
+	headTPath{_pathToHead}, 
+	torsoTPath{_pathToBody}
 {
 	fillBody(snakeStartSize, headTPath.c_str(), torsoTPath.c_str());
 }
@@ -34,13 +37,18 @@ void Snake::SnakeBody::Move()
 		body[0].GetPos().x + static_cast<unsigned int>(xDir),
 		body[0].GetPos().y + static_cast<unsigned int>(yDir)
 	));
+
 }
 
 void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 {
 	if (!firstMove)
-		firstMove = true;
+	{
+		if (_dir == BaseP::Direction::DOWN)
+			return;
 
+		firstMove = true;
+	}
 	switch (_dir)
 	{
 	case BaseP::Direction::TOP:
@@ -80,6 +88,11 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 	}
 }
 
+void Snake::SnakeBody::DoSomeSpecifyActions()
+{
+	this->GrowUp();
+}
+
 void Snake::SnakeBody::GrowUp()
 {
 	addTorsoSection(torsoTPath.c_str());
@@ -96,13 +109,31 @@ void Snake::SnakeBody::SetPos(const sf::Vector2u& _pos)
 	}
 }
 
-sf::Vector2u Snake::SnakeBody::GetHeadPos() const
+sf::Vector2u const Snake::SnakeBody::GetPos() const
+{
+	return this->GetHeadPos();
+}
+
+const sf::Vector2u Snake::SnakeBody::GetHeadPos() const
 {
 	return sf::Vector2u(body[0].GetPos());
 }
 
-void Snake::SnakeBody::SetSpriteScale(unsigned int _width, unsigned int _height,
-	unsigned int _lwlW, unsigned int _lwlH)
+const sf::Vector2u Snake::SnakeBody::GetPosOnIndex(unsigned int _pos) const
+{
+	return body[_pos].GetPos();
+}
+
+const size_t Snake::SnakeBody::GetCurLen() const
+{
+	return body.size();
+}
+
+void Snake::SnakeBody::SetSpriteScale(
+	unsigned int _width, 
+	unsigned int _height,
+	unsigned int _lwlW, 
+	unsigned int _lwlH)
 {
 	for (auto& el : body)
 	{
@@ -138,7 +169,10 @@ void SnakeBody::clearBody()
 		body.clear();
 }
 
-void Snake::SnakeBody::fillBody(int _count, const char* _pathToHead, const char* _pathToTorso)
+void Snake::SnakeBody::fillBody(
+	int _count, 
+	const char* _pathToHead, 
+	const char* _pathToTorso)
 {
 	body.clear();
 
@@ -161,9 +195,11 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 {
 	if (_pathToTorso)
 	{
-		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
-		body.back().SetPos(sf::Vector2u(
+		sf::Vector2u pos{ 
 			body[body.size() - 1].GetPos().x, 
-			body[body.size() - 1].GetPos().y));
+			body[body.size() - 1].GetPos().y };
+
+		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
+		body.back().SetPos(pos);
 	}
 }

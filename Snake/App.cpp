@@ -1,4 +1,5 @@
 #include "App.h"
+
 #include "LogicField.h"
 
 #include <iostream>
@@ -12,13 +13,20 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 	auto configs = loader->GetHudConfigs();
 	auto style = sf::Style::Titlebar | sf::Style::Close;
 
-	wnd = std::make_unique<MainWin::MainWindow>
-		(configs.width, configs.height, "Snake2D", style);
+	wnd = std::make_unique<MainWin::MainWindow>(
+		configs.width, 
+		configs.height, 
+		"Snake2D", 
+		style);
 	// Window prop }
 
-	auto hud = createHUD(configs.pathToHud.c_str(), configs.pathToReleaseBtn.c_str(), 
-		configs.pathToPressBtn.c_str(), configs.pathToTextFont.c_str());
-	hud->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y);
+	auto hud = prepareHUD(
+		configs.pathToHud.c_str(), 
+		configs.pathToReleaseBtn.c_str(), 
+		configs.pathToPressBtn.c_str(), 
+		configs.pathToTextFont.c_str(), 
+		wnd->get().getSize().x, 
+		wnd->get().getSize().y);
 
 	wnd->SetHud(hud);
 
@@ -35,7 +43,9 @@ int App::Run()
 	while (currentMode != Hud::MODE::EXIT)
 	{
 		wndProcesses();
-		if (currentMode == Hud::MODE::LVL_SELECTED)
+
+		// <GameSession> life time is start noq {
+		if (currentMode == Hud::MODE::LVL_SELECTED) 
 		{
 			auto session = getGameSession();
 			setCurMode(Hud::MODE::GAME_PROCESS);
@@ -48,10 +58,15 @@ int App::Run()
 				auto mode = session->GameFrame(currentMode);
 
 				// difference between threads(event handler is faster)
-				if (currentMode != Hud::MODE::MAIN_MENU && currentMode != Hud::MODE::EXIT)
+				if (currentMode != Hud::MODE::MAIN_MENU &&
+					currentMode != Hud::MODE::EXIT &&
+					currentMode != Hud::MODE::GAME_PAUSE)
+				{
 					setCurMode(mode);
+				}
+
 			}
-		}
+		}// <GameSession> life time is end }
 	}
 
 	return 0;
@@ -61,18 +76,24 @@ int App::Run()
 std::unique_ptr<GameSession> App::getGameSession()
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	auto sp = loader->GetSnakeProp();
 
 	auto level = loader->GetLVL(lvlSelected);
 
-	auto snake = prepareSnake(loader->GetPathTo(CLoader::ConfigKey::SNAKE_H).c_str(),
-		loader->GetPathTo(CLoader::ConfigKey::SNAKE_T).c_str(), level);
+	auto snake = prepareSnake(
+		sp.pathToHead.c_str(),
+		sp.pathToTorso.c_str(), 
+		level);
+
 	handler.SetPawn(snake);
 
 	auto gf = prepareGraphicField(level);
 
 	auto lf = std::make_shared<Logic::LogicField>(level);
 
-	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf);
+	auto apple = prepareApple(sp.pathToAple.c_str(), level);
+
+	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
 }
 
 void App::handleEvents()
@@ -143,10 +164,14 @@ std::shared_ptr<Snake::SnakeBody> App::prepareSnake(const char* _pTh, const char
 {
 	auto snake = std::make_shared<Snake::SnakeBody>(_pTh, _pTt);
 
-	snake->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
-		_lvl->GetConfigs().width, _lvl->GetConfigs().height);
+	snake->SetSpriteScale(
+		wnd->get().getSize().x, 
+		wnd->get().getSize().y,
+		_lvl->GetConfigs().width, 
+		_lvl->GetConfigs().height);
 
-	snake->SetPos(sf::Vector2u(_lvl->GetConfigs().startPosX,
+	snake->SetPos(sf::Vector2u(
+		_lvl->GetConfigs().startPosX,
 		_lvl->GetConfigs().startPosY));
 
 	return snake;
@@ -156,16 +181,40 @@ std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl)
 {
 	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
 
-	gf->SetSpriteScale(wnd->get().getSize().x, wnd->get().getSize().y,
-		_lvl->GetConfigs().width, _lvl->GetConfigs().height);
+	gf->SetSpriteScale(
+		wnd->get().getSize().x,
+		wnd->get().getSize().y,
+		_lvl->GetConfigs().width, 
+		_lvl->GetConfigs().height);
 
 	return gf;
 }
 
-std::shared_ptr<Hud::HUD> App::createHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
-	const char* _pathToBtnPressed, const char* _pathToFont)
+std::shared_ptr<Hud::HUD> App::prepareHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
+	const char* _pathToBtnPressed, const char* _pathToFont, unsigned int _width, unsigned int _height)
 {
-	return std::make_shared<Hud::HUD>(_pathToHud, _pathToBtnReleased, _pathToBtnPressed, _pathToFont);
+	auto hud = std::make_shared<Hud::HUD>(
+		_pathToHud, 
+		_pathToBtnReleased, 
+		_pathToBtnPressed, 
+		_pathToFont);
+
+	hud->SetSpriteScale(_width, _height);
+
+	return hud;
+}
+
+std::shared_ptr<Apple> App::prepareApple(const char* _pTa, auto _lvl)
+{
+	auto apple = std::make_shared<Apple>(_pTa);
+	
+	apple->SetSpriteScale(
+		wnd->get().getSize().x,
+		wnd->get().getSize().y,
+		_lvl->GetConfigs().width,
+		_lvl->GetConfigs().height);
+
+	return apple;
 }
 
 void App::setCurMode(Hud::MODE _mode)

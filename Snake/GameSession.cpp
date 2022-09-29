@@ -1,13 +1,26 @@
 #include "GameSession.h"
 
-GameSession::GameSession(MainWin::MainWindow* _wnd, 
-	std::shared_ptr<Snake::SnakeBody> _pawn,
-	std::shared_ptr<GraphicField::GraphicField> _gp,
-	std::shared_ptr<Logic::LogicField> _lField) : 
-	wnd{_wnd}, snake{_pawn}, gp{_gp}, logicField{_lField},
-	stepTime{10.f}, curPoints{0}, speedMyltiply{1.f}
-{
+#include "Random.h"
+#include <iostream>
 
+GameSession::GameSession(
+	MainWin::MainWindow*						_wnd, 
+	std::shared_ptr<Base::BasePlayerControlObj> _pawn,
+	std::shared_ptr<BaseD>						_gp,
+	std::shared_ptr<Logic::LogicField>			_lField,
+	std::shared_ptr<BaseD> _apple
+	) :
+	wnd{_wnd},
+	snake{_pawn}, 
+	gp{_gp}, 
+	logicField{_lField}, 
+	apple{_apple},
+	stepTime{50.f}, 
+	curPoints{0}, 
+	speedMyltiply{1.f}, 
+	appleOnBoard{false}
+{
+	
 }
 
 GameSession::~GameSession()
@@ -18,9 +31,11 @@ GameSession::~GameSession()
 
 Hud::MODE GameSession::GameFrame(Hud::MODE _curMode)
 {
-	// if player press <exit> key 
+	// if player press <exit> key on window
 	if (!wnd->PollEvents())
 		return Hud::MODE::EXIT;
+
+	spawnApple(appleOnBoard);
 
 	wndDraw(_curMode);
 
@@ -46,18 +61,40 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 {
 	if (_curMode != Hud::MODE::GAME_OVER)
 	{
-		if (!logicField->checkOnEmpty(snake->GetHeadPos()))
+		if (!logicField->checkOnEmpty(snake->GetPos()))
 		{
 			_curMode = Hud::MODE::GAME_OVER;
 			wnd->GetHUD().prepButtons(Hud::MODE::GAME_OVER);
 		}
-		else if (logicField->CheckSnakeGowUp(snake->GetHeadPos()))
+		else if (logicField->CheckSnakeGowUp(snake->GetPos()))
 		{
-			snake->GrowUp();
+			snake->DoSomeSpecifyActions();
+			appleOnBoard = false;
 			++curPoints;
 		}
 	}
 }
+
+void GameSession::spawnApple(bool _appleOnBoard)
+{
+	if (_appleOnBoard)
+		return;
+
+	RND::RandomINT rnd;
+	unsigned int nul = 0;
+	unsigned int x = rnd.GetValue(nul, logicField->GetLVLW());
+	unsigned int y = rnd.GetValue(nul, logicField->GetLVLH());
+
+	while (!logicField->SetApple(sf::Vector2u(x, y)))
+	{
+		x = rnd.GetValue(nul, logicField->GetLVLW());
+		y = rnd.GetValue(nul, logicField->GetLVLH());
+	}
+	
+	apple->SetPos(sf::Vector2u(x, y));
+	appleOnBoard = true;
+}
+
 
 void GameSession::wndDraw(Hud::MODE _curMode)
 {
@@ -68,12 +105,14 @@ void GameSession::wndDraw(Hud::MODE _curMode)
 	case Hud::MODE::GAME_PROCESS:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
+		wnd->Draw(*apple);
 		wnd->DrawHUD();
 		break;
 
 	case Hud::MODE::GAME_PAUSE:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
+		wnd->Draw(*apple);
 		wnd->DrawHUD();
 		wnd->DrawButtons();
 		break;
@@ -81,6 +120,7 @@ void GameSession::wndDraw(Hud::MODE _curMode)
 	case Hud::MODE::GAME_OVER:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
+		wnd->Draw(*apple);
 		wnd->DrawHUD();
 		wnd->DrawButtons();
 		break;

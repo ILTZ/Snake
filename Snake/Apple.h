@@ -2,8 +2,9 @@
 #define APPLE_H
 
 #include "BaseDrawable.h"
+#include "BaseD.h"
 
-class Apple : public BDraw::BaseDrawableCircle
+class Apple : public BaseDrawable::BaseDrawable, public BaseD
 {
 private:
 
@@ -14,6 +15,12 @@ public:
 public:
 	Apple(const Apple&)				= delete;
 	Apple& operator=(const Apple&)	= delete;
+
+public:
+	virtual void Draw(sf::RenderWindow& _wnd) override;
+	virtual void SetSpriteScale(unsigned int _width, unsigned int _height,
+		unsigned int _lwlW, unsigned int _lwlH) override{};
+	virtual void SetPos(const sf::Vector2u& _pos) override;
 
 private:
 

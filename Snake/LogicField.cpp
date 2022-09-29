@@ -6,15 +6,31 @@ bool Logic::LogicField::SetApple(const sf::Vector2u& _applePos)
 {
 	if (checkFieldLimits(_applePos))
 	{
-		applePos = _applePos;
+		if (curlvl->GetBlock(_applePos.x, _applePos.y) == LVLConstructor::LVLblock::FLOR)
+		{
+			applePos = _applePos;
 
-		return true;
+			return true;
+		}
 	}
 
 	return false;
 }
 
-Logic::LogicField::LogicField(std::shared_ptr<LVLConstructor::Level> _lvl) : curlvl{_lvl}
+const unsigned int Logic::LogicField::GetLVLW() const
+{
+	return lvlW;
+}
+
+const unsigned int Logic::LogicField::GetLVLH() const
+{
+	return lvlH;
+}
+
+Logic::LogicField::LogicField(std::shared_ptr<LVLConstructor::Level> _lvl) : 
+	curlvl{_lvl}, 
+	lvlW{_lvl->GetConfigs().width},
+	lvlH{_lvl->GetConfigs().height}
 {
 
 }
@@ -46,5 +62,10 @@ bool Logic::LogicField::checkFieldLimits(const sf::Vector2u& _pos)
 		return true;
 	}
 
+	return false;
+}
+
+bool Logic::LogicField::checkSnakeCollisions(Snake::SnakeBody* _snake)
+{
 	return false;
 }

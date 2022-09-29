@@ -9,7 +9,7 @@
 #include "Timer.h"
 #include "ConfigLoader.h"
 #include "GameSession.h"
-
+#include "Apple.h"
 
 using namespace MainWin;
 
@@ -55,8 +55,9 @@ private:
 
 	std::shared_ptr<Snake::SnakeBody> prepareSnake(const char* _pTh, const char* _pTt, auto _lvl);
 	std::shared_ptr<GraphicField::GraphicField> prepareGraphicField(auto _lvl);
-	std::shared_ptr<Hud::HUD> createHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
-		const char* _pathToBtnPressed, const char* _pathToFont);
+	std::shared_ptr<Hud::HUD> prepareHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
+		const char* _pathToBtnPressed, const char* _pathToFont, unsigned int _width, unsigned int _height);
+	std::shared_ptr<Apple> prepareApple(const char* _pTa, auto _lvl);
 
 private:
 	void setCurMode(Hud::MODE _mode);

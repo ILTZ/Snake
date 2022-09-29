@@ -156,6 +156,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="SnakeBody.cpp" />
     <ClCompile Include="SnakeParticle.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="BaseD.h" />
     <ClInclude Include="BaseDrawable.h" />
     <ClInclude Include="BasePawn.h" />
+    <ClInclude Include="BasePlayerControlObj.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />
@@ -178,6 +180,7 @@
     <ClInclude Include="LogicField.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="SnakeBody.h" />
     <ClInclude Include="SnakeParticle.h" />
