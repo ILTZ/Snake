@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Apple.cpp" />
     <ClCompile Include="BaseDrawable.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Apple.h" />
     <ClInclude Include="BaseD.h" />
     <ClInclude Include="BaseDrawable.h" />
     <ClInclude Include="BasePawn.h" />

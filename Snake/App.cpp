@@ -40,13 +40,16 @@ int App::Run()
 			auto session = getGameSession();
 			setCurMode(Hud::MODE::GAME_PROCESS);
 
-			while (currentMode != Hud::MODE::MAIN_MENU && currentMode != Hud::MODE::EXIT)
+			// May <GameSession> control render process in GAME_PROCESS time
+			while (currentMode == Hud::MODE::GAME_PROCESS || 
+					currentMode == Hud::MODE::GAME_PAUSE  ||
+					currentMode == Hud::MODE::GAME_OVER)
 			{
-				if (!session->GameFrame(currentMode))
-				{
-					setCurMode(Hud::MODE::EXIT);
-					return 1;
-				}
+				auto mode = session->GameFrame(currentMode);
+
+				// difference between threads(event handler is faster)
+				if (currentMode != Hud::MODE::MAIN_MENU && currentMode != Hud::MODE::EXIT)
+					setCurMode(mode);
 			}
 		}
 	}

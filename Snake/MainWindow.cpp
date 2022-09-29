@@ -94,6 +94,11 @@ void MainWin::MainWindow::SetHud(std::shared_ptr<Hud::HUD> _hud)
 	hud = _hud;
 }
 
+Hud::HUD& MainWin::MainWindow::GetHUD()
+{
+	return *hud;
+}
+
 void MainWin::MainWindow::AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
 {
 	whatDraw[_plan] = _whatDrow;

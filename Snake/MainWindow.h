@@ -56,6 +56,7 @@ namespace MainWin
 		bool PollEvents();
 		sf::RenderWindow& get();
 		void SetHud(std::shared_ptr<Hud::HUD> _hud);
+		Hud::HUD& GetHUD();
 
 	public:
 		void AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan);
