@@ -13,6 +13,8 @@ Snake::SnakeBody::SnakeBody(
 
 void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd) 
 {
+	std::lock_guard<std::mutex> lg(defMt);
+
 	for (auto& el : body)
 	{
 		el.Draw(_wnd);
@@ -195,6 +197,8 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 {
 	if (_pathToTorso)
 	{
+		std::lock_guard<std::mutex> lg(defMt);
+
 		sf::Vector2u pos{ 
 			body[body.size() - 1].GetPos().x, 
 			body[body.size() - 1].GetPos().y };

@@ -2,6 +2,7 @@
 #define SNAKEBODY_H
 
 #include <vector>
+#include <mutex>
 
 #include "BasePlayerControlObj.h"
 #include "SnakeParticle.h"
@@ -24,6 +25,9 @@ namespace Snake
 	private:
 		std::vector<SnakePart::SnakeParticle>	body;
 		const unsigned int						snakeStartSize	= 4;
+
+	private:
+		std::mutex defMt;
 
 	public:
 		SnakeBody(
