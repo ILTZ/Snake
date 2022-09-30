@@ -18,8 +18,8 @@ namespace MainWin
 		const int wHeight;
 
 	private:
-		sf::RenderWindow									wnd;
-		std::shared_ptr<Hud::HUD>							hud;
+		sf::RenderWindow			wnd;
+		std::shared_ptr<Hud::HUD>	hud;
 
 	public:
 		MainWindow(
