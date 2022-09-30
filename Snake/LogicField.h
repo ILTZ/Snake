@@ -4,7 +4,8 @@
 #include <SFML/System.hpp>
 
 #include "LevelConstructor.h"
-#include "SnakeBody.h"
+#include "BasePawn.h"
+
 
 namespace Logic
 {
@@ -21,16 +22,17 @@ namespace Logic
 		const unsigned int lvlH;
 
 	public:
-		LogicField(std::shared_ptr<LVLConstructor::Level> _lvl);
+		LogicField					(std::shared_ptr<LVLConstructor::Level> _lvl);
 
 	public:
-		LogicField(const LogicField&) = delete;
-		LogicField& operator=(const LogicField&) = delete;
+		LogicField					(const LogicField&) = delete;
+		LogicField& operator=		(const LogicField&) = delete;
 
 	public:
-		bool checkOnEmpty(const sf::Vector2u& _pos);
-		bool CheckSnakeGowUp(const sf::Vector2u& _pos);
-		bool SetApple(const sf::Vector2u& _applePos);
+		bool checkOnEmpty			(const sf::Vector2u& _pos);
+		bool CheckSnakeGowUp		(const sf::Vector2u& _pos);
+		bool SetApple				(const sf::Vector2u& _applePos);
+		bool CheckSnakeCollisions	(std::shared_ptr<BaseP::BasePawn> _snake);
 
 	public:
 		const unsigned int GetLVLW() const;
@@ -38,7 +40,7 @@ namespace Logic
 
 	private:
 		bool checkFieldLimits(const sf::Vector2u& _pos);
-		bool checkSnakeCollisions(Snake::SnakeBody* _snake);
+		
 	};
 
 }

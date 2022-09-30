@@ -61,7 +61,7 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 {
 	if (_curMode != Hud::MODE::GAME_OVER)
 	{
-		if (!logicField->checkOnEmpty(snake->GetPos()))
+		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions(snake))
 		{
 			_curMode = Hud::MODE::GAME_OVER;
 			wnd->GetHUD().prepButtons(Hud::MODE::GAME_OVER);

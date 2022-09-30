@@ -1,4 +1,5 @@
 #include "LogicField.h"
+#include "SnakeBody.h"
 
 using namespace Logic;
 
@@ -65,7 +66,19 @@ bool Logic::LogicField::checkFieldLimits(const sf::Vector2u& _pos)
 	return false;
 }
 
-bool Logic::LogicField::checkSnakeCollisions(Snake::SnakeBody* _snake)
+bool Logic::LogicField::CheckSnakeCollisions(std::shared_ptr<BaseP::BasePawn> _snake)
 {
+	auto snake = std::dynamic_pointer_cast<Snake::SnakeBody>(_snake);
+
+	if (!snake)
+		return false;
+
+	sf::Vector2u head = snake->GetHeadPos();
+	for (size_t i = 1; i < snake->GetCurLen(); ++i)
+	{
+		if (head == snake->GetPosOnIndex(i))
+			return true;
+	}
+
 	return false;
 }

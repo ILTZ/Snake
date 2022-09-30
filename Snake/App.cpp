@@ -57,7 +57,7 @@ int App::Run()
 			{
 				auto mode = session->GameFrame(currentMode);
 
-				// difference between threads(event handler is faster)
+				// difference between threads(<event handler> is faster switch currentMode of app)
 				if (currentMode != Hud::MODE::MAIN_MENU &&
 					currentMode != Hud::MODE::EXIT &&
 					currentMode != Hud::MODE::GAME_PAUSE)
