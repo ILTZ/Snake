@@ -1,6 +1,8 @@
 #include "MainWindow.h"
+#include "ConfigLoader.h"
 
 #include <SFML/Window/Event.hpp>
+
 
 using namespace MainWin;
 
@@ -16,20 +18,6 @@ MainWindow::MainWindow(
 {
 
 
-}
-
-int MainWindow::DrawLayouts()
-{
-	if (wnd.isOpen())
-	{
-		drawOther();
-	}
-	else
-	{
-		return 0;
-	}
-
-	return 1;
 }
 
 void MainWin::MainWindow::DrawHUD()
@@ -103,11 +91,6 @@ Hud::HUD& MainWin::MainWindow::GetHUD()
 	return *hud;
 }
 
-void MainWin::MainWindow::AddToDrawLayout(const std::shared_ptr<BaseD>& _whatDrow, Plans _plan)
-{
-	whatDraw[_plan] = _whatDrow;
-}
-
 std::optional<KB::KeyEvent> MainWin::MainWindow::GetKeyboardEvent()
 {
 	return kb.GetEvent();
@@ -118,21 +101,4 @@ std::optional<MS::MouseEvent> MainWin::MainWindow::GetMouseEvent()
 	return mouse.GetEvent();
 }
 
-void MainWin::MainWindow::drawOther()
-{
-	for (auto i = Plans::END; i >= Plans::START; --i)
-	{
-		if (whatDraw[i].get())
-			whatDraw[i]->Draw(wnd);
-	}
-}
 
-Plans MainWin::operator++(Plans& _x)
-{
-	return _x = static_cast<Plans>(std::underlying_type<Plans>::type(_x) + 1);
-}
-
-Plans MainWin::operator--(Plans& _x)
-{
-	return _x = static_cast<Plans>(std::underlying_type<Plans>::type(_x) - 1);
-}
