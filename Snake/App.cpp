@@ -51,9 +51,7 @@ int App::Run()
 			setCurMode(Hud::MODE::GAME_PROCESS);
 
 			// May <GameSession> control render process in GAME_PROCESS time
-			while (currentMode == Hud::MODE::GAME_PROCESS || 
-					currentMode == Hud::MODE::GAME_PAUSE  ||
-					currentMode == Hud::MODE::GAME_OVER)
+			while (checkGameProcessMod(currentMode))
 			{
 				auto mode = session->GameFrame(currentMode);
 
@@ -157,7 +155,10 @@ void App::drawMenu()
 
 }
 
-std::shared_ptr<Snake::SnakeBody> App::prepareSnake(const char* _pTh, const char* _pTt, auto _lvl)
+std::shared_ptr<Snake::SnakeBody> App::prepareSnake(
+	const char* _pTh, 
+	const char* _pTt, 
+	auto _lvl) const
 {
 	auto snake = std::make_shared<Snake::SnakeBody>(_pTh, _pTt);
 
@@ -174,7 +175,7 @@ std::shared_ptr<Snake::SnakeBody> App::prepareSnake(const char* _pTh, const char
 	return snake;
 }
 
-std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl)
+std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl) const
 {
 	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
 
@@ -193,7 +194,7 @@ std::shared_ptr<Hud::HUD> App::prepareHUD(
 	const char* _pathToBtnPressed, 
 	const char* _pathToFont, 
 	unsigned int _width, 
-	unsigned int _height)
+	unsigned int _height) const
 {
 	auto hud = std::make_shared<Hud::HUD>(
 		_pathToHud, 
@@ -206,7 +207,7 @@ std::shared_ptr<Hud::HUD> App::prepareHUD(
 	return hud;
 }
 
-std::shared_ptr<Apple> App::prepareApple(const char* _pTa, auto _lvl)
+std::shared_ptr<Apple> App::prepareApple(const char* _pTa, auto _lvl) const
 {
 	auto apple = std::make_shared<Apple>(_pTa);
 	
@@ -224,4 +225,16 @@ void App::setCurMode(Hud::MODE _mode)
 	std::lock_guard<std::mutex> lk(defMt);
 
 	currentMode = _mode;
+}
+
+bool App::checkGameProcessMod(Hud::MODE _gm)
+{
+	if (_gm == Hud::MODE::GAME_PROCESS ||
+		_gm == Hud::MODE::GAME_PAUSE ||
+		_gm == Hud::MODE::GAME_OVER)
+	{
+		return true;
+	}
+
+	return false;
 }

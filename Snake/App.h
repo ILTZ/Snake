@@ -17,17 +17,16 @@ class App final
 {
 private:
 	std::unique_ptr<MainWindow> wnd;
-	EventHandler handler;
+	EventHandler				handler;
 
 private:
-	Timer time;
-	Hud::MODE currentMode;
+	Hud::MODE		currentMode;
 	
 private:
-	CLoader::LVLs lvlSelected;
+	CLoader::LVLs	lvlSelected;
 
 private:
-	std::mutex defMt;
+	std::mutex		defMt;
 
 public:
 	App();
@@ -40,10 +39,6 @@ public:
 	int Run();
 
 private:
-	// 1 sec
-	float stepTime = 1000.f;
-
-private:
 	std::unique_ptr<GameSession> getGameSession();
 
 private:
@@ -53,14 +48,25 @@ private:
 	void wndProcesses();
 	void drawMenu();
 
-	std::shared_ptr<Snake::SnakeBody> prepareSnake(const char* _pTh, const char* _pTt, auto _lvl);
-	std::shared_ptr<GraphicField::GraphicField> prepareGraphicField(auto _lvl);
-	std::shared_ptr<Hud::HUD> prepareHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
-		const char* _pathToBtnPressed, const char* _pathToFont, unsigned int _width, unsigned int _height);
-	std::shared_ptr<Apple> prepareApple(const char* _pTa, auto _lvl);
+private:
+	std::shared_ptr<Snake::SnakeBody> prepareSnake(
+		const char* _pTh, 
+		const char* _pTt, 
+		auto _lvl)				const;
+	std::shared_ptr<Hud::HUD> prepareHUD(
+		const char* _pathToHud, 
+		const char* _pathToBtnReleased, 
+		const char* _pathToBtnPressed, 
+		const char* _pathToFont, 
+		unsigned int _width, 
+		unsigned int _height)	const;
+
+	std::shared_ptr<Apple> prepareApple(const char* _pTa, auto _lvl)			const;
+	std::shared_ptr<GraphicField::GraphicField> prepareGraphicField(auto _lvl)	const;
 
 private:
 	void setCurMode(Hud::MODE _mode);
+	bool checkGameProcessMod(Hud::MODE _gm);
 };
 
 
