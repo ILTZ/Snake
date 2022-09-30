@@ -1,22 +1,26 @@
 #include "MainWindow.h"
-#include "ConfigLoader.h"
 
 #include <SFML/Window/Event.hpp>
 
-
 using namespace MainWin;
 
-MainWindow::MainWindow(int _width, int _height, const std::string& _title, int32_t _style, const sf::ContextSettings& _settings) :
-	wWidth{_width}, wHeight{_height}
+MainWindow::MainWindow(
+	int _width, 
+	int _height, 
+	const std::string& _title, 
+	int32_t _style, 
+	const sf::ContextSettings& _settings) :
+	wWidth{_width}, 
+	wHeight{_height},
+	wnd{sf::VideoMode(_width, _height), _title, _style, _settings}
 {
-	wnd = std::make_unique<sf::RenderWindow>
-		(sf::VideoMode(_width, _height), _title, _style, _settings);
+
 
 }
 
 int MainWindow::DrawLayouts()
 {
-	if (wnd->isOpen())
+	if (wnd.isOpen())
 	{
 		drawOther();
 	}
@@ -30,29 +34,29 @@ int MainWindow::DrawLayouts()
 
 void MainWin::MainWindow::DrawHUD()
 {
-	if (wnd->isOpen() && hud.get())
+	if (wnd.isOpen() && hud.get())
 	{
-		hud->DrawHUD(*wnd.get());
+		hud->DrawHUD(wnd);
 	}
 }
 
 void MainWin::MainWindow::DrawButtons()
 {
-	if (wnd->isOpen() && hud.get())
+	if (wnd.isOpen() && hud.get())
 	{
-		hud->DrawButtons(*wnd.get());
+		hud->DrawButtons(wnd);
 	}
 }
 
 void MainWin::MainWindow::Draw(BaseD& _whatDraw)
 {
-	_whatDraw.Draw(*wnd.get());
+	_whatDraw.Draw(wnd);
 }
 
 bool MainWindow::PollEvents()
 {
 	sf::Event ev;
-	while (wnd.get()->pollEvent(ev))
+	while (wnd.pollEvent(ev))
 	{
 		// Exit game
 		if (ev.type == sf::Event::Closed)
@@ -86,7 +90,7 @@ bool MainWindow::PollEvents()
 
 sf::RenderWindow& MainWindow::get()
 {
-	return *wnd.get();
+	return wnd;
 }
 
 void MainWin::MainWindow::SetHud(std::shared_ptr<Hud::HUD> _hud)
@@ -119,7 +123,7 @@ void MainWin::MainWindow::drawOther()
 	for (auto i = Plans::END; i >= Plans::START; --i)
 	{
 		if (whatDraw[i].get())
-			whatDraw[i]->Draw(*wnd.get());
+			whatDraw[i]->Draw(wnd);
 	}
 }
 

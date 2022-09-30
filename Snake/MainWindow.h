@@ -35,8 +35,8 @@ namespace MainWin
 		const int wHeight;
 
 	private:
-		std::unique_ptr<sf::RenderWindow>	wnd;
-		std::shared_ptr<Hud::HUD>			hud;
+		sf::RenderWindow									wnd;
+		std::shared_ptr<Hud::HUD>							hud;
 		std::unordered_map<Plans, std::shared_ptr<BaseD>>	whatDraw;
 
 	public:

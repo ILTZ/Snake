@@ -115,9 +115,6 @@ void App::handleEvents()
 	}
 }
 
-
-
-
 void App::wndProcesses()
 {
 	if (!wnd->PollEvents()) // .. if player press <EXIT> key on window
@@ -190,8 +187,13 @@ std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl)
 	return gf;
 }
 
-std::shared_ptr<Hud::HUD> App::prepareHUD(const char* _pathToHud, const char* _pathToBtnReleased, 
-	const char* _pathToBtnPressed, const char* _pathToFont, unsigned int _width, unsigned int _height)
+std::shared_ptr<Hud::HUD> App::prepareHUD(
+	const char* _pathToHud, 
+	const char* _pathToBtnReleased, 
+	const char* _pathToBtnPressed, 
+	const char* _pathToFont, 
+	unsigned int _width, 
+	unsigned int _height)
 {
 	auto hud = std::make_shared<Hud::HUD>(
 		_pathToHud, 
