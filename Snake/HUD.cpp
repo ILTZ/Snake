@@ -10,7 +10,7 @@ HUD::HUD(const char* _pathToHud, const char* _pathToBtnReleased, const char* _pa
 
 	hudSprite = new sf::Sprite(*hud);
 
-	prepButtons(MODE::MAIN_MENU);
+	PrepButtons(MODE::MAIN_MENU);
 }
 
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
@@ -87,7 +87,7 @@ void Hud::HUD::RealeseButtons()
 	}
 }
 
-void Hud::HUD::prepButtons(MODE _mode, int _lvlCount)
+void Hud::HUD::PrepButtons(MODE _mode, int _lvlCount)
 {
 	fillBtnsArr(_mode, _lvlCount);
 }

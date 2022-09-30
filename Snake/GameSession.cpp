@@ -15,7 +15,7 @@ GameSession::GameSession(
 	gp{_gp}, 
 	logicField{_lField}, 
 	apple{_apple},
-	stepTime{50.f}, 
+	stepTime{10.f}, 
 	curPoints{0}, 
 	speedMyltiply{1.f}, 
 	appleOnBoard{false}
@@ -64,7 +64,7 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions(snake))
 		{
 			_curMode = Hud::MODE::GAME_OVER;
-			wnd->GetHUD().prepButtons(Hud::MODE::GAME_OVER);
+			wnd->GetHUD().PrepButtons(Hud::MODE::GAME_OVER);
 		}
 		else if (logicField->CheckSnakeGowUp(snake->GetPos()))
 		{
@@ -82,13 +82,13 @@ void GameSession::spawnApple(bool _appleOnBoard)
 
 	RND::RandomINT rnd;
 	unsigned int nul = 0;
-	unsigned int x = rnd.GetValue(nul, logicField->GetLVLW());
-	unsigned int y = rnd.GetValue(nul, logicField->GetLVLH());
+	unsigned int x = rnd.GetValue(nul, logicField->GetLVLW() - 1);
+	unsigned int y = rnd.GetValue(nul, logicField->GetLVLH() - 1);
 
 	while (!logicField->SetApple(sf::Vector2u(x, y)))
 	{
-		x = rnd.GetValue(nul, logicField->GetLVLW());
-		y = rnd.GetValue(nul, logicField->GetLVLH());
+		x = rnd.GetValue(nul, logicField->GetLVLW() - 1);
+		y = rnd.GetValue(nul, logicField->GetLVLH() - 1);
 	}
 	
 	apple->SetPos(sf::Vector2u(x, y));

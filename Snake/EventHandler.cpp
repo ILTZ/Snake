@@ -51,7 +51,7 @@ std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<KB::Ke
 		case sf::Keyboard::Key::Escape:
 		case sf::Keyboard::Key::P:
 			temp = Hud::MODE::GAME_PAUSE;
-			hud->prepButtons(Hud::MODE::GAME_PAUSE);
+			hud->PrepButtons(Hud::MODE::GAME_PAUSE);
 			break;
 
 		default:
@@ -94,7 +94,7 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 					SmartPointer::SmartPointer<CLoader::ConfigLoader> loader 
 						= new CLoader::ConfigLoader();
 
-					hud->prepButtons(Hud::MODE::LVL_SELECT, loader->GetLvlCount());
+					hud->PrepButtons(Hud::MODE::LVL_SELECT, loader->GetLvlCount());
 				}
 				break;
 
@@ -108,12 +108,12 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 
 			case bMod::BACK:
 				temp.value().gameMode = hMod::MAIN_MENU;
-				hud->prepButtons(Hud::MODE::MAIN_MENU);
+				hud->PrepButtons(Hud::MODE::MAIN_MENU);
 				break;
 
 			case bMod::LEADER_BORD:
 				temp.value().gameMode = hMod::LEADERS;
-				hud->prepButtons(Hud::MODE::LEADERS);
+				hud->PrepButtons(Hud::MODE::LEADERS);
 				break;
 
 			case bMod::LVL_1:
@@ -139,7 +139,7 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 
 			case bMod::MAIN_MENU:
 				temp.value().gameMode = hMod::MAIN_MENU;
-				hud->prepButtons(Hud::MODE::MAIN_MENU);
+				hud->PrepButtons(Hud::MODE::MAIN_MENU);
 
 				break;
 
