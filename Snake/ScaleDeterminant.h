@@ -17,7 +17,6 @@ public:
 
 public:
 	const sf::Vector2f CalculateScale(
-		const sf::Vector2f& _windowSize, 
 		const sf::Vector2f& _fieldSize, 
 		const sf::Vector2f& _fieldCellSize, 
 		const sf::Vector2f& _drawableObjSize) const;
