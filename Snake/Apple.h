@@ -4,7 +4,7 @@
 #include "BaseDrawable.h"
 #include "BaseD.h"
 
-class Apple : public BaseDrawable::BaseDrawable, public BaseD
+class Apple : public BaseDrawable::BaseDrawableCircle, public BaseD
 {
 private:
 

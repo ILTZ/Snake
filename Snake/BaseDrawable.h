@@ -10,7 +10,7 @@
 
 namespace BaseDrawable
 {
-	class BaseDrawable
+	class BaseDrawableCircle
 	{
 	protected:
 		SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
@@ -22,11 +22,11 @@ namespace BaseDrawable
 		float height = 0.f;
 
 	public:
-		BaseDrawable(const char* _pathToTexture, float _radius = 20.f);
-		BaseDrawable(const BaseDrawable& _other);
-		BaseDrawable& operator=(const BaseDrawable& _other);
-		BaseDrawable(BaseDrawable&& _other) noexcept;
-		virtual ~BaseDrawable();
+		BaseDrawableCircle(const char* _pathToTexture, float _radius = 20.f);
+		BaseDrawableCircle(const BaseDrawableCircle& _other);
+		BaseDrawableCircle& operator=(const BaseDrawableCircle& _other);
+		BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept;
+		virtual ~BaseDrawableCircle();
 
 	public:
 		void SetPos(const sf::Vector2u& _newPos);

@@ -1,7 +1,7 @@
 #include "BaseDrawable.h"
 
 
-BaseDrawable::BaseDrawable::BaseDrawable(const char* _pathToTexture, float _radius)
+BaseDrawable::BaseDrawableCircle::BaseDrawableCircle(const char* _pathToTexture, float _radius)
 {
 	baseTexture = new sf::Texture();
 	baseTexture->loadFromFile(_pathToTexture);
@@ -15,7 +15,7 @@ BaseDrawable::BaseDrawable::BaseDrawable(const char* _pathToTexture, float _radi
 	baseFigure->setOrigin(width / 2.f, height / 2.f);
 }
 
-BaseDrawable::BaseDrawable::BaseDrawable(const BaseDrawable& _other)
+BaseDrawable::BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _other)
 {
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
@@ -31,7 +31,7 @@ BaseDrawable::BaseDrawable::BaseDrawable(const BaseDrawable& _other)
 	curPos = _other.curPos;
 }
 
-BaseDrawable::BaseDrawable& BaseDrawable::BaseDrawable::operator=(const BaseDrawable& _other)
+BaseDrawable::BaseDrawableCircle& BaseDrawable::BaseDrawableCircle::operator=(const BaseDrawableCircle& _other)
 {
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
@@ -49,7 +49,7 @@ BaseDrawable::BaseDrawable& BaseDrawable::BaseDrawable::operator=(const BaseDraw
 	return *this;
 }
 
-BaseDrawable::BaseDrawable::BaseDrawable(BaseDrawable&& _other) noexcept
+BaseDrawable::BaseDrawableCircle::BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept
 {
 	if (this != &_other)
 	{
@@ -63,47 +63,47 @@ BaseDrawable::BaseDrawable::BaseDrawable(BaseDrawable&& _other) noexcept
 	}
 }
 
-BaseDrawable::BaseDrawable::~BaseDrawable()
+BaseDrawable::BaseDrawableCircle::~BaseDrawableCircle()
 {
 }
 
-void BaseDrawable::BaseDrawable::SetPos(const sf::Vector2u& _newPos)
+void BaseDrawable::BaseDrawableCircle::SetPos(const sf::Vector2u& _newPos)
 {
 	changeRotation(_newPos);
 	curPos = _newPos;
 }
 
-const sf::Vector2u& BaseDrawable::BaseDrawable::GetPos() const
+const sf::Vector2u& BaseDrawable::BaseDrawableCircle::GetPos() const
 {
 	return curPos;
 }
 
-void BaseDrawable::BaseDrawable::Draw(sf::RenderWindow& _wnd)
+void BaseDrawable::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
 	baseFigure->setPosition(sf::Vector2f(
-		static_cast<float>(curPos.x) * width + baseFigure->getOrigin().x,
-		static_cast<float>(curPos.y) * height + baseFigure->getOrigin().y));
+		static_cast<float>(curPos.x) * (baseFigure->getRadius() * 2.f) + baseFigure->getOrigin().x,
+		static_cast<float>(curPos.y) * (baseFigure->getRadius() * 2.f) + baseFigure->getOrigin().y));
 
 	_wnd.draw(*baseFigure);
 }
 
-void BaseDrawable::BaseDrawable::SetSpriteScale(const sf::Vector2f& _newScale)
+void BaseDrawable::BaseDrawableCircle::SetSpriteScale(const sf::Vector2f& _newScale)
 {
 	baseFigure->setScale(_newScale);
 }
 
-void BaseDrawable::BaseDrawable::SetNewSize(const sf::Vector2f& _newSize)
+void BaseDrawable::BaseDrawableCircle::SetNewSize(const sf::Vector2f& _newSize)
 {
 	width	= _newSize.x;
 	height	= _newSize.y;
 }
 
-const sf::Vector2f BaseDrawable::BaseDrawable::GetSize() const
+const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetSize() const
 {
 	return sf::Vector2f(width, height);
 }
 
-void BaseDrawable::BaseDrawable::changeRotation(const sf::Vector2u& _newPos)
+void BaseDrawable::BaseDrawableCircle::changeRotation(const sf::Vector2u& _newPos)
 {
 	if (_newPos.y > curPos.y)
 	{

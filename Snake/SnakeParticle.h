@@ -6,7 +6,7 @@
 
 namespace SnakePart
 {
-	class SnakeParticle : public BaseDrawable::BaseDrawable
+	class SnakeParticle : public BaseDrawable::BaseDrawableCircle
 	{
 	private:
 		//const std::string pathToTexture;
