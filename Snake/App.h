@@ -66,7 +66,7 @@ private:
 
 private:
 	void setCurMode(Hud::MODE _mode);
-	bool checkGameProcessMod(Hud::MODE _gm);
+
 };
 
 

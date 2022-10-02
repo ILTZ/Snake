@@ -40,18 +40,33 @@ int App::Run()
 		});
 
 	
+	auto checkGameSessionMods = [](Hud::MODE _mode) -> bool
+	{
+		switch (_mode)
+		{
+		case Hud::MODE::GAME_PROCESS:
+		case Hud::MODE::GAME_PAUSE:
+		case Hud::MODE::GAME_OVER:
+			return true;
+
+		default:
+			return false;
+		}
+	};
+
 	while (currentMode != Hud::MODE::EXIT)
 	{
 		wndProcesses();
 
-		// <GameSession> life time is start noq {
+		
 		if (currentMode == Hud::MODE::LVL_SELECTED) 
 		{
-			auto session = createGameSession();
+
+			auto session = createGameSession(); // <GameSession> life time is start now {
 			setCurMode(Hud::MODE::GAME_PROCESS);
 
 			// May <GameSession> control render process in GAME_PROCESS time
-			while (checkGameProcessMod(currentMode))
+			while (checkGameSessionMods(currentMode))
 			{
 				auto mode = session->GameFrame(currentMode);
 
@@ -227,14 +242,4 @@ void App::setCurMode(Hud::MODE _mode)
 	currentMode = _mode;
 }
 
-bool App::checkGameProcessMod(Hud::MODE _gm)
-{
-	if (_gm == Hud::MODE::GAME_PROCESS ||
-		_gm == Hud::MODE::GAME_PAUSE ||
-		_gm == Hud::MODE::GAME_OVER)
-	{
-		return true;
-	}
 
-	return false;
-}
