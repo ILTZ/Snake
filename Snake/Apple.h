@@ -4,7 +4,7 @@
 #include "BaseDrawable.h"
 #include "BaseD.h"
 
-class Apple : public BaseDrawable::BaseDrawableCircle, public BaseD
+class Apple : public BaseDrawable::BaseDrawableCircle
 {
 private:
 
@@ -17,9 +17,7 @@ public:
 	Apple& operator=(const Apple&)	= delete;
 
 public:
-	virtual void Draw(sf::RenderWindow& _wnd)		override;
-	void SetScale(const sf::Vector2f& _newScale)	override;
-	virtual void SetPos(const sf::Vector2u& _pos)	override;
+
 
 private:
 

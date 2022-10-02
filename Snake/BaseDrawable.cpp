@@ -87,7 +87,7 @@ void BaseDrawable::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 	_wnd.draw(*baseFigure);
 }
 
-void BaseDrawable::BaseDrawableCircle::SetSpriteScale(const sf::Vector2f& _newScale)
+void BaseDrawable::BaseDrawableCircle::SetScale(const sf::Vector2f& _newScale)
 {
 	baseFigure->setScale(_newScale);
 }

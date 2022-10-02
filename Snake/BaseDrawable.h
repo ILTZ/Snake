@@ -7,10 +7,11 @@
 
 
 #include "SmartPointer.h"
+#include "BaseD.h"
 
 namespace BaseDrawable
 {
-	class BaseDrawableCircle
+	class BaseDrawableCircle : public BaseD
 	{
 	protected:
 		SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
@@ -29,10 +30,12 @@ namespace BaseDrawable
 		virtual ~BaseDrawableCircle();
 
 	public:
-		void SetPos(const sf::Vector2u& _newPos);
+		void SetPos(const sf::Vector2u& _newPos)		override;
+		void Draw(sf::RenderWindow& _wnd)				override;
+		void SetScale(const sf::Vector2f& _newScale)	override;
+
+	public:
 		const sf::Vector2u& GetPos() const;
-		void Draw(sf::RenderWindow& _wnd);
-		void SetSpriteScale(const sf::Vector2f& _newScale);
 		void SetNewSize(const sf::Vector2f& _newSize);
 		const sf::Vector2f GetSize() const;
 

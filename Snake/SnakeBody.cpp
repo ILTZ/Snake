@@ -25,7 +25,7 @@ void Snake::SnakeBody::SetScale(const sf::Vector2f& _newScale)
 {
 	for (auto& el : body)
 	{
-		el.SetSpriteScale(_newScale);
+		el.SetScale(_newScale);
 	}
 }
 
