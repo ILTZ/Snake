@@ -41,8 +41,7 @@ namespace GraphicField
 
 	public:
 		void Draw(sf::RenderWindow& _wnd) override;
-		void SetSpriteScale(unsigned int _width, unsigned int _height,
-			unsigned int _lwlW, unsigned int _lwlH) override;
+		void SetScale(const sf::Vector2f& _newScale);
 
 	private:
 		// no need

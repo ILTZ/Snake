@@ -21,6 +21,14 @@ void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd)
 	}
 }
 
+void Snake::SnakeBody::SetScale(const sf::Vector2f& _newScale)
+{
+	for (auto& el : body)
+	{
+		el.SetSpriteScale(_newScale);
+	}
+}
+
 void Snake::SnakeBody::Move()
 {
 	if (!firstMove)
@@ -129,40 +137,6 @@ const sf::Vector2u Snake::SnakeBody::GetPosOnIndex(unsigned int _pos) const
 const size_t Snake::SnakeBody::GetCurLen() const
 {
 	return body.size();
-}
-
-void Snake::SnakeBody::SetSpriteScale(
-	unsigned int _width, 
-	unsigned int _height,
-	unsigned int _lwlW, 
-	unsigned int _lwlH)
-{
-	for (auto& el : body)
-	{
-		auto size = el.GetSize();
-		const unsigned int half = (_width / 4);
-
-		float deltaWidth	= 1.f;
-		float deltaHeight	= 1.f;
-
-		if (((el.GetSize().x * _lwlW) - static_cast<float>(_width)) < half)
-		{
-			deltaWidth = (static_cast<float>(_width) - half) /
-				(el.GetSize().x * _lwlW);
-		}
-		if (el.GetSize().y * _lwlH > _height)
-		{
-			deltaHeight = _height / (el.GetSize().y * _lwlH);
-		}
-
-		el.SetSpriteScale(sf::Vector2f(deltaWidth, deltaHeight));
-		el.SetNewSize(sf::Vector2f
-		(
-			el.GetSize().x * deltaWidth,
-			el.GetSize().y * deltaHeight
-		));	
-	}
-
 }
 
 void SnakeBody::clearBody()

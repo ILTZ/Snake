@@ -41,19 +41,18 @@ namespace Snake
 		// <Base::BasePlayerControlObj> funcs {
 	public: 
 		//<BaseD> funcs {
-		void Draw(sf::RenderWindow& _wnd)	override;
-		void SetSpriteScale(
-			unsigned int _width, 
-			unsigned int _height,
-			unsigned int _lwlW, 
-			unsigned int _lwlH)				override;//<BaseD> funcs }
+		void Draw(sf::RenderWindow& _wnd)						override;
+		void SetScale(const sf::Vector2f& _newScale)			override;
+		//<BaseD> funcs }
 		
 		//<BasePawn> funcs {
 		void Move()								override;
 		void SetDir(BaseP::Direction _dir)		override;
 		void DoSomeSpecifyActions()				override;
 		void SetPos(const sf::Vector2u& _pos)	override;
-		sf::Vector2u const GetPos() const		override;//<BasePawn> funcs }
+		sf::Vector2u const GetPos() const		override;
+		//<BasePawn> funcs }
+		// 
 		// <Base::BasePlayerControlObj> funcs }
 
 	public:

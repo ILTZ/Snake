@@ -17,10 +17,9 @@ public:
 	Apple& operator=(const Apple&)	= delete;
 
 public:
-	virtual void Draw(sf::RenderWindow& _wnd) override;
-	virtual void SetSpriteScale(unsigned int _width, unsigned int _height,
-		unsigned int _lwlW, unsigned int _lwlH) override{};
-	virtual void SetPos(const sf::Vector2u& _pos) override;
+	virtual void Draw(sf::RenderWindow& _wnd)		override;
+	void SetScale(const sf::Vector2f& _newScale)	override;
+	virtual void SetPos(const sf::Vector2u& _pos)	override;
 
 private:
 

@@ -29,8 +29,8 @@ void GraphicField::GraphicField::Draw(sf::RenderWindow& _wnd)
 		for (unsigned int j = 0; j < curLvl->GetConfigs().height; ++j)
 		{
 			sprites[curLvl->GetBlock(i, j)].mainSprite->setPosition(
-				sprites[curLvl->GetBlock(i, j)].width * (float)i,
-				sprites[curLvl->GetBlock(i, j)].height * (float)j
+				sprites[curLvl->GetBlock(i, j)].mainSprite->getGlobalBounds().width		* (float)i,
+				sprites[curLvl->GetBlock(i, j)].mainSprite->getGlobalBounds().height	* (float)j
 			);
 
 			_wnd.draw(*sprites[curLvl->GetBlock(i, j)].mainSprite);
@@ -38,34 +38,13 @@ void GraphicField::GraphicField::Draw(sf::RenderWindow& _wnd)
 	}
 }
 
-void GraphicField::GraphicField::SetSpriteScale(unsigned int _width, unsigned int _height,
-	unsigned int _lwlW, unsigned int _lwlH)
+void GraphicField::GraphicField::SetScale(const sf::Vector2f& _newScale)
 {
 	for (auto& el : sprites)
 	{
-		if (el.second.width)
-		{
-			float deltaWidth = 1.f;
-			float deltaHeight = 1.f;
-			// 1/4 our window(need for hud)
-			const unsigned int half = (_width / 4);
-
-			if (((el.second.width * _lwlW) - static_cast<float>(_width)) < half)
-			{
-				deltaWidth = (static_cast<float>(_width) - half) / 
-					(el.second.width * _lwlW);
-			}
-			if (el.second.height * _lwlH > _height)
-			{
-				deltaHeight = _height / (el.second.height * _lwlH);
-			}
-
-			el.second.mainSprite->setScale(deltaWidth, deltaHeight);
-			el.second.width		*= deltaWidth;
-			el.second.height	*= deltaHeight;
-		}
+		el.second.mainSprite->setScale(_newScale);
 	}
-
 }
+
 
 

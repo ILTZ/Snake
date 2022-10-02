@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include "LogicField.h"
+#include "ScaleDeterminant.h"
 
 #include <iostream>
 #include <thread>
@@ -177,12 +178,6 @@ std::shared_ptr<Snake::SnakeBody> App::createSnake(
 {
 	auto snake = std::make_shared<Snake::SnakeBody>(_pTh, _pTt);
 
-	snake->SetSpriteScale(
-		wnd->get().getSize().x, 
-		wnd->get().getSize().y,
-		_lvl->GetConfigs().width, 
-		_lvl->GetConfigs().height);
-
 	snake->SetPos(sf::Vector2u(
 		_lvl->GetConfigs().startPosX,
 		_lvl->GetConfigs().startPosY));
@@ -193,12 +188,6 @@ std::shared_ptr<Snake::SnakeBody> App::createSnake(
 std::shared_ptr<GraphicField::GraphicField> App::createGrapcfhicField(auto _lvl) const
 {
 	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
-
-	gf->SetSpriteScale(
-		wnd->get().getSize().x,
-		wnd->get().getSize().y,
-		_lvl->GetConfigs().width, 
-		_lvl->GetConfigs().height);
 
 	return gf;
 }
@@ -226,12 +215,6 @@ std::shared_ptr<Apple> App::createApple(const char* _pTa, auto _lvl) const
 {
 	auto apple = std::make_shared<Apple>(_pTa);
 	
-	apple->SetSpriteScale(
-		wnd->get().getSize().x,
-		wnd->get().getSize().y,
-		_lvl->GetConfigs().width,
-		_lvl->GetConfigs().height);
-
 	return apple;
 }
 
