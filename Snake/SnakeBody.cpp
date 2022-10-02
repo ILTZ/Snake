@@ -193,8 +193,10 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 		sf::Vector2u pos{ 
 			body[body.size() - 1].GetPos().x, 
 			body[body.size() - 1].GetPos().y };
+		sf::Vector2f scale = body[body.size() - 1].GetScale();
 
 		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
 		body.back().SetPos(pos);
+		body.back().SetScale(scale);
 	}
 }

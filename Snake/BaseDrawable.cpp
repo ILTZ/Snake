@@ -92,6 +92,11 @@ void BaseDrawable::BaseDrawableCircle::SetScale(const sf::Vector2f& _newScale)
 	baseFigure->setScale(_newScale);
 }
 
+const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetScale() const
+{
+	return baseFigure->getScale();
+}
+
 void BaseDrawable::BaseDrawableCircle::SetNewSize(const sf::Vector2f& _newSize)
 {
 	width	= _newSize.x;

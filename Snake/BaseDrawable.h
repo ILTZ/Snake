@@ -33,6 +33,7 @@ namespace BaseDrawable
 		void SetPos(const sf::Vector2u& _newPos)		override;
 		void Draw(sf::RenderWindow& _wnd)				override;
 		void SetScale(const sf::Vector2f& _newScale)	override;
+		const sf::Vector2f GetScale()					const;
 
 	public:
 		const sf::Vector2u& GetPos() const;
