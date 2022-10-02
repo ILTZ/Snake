@@ -103,6 +103,23 @@ void Snake::SnakeBody::DoSomeSpecifyActions()
 	this->GrowUp();
 }
 
+void Snake::SnakeBody::CalculateAndSetScale(const ScaleDeterminant& _det)
+{
+	auto newHeadScale = _det.CalculateScale(body[0].GetSize());
+	auto newTorsoScale = _det.CalculateScale(body[1].GetSize());
+
+	for (size_t i = 0; i < body.size(); ++i)
+	{
+		if (i == 0)
+		{
+			body[i].SetScale(newHeadScale);
+			continue;
+		}
+		body[i].SetScale(newTorsoScale);
+	}
+
+}
+
 void Snake::SnakeBody::GrowUp()
 {
 	addTorsoSection(torsoTPath.c_str());

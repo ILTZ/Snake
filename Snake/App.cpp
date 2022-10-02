@@ -90,24 +90,28 @@ int App::Run()
 std::unique_ptr<GameSession> App::createGameSession()
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
-	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
-
-	auto sp = loader->GetSnakeProp();
-
+	
 	auto level = loader->GetLVL(lvlSelected);
 
+	auto sp = loader->GetSnakeProp();
 	auto snake = createSnake(
 		sp.pathToHead.c_str(),
 		sp.pathToTorso.c_str(), 
 		level);
-
 	handler.SetPawn(snake);
 
+	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant(
+		sf::Vector2u(wnd->get().getSize().x / 4 * 3, wnd->get().getSize().y),
+		sf::Vector2u(level->GetConfigs().width, level->GetConfigs().height));
+
+
 	auto gf = createGrapcfhicField(level);
-
 	auto lf = std::make_shared<Logic::LogicField>(level);
-
 	auto apple = createApple(sp.pathToAple.c_str(), level);
+
+	gf->CalculateAndSetScale(*det);
+	snake->CalculateAndSetScale(*det);
+
 
 	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
 }

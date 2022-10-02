@@ -29,8 +29,8 @@ void GraphicField::GraphicField::Draw(sf::RenderWindow& _wnd)
 		for (unsigned int j = 0; j < curLvl->GetConfigs().height; ++j)
 		{
 			sprites[curLvl->GetBlock(i, j)].mainSprite->setPosition(
-				sprites[curLvl->GetBlock(i, j)].mainSprite->getGlobalBounds().width		* (float)i,
-				sprites[curLvl->GetBlock(i, j)].mainSprite->getGlobalBounds().height	* (float)j
+				sprites[curLvl->GetBlock(i, j)].mainSprite->getGlobalBounds().width		* static_cast<float>(i),
+				sprites[curLvl->GetBlock(i, j)].mainSprite->getGlobalBounds().height	* static_cast<float>(j)
 			);
 
 			_wnd.draw(*sprites[curLvl->GetBlock(i, j)].mainSprite);
@@ -43,6 +43,17 @@ void GraphicField::GraphicField::SetScale(const sf::Vector2f& _newScale)
 	for (auto& el : sprites)
 	{
 		el.second.mainSprite->setScale(_newScale);
+	}
+}
+
+void GraphicField::GraphicField::CalculateAndSetScale(const ScaleDeterminant& _det)
+{
+	for (auto& el : sprites)
+	{
+		auto newScale = _det.CalculateScale(sf::Vector2f(
+			el.second.mainSprite->getGlobalBounds().width,
+			el.second.mainSprite->getGlobalBounds().height));
+		el.second.mainSprite->setScale(newScale);
 	}
 }
 

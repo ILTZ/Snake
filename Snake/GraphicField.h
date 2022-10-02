@@ -8,10 +8,11 @@
 #include "BaseD.h"
 #include "SmartPointer.h"
 #include "LevelConstructor.h"
+#include "BaseScalable.h"
 
 namespace GraphicField
 {
-	class GraphicField : public BaseD
+	class GraphicField : public BaseD, public BaseScalable
 	{
 	private:
 		struct Sprite
@@ -42,6 +43,9 @@ namespace GraphicField
 	public:
 		void Draw(sf::RenderWindow& _wnd) override;
 		void SetScale(const sf::Vector2f& _newScale);
+
+	public:
+		void CalculateAndSetScale(const ScaleDeterminant& _det) override;
 
 	private:
 		// no need

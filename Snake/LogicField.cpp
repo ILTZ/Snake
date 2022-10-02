@@ -76,7 +76,7 @@ bool Logic::LogicField::CheckSnakeCollisions(std::shared_ptr<BaseP::BasePawn> _s
 	sf::Vector2u head = snake->GetHeadPos();
 	for (size_t i = 1; i < snake->GetCurLen(); ++i)
 	{
-		if (head == snake->GetPosOnIndex(i))
+		if (head == snake->GetPosOnIndex(static_cast<unsigned int>(i)))
 			return true;
 	}
 

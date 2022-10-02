@@ -170,6 +170,7 @@
     <ClInclude Include="BaseDrawable.h" />
     <ClInclude Include="BasePawn.h" />
     <ClInclude Include="BasePlayerControlObj.h" />
+    <ClInclude Include="BaseScalable.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />

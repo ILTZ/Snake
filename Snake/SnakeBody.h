@@ -5,13 +5,14 @@
 #include <mutex>
 
 #include "BasePlayerControlObj.h"
+#include "BaseScalable.h"
 #include "SnakeParticle.h"
 
 
 namespace Snake
 {
 
-	class SnakeBody : public Base::BasePlayerControlObj
+	class SnakeBody : public Base::BasePlayerControlObj, public BaseScalable
 	{
 	private:
 		const std::string headTPath;
@@ -54,6 +55,9 @@ namespace Snake
 		//<BasePawn> funcs }
 		// 
 		// <Base::BasePlayerControlObj> funcs }
+
+	public:
+		void CalculateAndSetScale(const ScaleDeterminant& _det) override;
 
 	public:
 		void				GrowUp();
