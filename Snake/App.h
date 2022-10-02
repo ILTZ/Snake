@@ -39,7 +39,7 @@ public:
 	int Run();
 
 private:
-	std::unique_ptr<GameSession> getGameSession();
+	std::unique_ptr<GameSession> createGameSession();
 
 private:
 	void handleEvents();
@@ -49,11 +49,11 @@ private:
 	void drawMenu();
 
 private:
-	std::shared_ptr<Snake::SnakeBody> prepareSnake(
+	std::shared_ptr<Snake::SnakeBody> createSnake(
 		const char* _pTh, 
 		const char* _pTt, 
 		auto _lvl)				const;
-	std::shared_ptr<Hud::HUD> prepareHUD(
+	std::shared_ptr<Hud::HUD> createHUD(
 		const char* _pathToHud, 
 		const char* _pathToBtnReleased, 
 		const char* _pathToBtnPressed, 
@@ -61,8 +61,8 @@ private:
 		unsigned int _width, 
 		unsigned int _height)	const;
 
-	std::shared_ptr<Apple> prepareApple(const char* _pTa, auto _lvl)			const;
-	std::shared_ptr<GraphicField::GraphicField> prepareGraphicField(auto _lvl)	const;
+	std::shared_ptr<Apple> createApple(const char* _pTa, auto _lvl)				const;
+	std::shared_ptr<GraphicField::GraphicField> createGrapcfhicField(auto _lvl)	const;
 
 private:
 	void setCurMode(Hud::MODE _mode);

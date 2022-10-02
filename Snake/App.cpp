@@ -20,7 +20,7 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 		style);
 	// Window prop }
 
-	auto hud = prepareHUD(
+	auto hud = createHUD(
 		configs.pathToHud.c_str(), 
 		configs.pathToReleaseBtn.c_str(), 
 		configs.pathToPressBtn.c_str(), 
@@ -47,7 +47,7 @@ int App::Run()
 		// <GameSession> life time is start noq {
 		if (currentMode == Hud::MODE::LVL_SELECTED) 
 		{
-			auto session = getGameSession();
+			auto session = createGameSession();
 			setCurMode(Hud::MODE::GAME_PROCESS);
 
 			// May <GameSession> control render process in GAME_PROCESS time
@@ -71,25 +71,25 @@ int App::Run()
 }
 
 
-std::unique_ptr<GameSession> App::getGameSession()
+std::unique_ptr<GameSession> App::createGameSession()
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 	auto sp = loader->GetSnakeProp();
 
 	auto level = loader->GetLVL(lvlSelected);
 
-	auto snake = prepareSnake(
+	auto snake = createSnake(
 		sp.pathToHead.c_str(),
 		sp.pathToTorso.c_str(), 
 		level);
 
 	handler.SetPawn(snake);
 
-	auto gf = prepareGraphicField(level);
+	auto gf = createGrapcfhicField(level);
 
 	auto lf = std::make_shared<Logic::LogicField>(level);
 
-	auto apple = prepareApple(sp.pathToAple.c_str(), level);
+	auto apple = createApple(sp.pathToAple.c_str(), level);
 
 	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
 }
@@ -155,7 +155,7 @@ void App::drawMenu()
 
 }
 
-std::shared_ptr<Snake::SnakeBody> App::prepareSnake(
+std::shared_ptr<Snake::SnakeBody> App::createSnake(
 	const char* _pTh, 
 	const char* _pTt, 
 	auto _lvl) const
@@ -175,7 +175,7 @@ std::shared_ptr<Snake::SnakeBody> App::prepareSnake(
 	return snake;
 }
 
-std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl) const
+std::shared_ptr<GraphicField::GraphicField> App::createGrapcfhicField(auto _lvl) const
 {
 	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
 
@@ -188,7 +188,7 @@ std::shared_ptr<GraphicField::GraphicField> App::prepareGraphicField(auto _lvl) 
 	return gf;
 }
 
-std::shared_ptr<Hud::HUD> App::prepareHUD(
+std::shared_ptr<Hud::HUD> App::createHUD(
 	const char* _pathToHud, 
 	const char* _pathToBtnReleased, 
 	const char* _pathToBtnPressed, 
@@ -207,7 +207,7 @@ std::shared_ptr<Hud::HUD> App::prepareHUD(
 	return hud;
 }
 
-std::shared_ptr<Apple> App::prepareApple(const char* _pTa, auto _lvl) const
+std::shared_ptr<Apple> App::createApple(const char* _pTa, auto _lvl) const
 {
 	auto apple = std::make_shared<Apple>(_pTa);
 	
