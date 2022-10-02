@@ -5,8 +5,11 @@
 
 class ScaleDeterminant
 {
+private:
+	const sf::Vector2u gameFieldSize;
+
 public:
-	ScaleDeterminant() = default;
+	ScaleDeterminant(const sf::Vector2u& _gameFieldSize);
 	
 public:
 	ScaleDeterminant(const ScaleDeterminant&)				= delete;
@@ -16,9 +19,8 @@ public:
 	ScaleDeterminant& operator=(ScaleDeterminant&&)			= delete;
 
 public:
-	const sf::Vector2f CalculateScale(
-		const sf::Vector2f& _fieldSize, 
-		const sf::Vector2f& _fieldCellSize, 
+	const sf::Vector2f CalculateScale( 
+		const sf::Vector2u& _fieldCellSize, 
 		const sf::Vector2f& _drawableObjSize) const;
 
 private:

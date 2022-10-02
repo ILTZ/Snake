@@ -90,6 +90,8 @@ int App::Run()
 std::unique_ptr<GameSession> App::createGameSession()
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
+
 	auto sp = loader->GetSnakeProp();
 
 	auto level = loader->GetLVL(lvlSelected);

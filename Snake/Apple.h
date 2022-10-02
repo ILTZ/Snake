@@ -16,9 +16,6 @@ public:
 	Apple(const Apple&)				= delete;
 	Apple& operator=(const Apple&)	= delete;
 
-public:
-
-
 private:
 
 };
