@@ -212,8 +212,6 @@ std::shared_ptr<Hud::HUD> App::createHUD(
 		_pathToBtnPressed, 
 		_pathToFont);
 
-	hud->SetSpriteScale(_width, _height);
-
 	return hud;
 }
 

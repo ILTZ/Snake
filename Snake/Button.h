@@ -12,13 +12,13 @@
 
 namespace Buttons
 {
-	enum class BtnMode
+	enum class BtnState
 	{
 		PRESSED		= 0,
 		RELEASED	= 1,
 	};
 
-	enum class Btn
+	enum class BtnPurpose
 	{
 		START		= 0,
 		EXIT		= 1,
@@ -26,14 +26,13 @@ namespace Buttons
 		CONTINUE	= 3,
 		LEADER_BORD	= 4,
 		MAIN_MENU	= 5,
-		LVL			= 6,
-		LVL_1 = 7,
-		LVL_2 = 8,
-		LVL_3 = 9,
-		LVL_4 = 10,
-		LVL_5 = 11,
+		LVL_1		= 6,
+		LVL_2		= 7,
+		LVL_3		= 8,
+		LVL_4		= 9,
+		LVL_5		= 10,
 	};
-	Btn operator++(Btn& _x);
+	BtnPurpose operator++(BtnPurpose& _x);
 
 	class Button
 	{
@@ -57,12 +56,20 @@ namespace Buttons
 
 	private:
 		SmartPointer::SmartPointer<TextConf> text;
-		std::unordered_map<BtnMode, BtnConf> btns;
-		Btn		whatBtn;
-		BtnMode curMode;
+		std::unordered_map<BtnState, BtnConf> btns;
+		BtnPurpose		whatBtn;
+		BtnState curMode;
 		
+	private:
+		sf::Vector2f btnsSizeDifference;
+
 	public:
-		Button(Btn _wBtn, const char* _pathToU, const char* _pathToD, const char* _pathToFont, const char* _btnText = nullptr);
+		Button(
+			BtnPurpose _btnPurpose, 
+			const char* _pathToRelesedBtnTexture, 
+			const char* _pathToPressedBtnTexture, 
+			const char* _pathToFont, 
+			const char* _btnText);
 		~Button();
 
 	public:
@@ -71,17 +78,15 @@ namespace Buttons
 
 	public:
 		// Switch PRESSED || RELEASED
-		void SwitchCurrentState(BtnMode _mode);
+		void SwitchCurrentState(BtnState _mode);
 		void Rescale(const sf::Vector2f& _newScale);
 		void Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos);
 
 	public:
-		Btn GetBtnDest() const;
-		BtnMode GetBtnMode() const;
+		BtnPurpose GetBtnPurpose()		const;
+		BtnState GetBtnState()	const;
 		bool GetTouch(float _x, float _y);
 
-	private:
-		sf::Vector2f getBtnSizeDif(const sf::RectangleShape& _first, const sf::RectangleShape& _second);
 	};
 }
 

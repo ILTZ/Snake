@@ -62,7 +62,7 @@ namespace Hud
 		void SetSpriteScale	(unsigned int _width, unsigned int _height);
 
 	public:
-		std::optional <Buttons::Btn>	CheckButtons(float _x, float _y);
+		std::optional <Buttons::BtnPurpose>	CheckButtons(float _x, float _y);
 		void							RealeseButtons();
 
 	public:

@@ -83,7 +83,7 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 		{
 			temp = EventHandler::HandleResult();
 
-			using bMod = Buttons::Btn;
+			using bMod = Buttons::BtnPurpose;
 			using hMod = Hud::MODE;
 
 			switch (button.value())

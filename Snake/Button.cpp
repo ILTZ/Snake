@@ -5,21 +5,26 @@
 
 using namespace Buttons;
 
-Button::Button(Btn _wBtn, const char* _pathToU, const char* _pathToD, const char* _pathToFont, const char* _btnText) :
-	whatBtn{ _wBtn }, curMode{BtnMode::RELEASED}
+Button::Button(
+	BtnPurpose _btnPurpose,
+	const char* _pathToRelesedBtnTexture,
+	const char* _pathToPressedBtnTexture,
+	const char* _pathToFont, 
+	const char* _btnText) :
+	whatBtn{ _btnPurpose }, 
+	curMode{BtnState::RELEASED}
 {
-	btns[BtnMode::RELEASED] = BtnConf(_pathToU);
-	btns[BtnMode::PRESSED] = BtnConf(_pathToD);
+	btns[BtnState::RELEASED] = BtnConf(_pathToRelesedBtnTexture);
+	btns[BtnState::PRESSED] = BtnConf(_pathToPressedBtnTexture);
 
-	btns[BtnMode::PRESSED].rectShape->setOrigin(btns[BtnMode::RELEASED].rectShape->getOrigin().x, 
-		btns[BtnMode::RELEASED].rectShape->getOrigin().y + 
-		getBtnSizeDif(*btns[BtnMode::RELEASED].rectShape, *btns[BtnMode::PRESSED].rectShape).y);
+	btnsSizeDifference.x = btns[BtnState::RELEASED].rectShape->getSize().x - btns[BtnState::PRESSED].rectShape->getSize().x;
+	btnsSizeDifference.y = btns[BtnState::RELEASED].rectShape->getSize().y - btns[BtnState::PRESSED].rectShape->getSize().y;
 
+	btns[BtnState::PRESSED].rectShape->setOrigin(
+		btns[BtnState::RELEASED].rectShape->getOrigin().x,
+		btns[BtnState::RELEASED].rectShape->getOrigin().y + btnsSizeDifference.y);
 
-	if (_btnText)
-		text = new TextConf(_pathToFont, _btnText);
-	else
-		text = new TextConf(_pathToFont, "NONE");
+	text = new TextConf(_pathToFont, _btnText);
 
 }
 
@@ -31,15 +36,15 @@ Buttons::Button::~Button()
 #endif
 }
 
-void Buttons::Button::SwitchCurrentState(BtnMode _mode)
+void Buttons::Button::SwitchCurrentState(BtnState _mode)
 {
 	curMode = _mode;
 }
 
 void Buttons::Button::Rescale(const sf::Vector2f& _newScale)
 {
-	btns[BtnMode::PRESSED].rectShape->setScale(_newScale);
-	btns[BtnMode::RELEASED].rectShape->setScale(_newScale);
+	btns[BtnState::PRESSED].rectShape->setScale(_newScale);
+	btns[BtnState::RELEASED].rectShape->setScale(_newScale);
 
 	text->btnText.setScale(_newScale);
 }
@@ -48,21 +53,20 @@ void Buttons::Button::Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos)
 {
 	auto nPosY = _pos.y;
 	auto tDif = 0.f;
-	auto dif	= getBtnSizeDif(*btns[BtnMode::RELEASED].rectShape, 
-		*btns[BtnMode::PRESSED].rectShape).y;
 
-	if (curMode == BtnMode::PRESSED)
+	if (curMode == BtnState::PRESSED)
 	{
-		nPosY	+= dif;
-		tDif	-= dif;
+		nPosY	+= btnsSizeDifference.y;
+		tDif	-= btnsSizeDifference.y;
 	}
 	else
 	{
-		nPosY -= dif;
+		nPosY -= btnsSizeDifference.y;
 	}
 
 	btns[curMode].rectShape->setPosition(_pos.x, nPosY);
-	text->btnText.setPosition(btns[curMode].rectShape->getPosition().x,
+	text->btnText.setPosition(
+		btns[curMode].rectShape->getPosition().x,
 		btns[curMode].rectShape->getPosition().y + tDif);
 	
 
@@ -70,12 +74,12 @@ void Buttons::Button::Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos)
 	_wnd.draw(text->btnText);
 }
 
-Btn Buttons::Button::GetBtnDest() const
+BtnPurpose Buttons::Button::GetBtnPurpose() const
 {
 	return whatBtn;
 }
 
-BtnMode Buttons::Button::GetBtnMode() const
+BtnState Buttons::Button::GetBtnState() const
 {
 	return curMode;
 }
@@ -89,24 +93,15 @@ bool Buttons::Button::GetTouch(float _x, float _y)
 		_y <= (btn->getPosition().y + (btn->getSize().y / 2.f))
 		)
 	{
-		if (curMode == BtnMode::PRESSED)
-			curMode = BtnMode::RELEASED;
+		if (curMode == BtnState::PRESSED)
+			curMode = BtnState::RELEASED;
 		else
-			curMode = BtnMode::PRESSED;
+			curMode = BtnState::PRESSED;
 
 		return true;
 	}
 
 	return false;
-}
-
-sf::Vector2f Buttons::Button::getBtnSizeDif(const sf::RectangleShape& _first, const sf::RectangleShape& _second)
-{
-	return 
-		sf::Vector2f(
-		_first.getSize().x - _second.getSize().x,
-		_first.getSize().y - _second.getSize().y
-	);
 }
 
 Buttons::Button::BtnConf::BtnConf(const char* _pathToBtn) : mainText{new sf::Texture()}
@@ -138,7 +133,7 @@ Buttons::Button::TextConf::TextConf(const char* _pathToFont, const std::string& 
 
 }
 
-Btn Buttons::operator++(Btn& _x)
+BtnPurpose Buttons::operator++(BtnPurpose& _x)
 {
-	return _x = static_cast<Btn>(std::underlying_type<Btn>::type(_x) + 1);
+	return _x = static_cast<BtnPurpose>(std::underlying_type<BtnPurpose>::type(_x) + 1);
 }
