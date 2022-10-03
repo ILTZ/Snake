@@ -20,7 +20,7 @@ void ScaleDeterminant::SetGameFieldSizeOnCell(const sf::Vector2u& _newSize)
     gameFieldSizeOnCell = _newSize;
 }
 
-const sf::Vector2f ScaleDeterminant::CalculateScale(const sf::Vector2f& _drawableObjSize) const
+const sf::Vector2f ScaleDeterminant::CalculateScaleForGameObject(const sf::Vector2f& _drawableObjSize) const
 {
     assert(gameFieldSize.x && gameFieldSize.y);
     assert(gameFieldSizeOnCell.x && gameFieldSizeOnCell.y);
@@ -42,6 +42,15 @@ const sf::Vector2f ScaleDeterminant::CalculateScale(const sf::Vector2f& _drawabl
 
 
     return sf::Vector2f(xFactor, yFactor);
+}
+
+const sf::Vector2f ScaleDeterminant::CalculateAbsoluteScale(const sf::Vector2u& _objectSize, const sf::Vector2u& _targetSize) const
+{
+    return sf::Vector2f(
+        static_cast<float>(_targetSize.x) / static_cast<float>(_objectSize.x),
+        static_cast<float>(_targetSize.y) / static_cast<float>(_objectSize.y)
+    );
+
 }
 
 

@@ -46,7 +46,7 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 			_wnd, 
 			sf::Vector2f(
 				buttonsPos.x,
-				buttonsPos.y / static_cast<float>(btns.size() + 2) * static_cast<float>(i + 1))
+				(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1))
 		);
 	}
 }
@@ -55,6 +55,11 @@ void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 {
 	currentScale = _newScale;
 	hudSprite->setScale(currentScale);
+}
+
+const sf::Vector2u Hud::HUD::GetHUDSize() const
+{
+	return hud->getSize();
 }
 
 std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)

@@ -71,6 +71,9 @@ namespace Hud
 		void SetScale		(const sf::Vector2f& _newScale);
 
 	public:
+		const sf::Vector2u GetHUDSize() const;
+
+	public:
 		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(float _x, float _y);
 		void RealeseButtons();
 

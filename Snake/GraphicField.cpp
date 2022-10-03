@@ -50,7 +50,7 @@ void GraphicField::GraphicField::CalculateAndSetScale(const ScaleDeterminant& _d
 {
 	for (auto& el : sprites)
 	{
-		auto newScale = _det.CalculateScale(sf::Vector2f(
+		auto newScale = _det.CalculateScaleForGameObject(sf::Vector2f(
 			el.second.mainSprite->getGlobalBounds().width,
 			el.second.mainSprite->getGlobalBounds().height));
 		el.second.mainSprite->setScale(newScale);

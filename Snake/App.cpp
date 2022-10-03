@@ -3,7 +3,6 @@
 #include "LogicField.h"
 #include "ScaleDeterminant.h"
 
-#include <iostream>
 #include <thread>
 
 App::App() : currentMode{Hud::MODE::MAIN_MENU}
@@ -28,6 +27,10 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 		configs.pathToTextFont.c_str(), 
 		wnd->get().getSize().x, 
 		wnd->get().getSize().y);
+
+	ScaleDeterminant det;
+	auto hudScale = det.CalculateAbsoluteScale(hud->GetHUDSize(), wnd->get().getSize());
+	hud->SetScale(hudScale);
 
 	wnd->SetHud(hud);
 

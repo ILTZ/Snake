@@ -105,8 +105,8 @@ void Snake::SnakeBody::DoSomeSpecifyActions()
 
 void Snake::SnakeBody::CalculateAndSetScale(const ScaleDeterminant& _det)
 {
-	auto newHeadScale = _det.CalculateScale(body[0].GetSize());
-	auto newTorsoScale = _det.CalculateScale(body[1].GetSize());
+	auto newHeadScale = _det.CalculateScaleForGameObject(body[0].GetSize());
+	auto newTorsoScale = _det.CalculateScaleForGameObject(body[1].GetSize());
 
 	for (size_t i = 0; i < body.size(); ++i)
 	{
