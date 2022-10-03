@@ -111,7 +111,7 @@ std::unique_ptr<GameSession> App::createGameSession()
 
 	gf->CalculateAndSetScale(*det);
 	snake->CalculateAndSetScale(*det);
-
+	apple->CalculateAndSetScale(*det);
 
 	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
 }

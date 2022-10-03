@@ -2,9 +2,10 @@
 #define APPLE_H
 
 #include "BaseDrawable.h"
-#include "BaseD.h"
+#include "BaseScalable.h"
 
-class Apple : public BaseDrawable::BaseDrawableCircle
+
+class Apple : public BaseDrawable::BaseDrawableCircle, public BaseScalable
 {
 private:
 
@@ -15,6 +16,8 @@ public:
 public:
 	Apple(const Apple&)				= delete;
 	Apple& operator=(const Apple&)	= delete;
+
+	void CalculateAndSetScale(const ScaleDeterminant& _det) override;
 
 private:
 

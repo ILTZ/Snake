@@ -1,5 +1,5 @@
 {
-    "RESOLUTION": [1600,1200],
+    "RESOLUTION": [1800,1400],
     "BTN_PRESS": ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed2.png",
     "BTN_RELEASE": ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
     "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
