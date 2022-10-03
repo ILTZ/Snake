@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Button.h"
-
+#include "Widget.h"
 
 namespace Hud
 {
@@ -29,6 +29,15 @@ namespace Hud
 
 	class HUD
 	{
+	private:
+		struct WidgetsProperties
+		{
+			std::unique_ptr<BaseWidget> widget;
+
+			float xPosition;
+			float yPosition;
+		};
+
 	private:
 		const std::string pathToHUD;
 		const std::string pathToBtnReleased;
@@ -69,9 +78,9 @@ namespace Hud
 		void DrawHUD		(sf::RenderWindow& _wnd);
 		void DrawButtons	(sf::RenderWindow& _wnd);
 		void SetScale		(const sf::Vector2f& _newScale);
-
+		
 	public:
-		const sf::Vector2u GetHUDSize() const;
+		const sf::Vector2u GetHUDSize()			const;
 
 	public:
 		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(float _x, float _y);
@@ -82,7 +91,7 @@ namespace Hud
 
 	private:
 		void fillBtnsArr(MODE _mode, int _lvlCount = 0);
-
+		void drawWidgets(sf::RenderWindow& _wnd);
 	};
 }
 

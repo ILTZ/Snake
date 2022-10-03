@@ -21,13 +21,17 @@ HUD::HUD(
 	hud->loadFromFile(pathToHUD.c_str());
 	hudSprite = new sf::Sprite(*hud);
 
-	hudPos.x = static_cast<float>(_wndSize.x) * 0.75f;
-	hudPos.y = static_cast<float>(_wndSize.y);
+	const float wndX = static_cast<float>(_wndSize.x);
+	const float wndY = static_cast<float>(_wndSize.y);
 
-	buttonsPos.x = static_cast<float>(_wndSize.x) / 2.f;
-	// Will be use for calculate cur position of each button vertically
-	buttonsPos.y = static_cast<float>(_wndSize.y);
+	// Last quarter of window
+	hudPos.x = wndX * 0.75f;
+	hudPos.y = 0.f;
+	hudSprite->setPosition(hudPos);
 
+	buttonsPos.x = wndX / 2.f;
+	buttonsPos.y = wndY;
+	
 	PrepButtons(MODE::MAIN_MENU);
 }
 
@@ -42,12 +46,9 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 
 	for (int i = 0; i < btns.size(); ++i)
 	{
-		btns[i]->Draw(
-			_wnd, 
-			sf::Vector2f(
-				buttonsPos.x,
-				(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1))
-		);
+		btns[i]->Draw(_wnd,
+			sf::Vector2f(buttonsPos.x,
+						(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1)));
 	}
 }
 

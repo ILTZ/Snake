@@ -29,7 +29,10 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 		wnd->get().getSize().y);
 
 	ScaleDeterminant det;
-	auto hudScale = det.CalculateAbsoluteScale(hud->GetHUDSize(), wnd->get().getSize());
+	auto hudScale = det.CalculateAbsoluteScale(hud->GetHUDSize(), 
+		sf::Vector2u(configs.width / 4, 
+			configs.height));
+
 	hud->SetScale(hudScale);
 
 	wnd->SetHud(hud);
