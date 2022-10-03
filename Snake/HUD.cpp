@@ -8,8 +8,7 @@ HUD::HUD(
 	const char* _pathToHud, 
 	const char* _pathToBtnReleased, 
 	const char* _pathToBtnPressed, 
-	const char* _pathToFont,
-	const sf::Vector2u& _wndSize) :
+	const char* _pathToFont) :
 	pathToHUD				{_pathToHud}, 
 	pathToBtnReleased		{_pathToBtnReleased}, 
 	pathToBtnPressed		{_pathToBtnPressed}, 
@@ -21,18 +20,6 @@ HUD::HUD(
 	hud->loadFromFile(pathToHUD.c_str());
 	hudSprite = new sf::Sprite(*hud);
 
-	const float wndX = static_cast<float>(_wndSize.x);
-	const float wndY = static_cast<float>(_wndSize.y);
-
-	// Last quarter of window
-	hudPos.x = wndX * 0.75f;
-	hudPos.y = 0.f;
-	hudSprite->setPosition(hudPos);
-
-	buttonsPos.x = wndX / 2.f;
-	buttonsPos.y = wndY;
-	
-	PrepButtons(MODE::MAIN_MENU);
 }
 
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
@@ -61,6 +48,27 @@ void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 const sf::Vector2u Hud::HUD::GetHUDSize() const
 {
 	return hud->getSize();
+}
+
+const sf::Vector2f Hud::HUD::GetHudPosition() const
+{
+	return hudPos;
+}
+
+void Hud::HUD::SetHudPosition(const sf::Vector2f& _newPos)
+{
+	hudPos = _newPos;
+	hudSprite->setPosition(hudPos);
+}
+
+const sf::Vector2f Hud::HUD::GetButtonsPosition() const
+{
+	return buttonsPos;
+}
+
+void Hud::HUD::SetButtonsPosition(const sf::Vector2f& _newPos)
+{
+	buttonsPos = _newPos;
 }
 
 std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)

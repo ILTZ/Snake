@@ -53,13 +53,6 @@ private:
 		const char* _pTh, 
 		const char* _pTt, 
 		auto _lvl)				const;
-	std::shared_ptr<Hud::HUD> createHUD(
-		const char* _pathToHud, 
-		const char* _pathToBtnReleased, 
-		const char* _pathToBtnPressed, 
-		const char* _pathToFont, 
-		unsigned int _width, 
-		unsigned int _height)	const;
 
 	std::shared_ptr<Apple> createApple(const char* _pTa, auto _lvl)				const;
 	std::shared_ptr<GraphicField::GraphicField> createGrapcfhicField(auto _lvl)	const;

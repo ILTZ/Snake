@@ -9,7 +9,7 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
-	// Window prop {
+	// Window configurate {
 	auto configs = loader->GetHudConfigs();
 	auto style = sf::Style::Titlebar | sf::Style::Close;
 
@@ -17,23 +17,22 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 		configs.width, 
 		configs.height, 
 		"Snake2D", 
-		style);
-	// Window prop }
+		style);// Window configurate }
+	
+	// Hud configurate {
+	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
-	auto hud = createHUD(
+	auto hud = std::make_shared<Hud::HUD>(
 		configs.pathToHud.c_str(), 
 		configs.pathToReleaseBtn.c_str(), 
 		configs.pathToPressBtn.c_str(), 
-		configs.pathToTextFont.c_str(), 
-		wnd->get().getSize().x, 
-		wnd->get().getSize().y);
-
-	ScaleDeterminant det;
-	auto hudScale = det.CalculateAbsoluteScale(hud->GetHUDSize(), 
+		configs.pathToTextFont.c_str());
+	
+	auto hudScale = det->CalculateAbsoluteScale(hud->GetHUDSize(), 
 		sf::Vector2u(configs.width / 4, 
 			configs.height));
-
-	hud->SetScale(hudScale);
+	hud->PrepButtons(currentMode);
+	hud->SetScale(hudScale);// Hud configurate }
 
 	wnd->SetHud(hud);
 
@@ -202,24 +201,6 @@ std::shared_ptr<GraphicField::GraphicField> App::createGrapcfhicField(auto _lvl)
 	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
 
 	return gf;
-}
-
-std::shared_ptr<Hud::HUD> App::createHUD(
-	const char* _pathToHud, 
-	const char* _pathToBtnReleased, 
-	const char* _pathToBtnPressed, 
-	const char* _pathToFont, 
-	unsigned int _width, 
-	unsigned int _height) const
-{
-	auto hud = std::make_shared<Hud::HUD>(
-		_pathToHud, 
-		_pathToBtnReleased, 
-		_pathToBtnPressed, 
-		_pathToFont,
-		sf::Vector2u(_width, _height));
-
-	return hud;
 }
 
 std::shared_ptr<Apple> App::createApple(const char* _pTa, auto _lvl) const

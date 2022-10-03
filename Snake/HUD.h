@@ -62,13 +62,15 @@ namespace Hud
 	private:
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
+	private:
+		unsigned int baseWidgetArraySize = 4;
+
 	public:
 		HUD(
 			const char* _pathToHud, 
 			const char* _pathToBtnReleased, 
 			const char* _pathToBtnPressed, 
-			const char* _pathToFont,
-			const sf::Vector2u& _wndSize);
+			const char* _pathToFont);
 
 	public:
 		HUD(const HUD&)				= delete;
@@ -81,13 +83,21 @@ namespace Hud
 		
 	public:
 		const sf::Vector2u GetHUDSize()			const;
+		const sf::Vector2f GetHudPosition()		const;
+		void SetHudPosition(const sf::Vector2f& _newPos);
 
 	public:
-		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(float _x, float _y);
-		void RealeseButtons();
-
-	public:
+		const sf::Vector2f GetButtonsPosition()					const;
+		void SetButtonsPosition(const sf::Vector2f& _newPos);
 		void PrepButtons(MODE _mode, int _lvlCount = 0);
+
+		void RealeseButtons();
+		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(
+			float _x,
+			float _y);
+
+	public:
+		void AddWidget(std::unique_ptr<BaseWidget> _widget);
 
 	private:
 		void fillBtnsArr(MODE _mode, int _lvlCount = 0);
