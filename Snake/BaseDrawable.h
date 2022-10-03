@@ -17,7 +17,8 @@ namespace BaseDrawable
 		SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
 		SmartPointer::SmartPointer<sf::Texture>		baseTexture;
 
-		sf::Vector2u curPos;
+		sf::Vector2u currentPosition;
+		sf::Vector2f currentScale;
 
 		float width = 0.f;
 		float height = 0.f;

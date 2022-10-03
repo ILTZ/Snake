@@ -27,7 +27,7 @@ BaseDrawable::BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _
 	baseFigure->setTexture(&*baseTexture);
 	baseFigure->setOrigin(width / 2.f, height / 2.f);
 
-	curPos = _other.curPos;
+	currentPosition = _other.currentPosition;
 }
 
 BaseDrawable::BaseDrawableCircle& BaseDrawable::BaseDrawableCircle::operator=(const BaseDrawableCircle& _other)
@@ -43,7 +43,7 @@ BaseDrawable::BaseDrawableCircle& BaseDrawable::BaseDrawableCircle::operator=(co
 	baseFigure->setTexture(&*baseTexture);
 	baseFigure->setOrigin(width / 2.f, height / 2.f);
 
-	curPos = _other.curPos;
+	currentPosition = _other.currentPosition;
 
 	return *this;
 }
@@ -55,7 +55,7 @@ BaseDrawable::BaseDrawableCircle::BaseDrawableCircle(BaseDrawableCircle&& _other
 		baseTexture = _other.baseTexture.Release();
 		baseFigure = _other.baseFigure.Release();
 
-		curPos = _other.curPos;
+		currentPosition = _other.currentPosition;
 
 		width = _other.width;
 		height = _other.height;
@@ -69,36 +69,37 @@ BaseDrawable::BaseDrawableCircle::~BaseDrawableCircle()
 void BaseDrawable::BaseDrawableCircle::SetPos(const sf::Vector2u& _newPos)
 {
 	changeRotation(_newPos);
-	curPos = _newPos;
+	currentPosition = _newPos;
 }
 
 const sf::Vector2u& BaseDrawable::BaseDrawableCircle::GetPos() const
 {
-	return curPos;
+	return currentPosition;
 }
 
 void BaseDrawable::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
 	baseFigure->setPosition(sf::Vector2f(
-		static_cast<float>(curPos.x) * width  + baseFigure->getOrigin().x,
-		static_cast<float>(curPos.y) * height + baseFigure->getOrigin().y));
+		static_cast<float>(currentPosition.x) * width + baseFigure->getRadius(),
+		static_cast<float>(currentPosition.y) * height + height / 2.f));
 
 	_wnd.draw(*baseFigure);
 }
 
 void BaseDrawable::BaseDrawableCircle::SetScale(const sf::Vector2f& _newScale)
 {
-	baseFigure->setScale(_newScale);
-
 	width	*= _newScale.x;
 	height	*= _newScale.y;
 
-	baseFigure->setOrigin(width / 2.f, height / 2.f);
+	currentScale = _newScale;
+
+	baseFigure->setRadius(baseFigure->getRadius() * _newScale.x);
+	baseFigure->setOrigin(baseFigure->getRadius(), baseFigure->getRadius());
 }
 
 const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetScale() const
 {
-	return baseFigure->getScale();
+	return currentScale;
 }
 
 const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetSize() const
@@ -108,19 +109,19 @@ const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetSize() const
 
 void BaseDrawable::BaseDrawableCircle::changeRotation(const sf::Vector2u& _newPos)
 {
-	if (_newPos.y > curPos.y)
+	if (_newPos.y > currentPosition.y)
 	{
 		baseFigure->setRotation(180.f);
 	}
-	else if (_newPos.y < curPos.y)
+	else if (_newPos.y < currentPosition.y)
 	{
 		baseFigure->setRotation(0.f);
 	}
-	else if (_newPos.x > curPos.x)
+	else if (_newPos.x > currentPosition.x)
 	{
 		baseFigure->setRotation(90.f);
 	}
-	else if (_newPos.x < curPos.x)
+	else if (_newPos.x < currentPosition.x)
 	{
 		baseFigure->setRotation(270.f);
 	}
