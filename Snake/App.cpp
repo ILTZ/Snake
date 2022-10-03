@@ -210,7 +210,8 @@ std::shared_ptr<Hud::HUD> App::createHUD(
 		_pathToHud, 
 		_pathToBtnReleased, 
 		_pathToBtnPressed, 
-		_pathToFont);
+		_pathToFont,
+		sf::Vector2u(_width, _height));
 
 	return hud;
 }

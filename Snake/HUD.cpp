@@ -21,7 +21,7 @@ HUD::HUD(
 	hud->loadFromFile(pathToHUD.c_str());
 	hudSprite = new sf::Sprite(*hud);
 
-	hudPos.x = static_cast<float>(_wndSize.x) * 0.75;
+	hudPos.x = static_cast<float>(_wndSize.x) * 0.75f;
 	hudPos.y = static_cast<float>(_wndSize.y);
 
 	buttonsPos.x = static_cast<float>(_wndSize.x) / 2.f;
@@ -42,13 +42,12 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 
 	for (int i = 0; i < btns.size(); ++i)
 	{
-		// Center of the window
-		float x = static_cast<float>(_wnd.getSize().x) / 2.f;
-		float y = static_cast<float>(_wnd.getSize().y) / static_cast<float>(btns.size() + 2);
-
-		btns[i]->Draw(_wnd, sf::Vector2f(
-			x, y * static_cast<float>(i + 1)
-		));
+		btns[i]->Draw(
+			_wnd, 
+			sf::Vector2f(
+				buttonsPos.x,
+				buttonsPos.y / static_cast<float>(btns.size() + 2) * static_cast<float>(i + 1))
+		);
 	}
 }
 
@@ -158,6 +157,7 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 	{
 		el->Rescale(currentScale);
 	}
+
 }
 
 
