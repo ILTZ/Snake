@@ -55,10 +55,10 @@ namespace Buttons
 		};
 
 	private:
-		SmartPointer::SmartPointer<TextConf> text;
-		std::unordered_map<BtnState, BtnConf> btns;
-		BtnPurpose		whatBtn;
-		BtnState curMode;
+		SmartPointer::SmartPointer<TextConf>	text;
+		std::unordered_map<BtnState, BtnConf>	btns;
+		BtnPurpose								btnPurpose;
+		BtnState								curState;
 		
 	private:
 		sf::Vector2f btnsSizeDifference;

@@ -11,8 +11,8 @@ Button::Button(
 	const char* _pathToPressedBtnTexture,
 	const char* _pathToFont, 
 	const char* _btnText) :
-	whatBtn{ _btnPurpose }, 
-	curMode{BtnState::RELEASED}
+	btnPurpose{ _btnPurpose }, 
+	curState{BtnState::RELEASED}
 {
 	btns[BtnState::RELEASED] = BtnConf(_pathToRelesedBtnTexture);
 	btns[BtnState::PRESSED] = BtnConf(_pathToPressedBtnTexture);
@@ -38,7 +38,7 @@ Buttons::Button::~Button()
 
 void Buttons::Button::SwitchCurrentState(BtnState _mode)
 {
-	curMode = _mode;
+	curState = _mode;
 }
 
 void Buttons::Button::Rescale(const sf::Vector2f& _newScale)
@@ -54,7 +54,7 @@ void Buttons::Button::Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos)
 	auto nPosY = _pos.y;
 	auto tDif = 0.f;
 
-	if (curMode == BtnState::PRESSED)
+	if (curState == BtnState::PRESSED)
 	{
 		nPosY	+= btnsSizeDifference.y;
 		tDif	-= btnsSizeDifference.y;
@@ -64,39 +64,39 @@ void Buttons::Button::Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos)
 		nPosY -= btnsSizeDifference.y;
 	}
 
-	btns[curMode].rectShape->setPosition(_pos.x, nPosY);
+	btns[curState].rectShape->setPosition(_pos.x, nPosY);
 	text->btnText.setPosition(
-		btns[curMode].rectShape->getPosition().x,
-		btns[curMode].rectShape->getPosition().y + tDif);
+		btns[curState].rectShape->getPosition().x,
+		btns[curState].rectShape->getPosition().y + tDif);
 	
 
-	_wnd.draw(*btns[curMode].rectShape);
+	_wnd.draw(*btns[curState].rectShape);
 	_wnd.draw(text->btnText);
 }
 
 BtnPurpose Buttons::Button::GetBtnPurpose() const
 {
-	return whatBtn;
+	return btnPurpose;
 }
 
 BtnState Buttons::Button::GetBtnState() const
 {
-	return curMode;
+	return curState;
 }
 
 bool Buttons::Button::GetTouch(float _x, float _y)
 {
-	auto& btn = btns[curMode].rectShape;
+	auto& btn = btns[curState].rectShape;
 	if (_x >= (btn->getPosition().x - (btn->getSize().x / 2.f)) &&
 		_x <= (btn->getPosition().x + (btn->getSize().x / 2.f)) &&
 		_y >= (btn->getPosition().y - (btn->getSize().y / 2.f)) &&
 		_y <= (btn->getPosition().y + (btn->getSize().y / 2.f))
 		)
 	{
-		if (curMode == BtnState::PRESSED)
-			curMode = BtnState::RELEASED;
+		if (curState == BtnState::PRESSED)
+			curState = BtnState::RELEASED;
 		else
-			curMode = BtnState::PRESSED;
+			curState = BtnState::PRESSED;
 
 		return true;
 	}
