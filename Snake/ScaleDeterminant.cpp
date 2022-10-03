@@ -13,22 +13,16 @@ const sf::Vector2f ScaleDeterminant::CalculateScale(const sf::Vector2f& _drawabl
     float xFactor = 1.f;
     float yFactor = 1.f;
 
-    if (_drawableObjSize.x * gameFieldSizeOnCell.x > gameFieldSize.x)
+    if (static_cast<unsigned int>(_drawableObjSize.x) * gameFieldSizeOnCell.x > gameFieldSize.x || 
+        static_cast<unsigned int>(_drawableObjSize.x) * gameFieldSizeOnCell.x < gameFieldSize.x)
     {
         xFactor = gameFieldSize.x / (_drawableObjSize.x * gameFieldSizeOnCell.x);
     }
-    else if (_drawableObjSize.x * gameFieldSizeOnCell.x < gameFieldSize.x)
-    {
-        xFactor = (_drawableObjSize.x * gameFieldSizeOnCell.x) / gameFieldSize.x;
-    }
 
-    if (_drawableObjSize.y * gameFieldSizeOnCell.y > gameFieldSize.y)
+    if (static_cast<unsigned int>(_drawableObjSize.y) * gameFieldSizeOnCell.y > gameFieldSize.y ||
+        static_cast<unsigned int>(_drawableObjSize.y) * gameFieldSizeOnCell.y < gameFieldSize.y)
     {
         yFactor = gameFieldSize.y / (_drawableObjSize.y * gameFieldSizeOnCell.y);
-    }
-    else if (_drawableObjSize.y * gameFieldSizeOnCell.y < gameFieldSize.y)
-    {
-        yFactor = (_drawableObjSize.y * gameFieldSizeOnCell.y) / gameFieldSize.y;
     }
 
 
