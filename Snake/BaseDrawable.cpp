@@ -1,6 +1,5 @@
 #include "BaseDrawable.h"
 
-
 BaseDrawable::BaseDrawableCircle::BaseDrawableCircle(const char* _pathToTexture, float _radius)
 {
 	baseTexture = new sf::Texture();
@@ -81,8 +80,8 @@ const sf::Vector2u& BaseDrawable::BaseDrawableCircle::GetPos() const
 void BaseDrawable::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
 	baseFigure->setPosition(sf::Vector2f(
-		static_cast<float>(curPos.x) * (baseFigure->getRadius() * 2.f) + baseFigure->getOrigin().x,
-		static_cast<float>(curPos.y) * (baseFigure->getRadius() * 2.f) + baseFigure->getOrigin().y));
+		static_cast<float>(curPos.x) * width  + baseFigure->getOrigin().x,
+		static_cast<float>(curPos.y) * height + baseFigure->getOrigin().y));
 
 	_wnd.draw(*baseFigure);
 }
@@ -90,17 +89,16 @@ void BaseDrawable::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
 void BaseDrawable::BaseDrawableCircle::SetScale(const sf::Vector2f& _newScale)
 {
 	baseFigure->setScale(_newScale);
+
+	width	*= _newScale.x;
+	height	*= _newScale.y;
+
+	baseFigure->setOrigin(width / 2.f, height / 2.f);
 }
 
 const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetScale() const
 {
 	return baseFigure->getScale();
-}
-
-void BaseDrawable::BaseDrawableCircle::SetNewSize(const sf::Vector2f& _newSize)
-{
-	width	= _newSize.x;
-	height	= _newSize.y;
 }
 
 const sf::Vector2f BaseDrawable::BaseDrawableCircle::GetSize() const

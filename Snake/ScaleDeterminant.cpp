@@ -17,9 +17,18 @@ const sf::Vector2f ScaleDeterminant::CalculateScale(const sf::Vector2f& _drawabl
     {
         xFactor = gameFieldSize.x / (_drawableObjSize.x * gameFieldSizeOnCell.x);
     }
+    else if (_drawableObjSize.x * gameFieldSizeOnCell.x < gameFieldSize.x)
+    {
+        xFactor = (_drawableObjSize.x * gameFieldSizeOnCell.x) / gameFieldSize.x;
+    }
+
     if (_drawableObjSize.y * gameFieldSizeOnCell.y > gameFieldSize.y)
     {
-        yFactor = gameFieldSize.y / (_drawableObjSize.y * gameFieldSizeOnCell.y - gameFieldSize.y);
+        yFactor = gameFieldSize.y / (_drawableObjSize.y * gameFieldSizeOnCell.y);
+    }
+    else if (_drawableObjSize.y * gameFieldSizeOnCell.y < gameFieldSize.y)
+    {
+        yFactor = (_drawableObjSize.y * gameFieldSizeOnCell.y) / gameFieldSize.y;
     }
 
 

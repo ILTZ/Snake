@@ -27,6 +27,8 @@ namespace BaseDrawable
 		BaseDrawableCircle(const BaseDrawableCircle& _other);
 		BaseDrawableCircle& operator=(const BaseDrawableCircle& _other);
 		BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept;
+
+	public:
 		virtual ~BaseDrawableCircle();
 
 	public:
@@ -37,7 +39,6 @@ namespace BaseDrawable
 
 	public:
 		const sf::Vector2u& GetPos() const;
-		void SetNewSize(const sf::Vector2f& _newSize);
 		const sf::Vector2f GetSize() const;
 
 	private:
