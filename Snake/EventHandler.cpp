@@ -70,12 +70,12 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 
 	if (_mouseEvent.value().isPressed)
 	{
-		hud->CheckButtons(static_cast<float>(_mouseEvent.value().wPos.x), 
+		hud->CheckButtonsTouch(static_cast<float>(_mouseEvent.value().wPos.x), 
 			static_cast<float>(_mouseEvent.value().wPos.y));
 	}
 	else
 	{
-		auto button = hud->CheckButtons(static_cast<float>(_mouseEvent.value().wPos.x), 
+		auto button = hud->CheckButtonsTouch(static_cast<float>(_mouseEvent.value().wPos.x), 
 			static_cast<float>(_mouseEvent.value().wPos.y));
 		hud->RealeseButtons();
 

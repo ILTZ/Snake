@@ -73,8 +73,8 @@ namespace Buttons
 		~Button();
 
 	public:
-		Button(const Button&) = delete;
-		Button& operator=(const Button&) = delete;
+		Button(const Button&)				= delete;
+		Button& operator=(const Button&)	= delete;
 
 	public:
 		// Switch PRESSED || RELEASED
@@ -84,7 +84,7 @@ namespace Buttons
 
 	public:
 		BtnPurpose GetBtnPurpose()		const;
-		BtnState GetBtnState()	const;
+		BtnState GetBtnState()			const;
 		bool GetTouch(float _x, float _y);
 
 	};

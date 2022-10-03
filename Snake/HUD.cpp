@@ -1,14 +1,32 @@
 #include "HUD.h"
 
+#include <cassert>
+
 using namespace Hud;
 
-HUD::HUD(const char* _pathToHud, const char* _pathToBtnReleased, const char* _pathToBtnPressed, const char* _pathToFont) :
-	pathToHUD{_pathToHud}, pathToBtnReleased{_pathToBtnReleased}, pathToBtnPressed{_pathToBtnPressed}, pathToFont{_pathToFont}
-{
-	hud = new sf::Texture();
-	hud->loadFromFile(pathToHUD.c_str());
+HUD::HUD(
+	const char* _pathToHud, 
+	const char* _pathToBtnReleased, 
+	const char* _pathToBtnPressed, 
+	const char* _pathToFont,
+	const sf::Vector2u& _wndSize) :
+	pathToHUD				{_pathToHud}, 
+	pathToBtnReleased		{_pathToBtnReleased}, 
+	pathToBtnPressed		{_pathToBtnPressed}, 
+	pathToFont				{_pathToFont},
+	hud						{new sf::Texture()},
+	currentScale			{1.f,1.f}
 
+{
+	hud->loadFromFile(pathToHUD.c_str());
 	hudSprite = new sf::Sprite(*hud);
+
+	hudPos.x = static_cast<float>(_wndSize.x) * 0.75;
+	hudPos.y = static_cast<float>(_wndSize.y);
+
+	buttonsPos.x = static_cast<float>(_wndSize.x) / 2.f;
+	// Will be use for calculate cur position of each button vertically
+	buttonsPos.y = static_cast<float>(_wndSize.y);
 
 	PrepButtons(MODE::MAIN_MENU);
 }
@@ -34,37 +52,13 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 	}
 }
 
-void Hud::HUD::SetSpriteScale(unsigned int _width, unsigned int _height)
+void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 {
-	
-
-	if (hud->getSize().x > _width || hud->getSize().y > _height)
-	{
-		float xFactor = 1.f;
-		float yFactor = 1.f;
-
-		if (hud->getSize().x > _width)
-		{
-			xFactor -= static_cast<float>(hud->getSize().x - _width) / 
-				static_cast<float>(hud->getSize().x);
-		}
-		if (hud->getSize().y > _height)
-		{
-			yFactor -= static_cast<float>(hud->getSize().y - _height) /
-				static_cast<float>(hud->getSize().y);
-		}
-
-		std::lock_guard<std::mutex> lk(defMutex);
-		hudSprite->setScale(xFactor, yFactor);
-		for (auto& el : btns)
-		{
-			el->Rescale(sf::Vector2f(xFactor, yFactor));
-		}
-	}
-
+	currentScale = _newScale;
+	hudSprite->setScale(currentScale);
 }
 
-std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtons(float _x, float _y)
+std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)
 {
 	std::optional <Buttons::BtnPurpose> temp;
 
@@ -92,7 +86,6 @@ void Hud::HUD::PrepButtons(MODE _mode, int _lvlCount)
 	fillBtnsArr(_mode, _lvlCount);
 }
 
-
 void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 {
 	std::lock_guard<std::mutex> lock(defMutex);
@@ -114,6 +107,8 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 
 	case Hud::MODE::LVL_SELECT:
 			{
+				assert(_lvlCount);
+
 				Buttons::BtnPurpose tempB = Buttons::BtnPurpose::LVL_1;
 				for (int i = 0; i < _lvlCount; ++i)
 				{
@@ -126,12 +121,6 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 					pathToFont.c_str(), "Back"));
 			}	
-			break;
-
-	case Hud::MODE::GAME_PROCESS:
-			{
-
-			}
 			break;
 
 	case Hud::MODE::LEADERS:
@@ -163,6 +152,11 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 
 	default:
 		break;
+	}
+
+	for (auto& el : btns)
+	{
+		el->Rescale(currentScale);
 	}
 }
 

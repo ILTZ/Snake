@@ -43,6 +43,14 @@ namespace Hud
 		SmartPointer::SmartPointer<sf::Sprite>	hudSprite;
 
 	private:
+		// Its position will always be in the last quarter of the screen
+		sf::Vector2f hudPos;
+		// Its position will always be in the midle of the screen
+		sf::Vector2f buttonsPos;
+		// Need for recreated buttons
+		sf::Vector2f currentScale;
+
+	private:
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
 	public:
@@ -50,7 +58,8 @@ namespace Hud
 			const char* _pathToHud, 
 			const char* _pathToBtnReleased, 
 			const char* _pathToBtnPressed, 
-			const char* _pathToFont);
+			const char* _pathToFont,
+			const sf::Vector2u& _wndSize);
 
 	public:
 		HUD(const HUD&)				= delete;
@@ -59,11 +68,11 @@ namespace Hud
 	public:
 		void DrawHUD		(sf::RenderWindow& _wnd);
 		void DrawButtons	(sf::RenderWindow& _wnd);
-		void SetSpriteScale	(unsigned int _width, unsigned int _height);
+		void SetScale		(const sf::Vector2f& _newScale);
 
 	public:
-		std::optional <Buttons::BtnPurpose>	CheckButtons(float _x, float _y);
-		void							RealeseButtons();
+		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(float _x, float _y);
+		void RealeseButtons();
 
 	public:
 		void PrepButtons(MODE _mode, int _lvlCount = 0);
