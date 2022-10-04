@@ -8,6 +8,7 @@
 #include "BaseDrawable.h"
 
 #include "ScoreWidget.h"
+#include "TimeWidget.h"
 
 class GameSession
 {
@@ -18,7 +19,8 @@ private:
 	std::shared_ptr<Logic::LogicField>				logicField;
 	std::shared_ptr<BaseD>							apple;
 
-	std::shared_ptr<ScoreWidget> scoreWidget;
+	std::shared_ptr<ScoreWidget>	scoreWidget;
+	std::shared_ptr<TimeWidget>		timeWidget;
 
 private:
 	Timer	timer;
@@ -28,6 +30,9 @@ private:
 private:
 	unsigned int	curPoints;
 	bool			appleOnBoard;
+
+private:
+	bool pause = false;
 
 public:
 	GameSession(

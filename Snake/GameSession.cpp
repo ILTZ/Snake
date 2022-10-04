@@ -30,7 +30,13 @@ GameSession::GameSession(
 		configs.pathToBaseWidget.c_str(),
 		configs.pathToTextFont.c_str());
 
+	timeWidget = std::make_shared<TimeWidget>(
+		configs.pathToBaseWidget.c_str(),
+		configs.pathToTextFont.c_str(),
+		100.f);
+
 	_wnd->GetHUD().AddWidget(scoreWidget);
+	_wnd->GetHUD().AddWidget(timeWidget);
 }
 
 GameSession::~GameSession()
@@ -44,6 +50,8 @@ Hud::MODE GameSession::GameFrame(Hud::MODE _curMode)
 	// if player press <exit> key on window
 	if (!wnd->PollEvents())
 		return Hud::MODE::EXIT;
+
+	timeWidget->WorkCycle(!pause);
 
 	spawnApple(appleOnBoard);
 
@@ -105,7 +113,6 @@ void GameSession::spawnApple(bool _appleOnBoard)
 	apple->SetPos(sf::Vector2u(x, y));
 	appleOnBoard = true;
 }
-
 
 void GameSession::wndDraw(Hud::MODE _curMode)
 {
