@@ -7,6 +7,9 @@ class Timer
 {
 private:
 	std::chrono::steady_clock::time_point last;
+
+private:
+	std::chrono::steady_clock::time_point lastInterval;
 	float tempTime;
 
 public:
@@ -19,9 +22,10 @@ public:
 public:
 	float Mark();
 	float Peek() const;
-	bool CheckInterval(float _nTime);
+	bool CheckInterval(float _timeInSeconds);
 
 private:
+	float MarkForInterval();
 };
 
 

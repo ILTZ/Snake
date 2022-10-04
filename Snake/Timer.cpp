@@ -3,6 +3,7 @@
 Timer::Timer() : tempTime{0.f}
 {
     last = std::chrono::steady_clock::now();
+	lastInterval = std::chrono::steady_clock::now();
 }
 
 float Timer::Mark()
@@ -21,13 +22,22 @@ float Timer::Peek() const
 
 bool Timer::CheckInterval(float _nTime)
 {
-	tempTime += Peek();
+	tempTime += MarkForInterval();
 	if (tempTime >= _nTime)
 	{
-		last = std::chrono::steady_clock::now();
+		lastInterval = std::chrono::steady_clock::now();
 		tempTime = 0.f;
 		return true;
 	}
 
 	return false;
+}
+
+float Timer::MarkForInterval()
+{
+	const auto old = lastInterval;
+	lastInterval = std::chrono::steady_clock::now();
+	const std::chrono::duration<float> frameTime = lastInterval - old;
+
+	return frameTime.count();
 }
