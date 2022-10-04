@@ -86,6 +86,17 @@ std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float 
 	return temp;
 }
 
+void Hud::HUD::AddWidget(std::shared_ptr<BaseWidget> _widget)
+{
+	assert(widgetArr.size() != baseWidgetArraySize);
+
+	widgetArr.emplace_back(_widget);
+	widgetArr.back()->SetScale(currentScale);
+	widgetArr.back()->SetPosition(sf::Vector2f(
+		hudPos.x + hudSprite->getGlobalBounds().width / 2.f,
+		));
+}
+
 void Hud::HUD::RealeseButtons()
 {
 	for (auto& el : btns)

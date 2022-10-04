@@ -2,6 +2,7 @@
 #define HUD_H
 
 #include <vector>
+#include <vector>
 #include <string>
 #include <optional>
 #include <mutex>
@@ -65,7 +66,8 @@ namespace Hud
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
 	private:
-		unsigned int baseWidgetArraySize = 4;
+		const unsigned int baseWidgetArraySize = 4;
+		std::vector<std::shared_ptr<BaseWidget>> widgetArr;
 
 	public:
 		HUD(
@@ -99,7 +101,7 @@ namespace Hud
 			float _y);
 
 	public:
-		void AddWidget(std::unique_ptr<BaseWidget> _widget);
+		void AddWidget(std::shared_ptr<BaseWidget> _widget);
 
 	private:
 		void fillBtnsArr(MODE _mode, int _lvlCount = 0);

@@ -159,6 +159,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="ScaleDeterminant.cpp" />
+    <ClCompile Include="ScoreWidget.cpp" />
     <ClCompile Include="SnakeBody.cpp" />
     <ClCompile Include="SnakeParticle.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="ScaleDeterminant.h" />
+    <ClInclude Include="ScoreWidget.h" />
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="SnakeBody.h" />
     <ClInclude Include="SnakeParticle.h" />

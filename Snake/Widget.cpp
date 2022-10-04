@@ -34,3 +34,17 @@ BaseWidget::BaseWidget(BaseWidget&& _other) noexcept
 		rectangleShape	= _other.rectangleShape.Release();
 	}
 }
+
+BaseWidget::~BaseWidget()
+{
+}
+
+void BaseWidget::SetScale(const sf::Vector2f& _newScale)
+{
+	rectangleShape->setScale(_newScale);
+}
+
+void BaseWidget::SetPosition(const sf::Vector2f& _newPosition)
+{
+	rectangleShape->setPosition(_newPosition);
+}

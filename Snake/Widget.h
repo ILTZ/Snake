@@ -3,12 +3,11 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "SmartPointer.h"
-#include "BaseD.h"
 
-
-class BaseWidget : public BaseD
+class BaseWidget
 {
 protected:
 	SmartPointer::SmartPointer<sf::Texture>			mainTexture;
@@ -19,19 +18,15 @@ public:
 	BaseWidget(const BaseWidget& _other);
 	BaseWidget(BaseWidget&& _other)				noexcept;
 
+	virtual ~BaseWidget();
+
 public:
 	BaseWidget& operator=(const BaseWidget&)	= delete;
 
 public:
-	virtual void Draw(sf::RenderWindow& _wnd)		= 0;
-	virtual void SetPos(const sf::Vector2u& _pos)	= 0;
-
-	virtual void SetSpriteScale(
-		unsigned int _width,
-		unsigned int _height,
-		unsigned int _lwlW,
-		unsigned int _lwlH)	= 0;
-
+	virtual void Draw(sf::RenderWindow& _target)				= 0;
+	virtual void SetScale(const sf::Vector2f& _newScale)		= 0;
+	virtual void SetPosition(const sf::Vector2f& _newPosition)	= 0;
 
 };
 

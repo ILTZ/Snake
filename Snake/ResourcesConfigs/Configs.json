@@ -3,7 +3,7 @@
     "BTN_PRESS": ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed2.png",
     "BTN_RELEASE": ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
     "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
-    "HUD": ".\\ResourcesConfigs\\HUD\\HUD_.png",
+    "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
     "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png",
