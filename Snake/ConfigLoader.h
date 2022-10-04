@@ -21,6 +21,7 @@ namespace CLoader
 		BTN_RELEASE = 7,
 		TEXT_FONT	= 8,
 		HUD			= 9,
+		BASE_WIDGET = 10,
 	};
 
 	enum class LVLs
@@ -52,6 +53,7 @@ namespace CLoader
 		std::string pathToReleaseBtn;
 		std::string pathToTextFont;
 		std::string pathToHud;
+		std::string pathToBaseWidget;
 	};
 
 	class ConfigLoader

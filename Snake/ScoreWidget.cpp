@@ -8,7 +8,7 @@ ScoreWidget::ScoreWidget(const char* _pathToTexture,
 	scoresText = new BaseText(
 		_pathToFont,
 		std::to_string(scores),
-		25u,
+		static_cast<unsigned int>(rectangleShape->getSize().y / 2.f),
 		sf::Color::Red,
 		sf::Text::Italic
 	);

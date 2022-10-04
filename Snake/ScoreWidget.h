@@ -4,7 +4,7 @@
 #include "Widget.h"
 #include "BaseText.h"
 
-class ScoreWidget : BaseWidget
+class ScoreWidget : public BaseWidget
 {
 private:
 	unsigned int scores;

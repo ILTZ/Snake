@@ -25,6 +25,7 @@ HUD::HUD(
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
 {
 	_wnd.draw(*hudSprite);
+	drawWidgets(_wnd);
 }
 
 void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
@@ -92,9 +93,6 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseWidget> _widget)
 
 	widgetArr.emplace_back(_widget);
 	widgetArr.back()->SetScale(currentScale);
-	widgetArr.back()->SetPosition(sf::Vector2f(
-		hudPos.x + hudSprite->getGlobalBounds().width / 2.f,
-		));
 }
 
 void Hud::HUD::RealeseButtons()
@@ -181,6 +179,19 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 	for (auto& el : btns)
 	{
 		el->Rescale(currentScale);
+	}
+}
+
+void Hud::HUD::drawWidgets(sf::RenderWindow& _wnd)
+{
+	for (size_t i = 0; i < widgetArr.size(); ++i)
+	{
+		widgetArr[i]->SetPosition(
+			sf::Vector2f(
+				hudPos.x + hudSprite->getGlobalBounds().width / 2.f,
+				(buttonsPos.y / static_cast<float>(widgetArr.size() + 1)) * static_cast<float>(i + 1)));
+
+		widgetArr[i]->Draw(_wnd);
 	}
 }
 

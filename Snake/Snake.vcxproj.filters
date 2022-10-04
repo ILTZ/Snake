@@ -13,6 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\HUD">
+      <UniqueIdentifier>{1e82f437-1371-4b2d-8f32-39227e1dbda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\HUD\Widgets">
+      <UniqueIdentifier>{11fa3664-79b2-459b-938f-7d67399e684e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\AbstractBase">
+      <UniqueIdentifier>{aecb1333-f215-47a9-a016-92544f7cb28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Window">
+      <UniqueIdentifier>{561eef3a-5f80-458a-9e65-8b8fb05d4c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Window\HUD">
+      <UniqueIdentifier>{b43197bb-9c5c-4fb9-9417-6f0c9aa46bc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Window\HUD\Widgets">
+      <UniqueIdentifier>{27ec6def-ede0-46d9-9ece-51966b9bdf2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\RealBase">
+      <UniqueIdentifier>{00028d66-f59a-4214-b6e8-686e4024eda7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Utilites">
+      <UniqueIdentifier>{aefb94b1-5e67-4a67-8347-cf2c4f04a3f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,12 +72,6 @@
     <ClCompile Include="LevelConstructor.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -72,39 +90,30 @@
     <ClCompile Include="Random.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Widget.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="ScaleDeterminant.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="BaseText.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <Filter>Исходные файлы\HUD\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeWidget.cpp">
+      <Filter>Исходные файлы\HUD\Widgets</Filter>
+    </ClCompile>
     <ClCompile Include="ScoreWidget.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\HUD\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Исходные файлы\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Исходные файлы\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainWindow.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="App.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlBase.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseDrawable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SmartPointer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="SnakeParticle.h">
@@ -113,31 +122,13 @@
     <ClInclude Include="SnakeBody.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigLoader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseD.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicField.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="LevelConstructor.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="EventHandler.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePawn.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="LogicField.h">
@@ -149,26 +140,65 @@
     <ClInclude Include="Apple.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="BasePlayerControlObj.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Widget.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
-    <ClInclude Include="ScaleDeterminant.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseScalable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseText.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="TimeWidget.h">
+      <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="ScoreWidget.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Файлы заголовков\Window\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Файлы заголовков\Window\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseD.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScalable.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePawn.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePlayerControlObj.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Файлы заголовков\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Файлы заголовков\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Файлы заголовков\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDrawable.h">
+      <Filter>Файлы заголовков\RealBase</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlBase.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseText.h">
+      <Filter>Файлы заголовков\RealBase</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleDeterminant.h">
+      <Filter>Файлы заголовков\Utilites</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPointer.h">
+      <Filter>Файлы заголовков\Utilites</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Файлы заголовков\Utilites</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigLoader.h">
+      <Filter>Файлы заголовков\Utilites</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

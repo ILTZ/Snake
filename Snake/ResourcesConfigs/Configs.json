@@ -4,6 +4,7 @@
     "BTN_RELEASE": ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
     "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
     "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
+    "BASE_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
     "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png",

@@ -31,15 +31,6 @@ namespace Hud
 	class HUD
 	{
 	private:
-		struct WidgetsProperties
-		{
-			std::unique_ptr<BaseWidget> widget;
-
-			std::string vectorText;
-			const sf::Vector2f widgetPos;
-		};
-
-	private:
 		const std::string pathToHUD;
 		const std::string pathToBtnReleased;
 		const std::string pathToBtnPressed;
@@ -66,7 +57,7 @@ namespace Hud
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
 	private:
-		const unsigned int baseWidgetArraySize = 4;
+		const unsigned int baseWidgetArraySize = 5;
 		std::vector<std::shared_ptr<BaseWidget>> widgetArr;
 
 	public:

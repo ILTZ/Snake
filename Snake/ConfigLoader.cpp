@@ -16,6 +16,7 @@ ConfigLoader::ConfigLoader(const std::string& _path) :
 	jsonKeys[ConfigKey::BTN_RELEASE]	= "BTN_RELEASE";
 	jsonKeys[ConfigKey::TEXT_FONT]		= "TEXT_FONT";
 	jsonKeys[ConfigKey::HUD]			= "HUD";
+	jsonKeys[ConfigKey::BASE_WIDGET] = "BASE_WIDGET";
 }
 
 nlohmann::json CLoader::ConfigLoader::getParseFile(const char* _pathToConfig)
@@ -186,6 +187,7 @@ HudConfigs CLoader::ConfigLoader::GetHudConfigs(const char* _pathToConfig)
 	temp.pathToReleaseBtn = file[jsonKeys[ConfigKey::BTN_RELEASE]];
 	temp.pathToTextFont = file[jsonKeys[ConfigKey::TEXT_FONT]];
 	temp.pathToHud = file[jsonKeys[ConfigKey::HUD]];
+	temp.pathToBaseWidget = file[jsonKeys[ConfigKey::BASE_WIDGET]];
 
 	return temp;
 }

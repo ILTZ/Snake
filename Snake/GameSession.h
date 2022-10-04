@@ -7,6 +7,8 @@
 #include "BasePlayerControlObj.h"
 #include "BaseDrawable.h"
 
+#include "ScoreWidget.h"
+
 class GameSession
 {
 private:
@@ -15,6 +17,8 @@ private:
 	std::shared_ptr<BaseD>							gp;
 	std::shared_ptr<Logic::LogicField>				logicField;
 	std::shared_ptr<BaseD>							apple;
+
+	std::shared_ptr<ScoreWidget> scoreWidget;
 
 private:
 	Timer	timer;

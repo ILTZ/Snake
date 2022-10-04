@@ -163,6 +163,7 @@
     <ClCompile Include="SnakeBody.cpp" />
     <ClCompile Include="SnakeParticle.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TimeWidget.cpp" />
     <ClCompile Include="Widget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +194,7 @@
     <ClInclude Include="SnakeBody.h" />
     <ClInclude Include="SnakeParticle.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TimeWidget.h" />
     <ClInclude Include="Widget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

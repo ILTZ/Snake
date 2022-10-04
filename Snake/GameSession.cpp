@@ -1,6 +1,8 @@
 #include "GameSession.h"
 
 #include "Random.h"
+#include "ConfigLoader.h"
+
 #include <iostream>
 
 GameSession::GameSession(
@@ -20,7 +22,15 @@ GameSession::GameSession(
 	speedMyltiply{1.f}, 
 	appleOnBoard{false}
 {
-	
+	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	auto configs = loader->GetHudConfigs();
+
+
+	scoreWidget = std::make_shared<ScoreWidget>(
+		configs.pathToBaseWidget.c_str(),
+		configs.pathToTextFont.c_str());
+
+	_wnd->GetHUD().AddWidget(scoreWidget);
 }
 
 GameSession::~GameSession()
@@ -71,6 +81,7 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 			snake->DoSomeSpecifyActions();
 			appleOnBoard = false;
 			++curPoints;
+			scoreWidget->IncreaseScores();
 		}
 	}
 }
