@@ -24,8 +24,6 @@ public:
 
 	void IncreaseScores();
 
-private:
-	void baseScoresTextInit();
 };
 
 

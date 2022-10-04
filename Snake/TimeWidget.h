@@ -10,7 +10,16 @@ private:
 	Timer time;
 
 public:
-	TimeWidget();
+	TimeWidget(
+		const char* _pathToTexture,
+		const char* _pathToFont);
+	TimeWidget(const TimeWidget& _other);
+	TimeWidget(TimeWidget&& _other) noexcept;
+
+public:
+	void Draw(sf::RenderWindow& _wnd)					override;
+	void SetScale(const sf::Vector2f& _newScale)		override;
+	void SetPosition(const sf::Vector2f& _newPosition)	override;
 
 private:
 

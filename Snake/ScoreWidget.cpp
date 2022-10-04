@@ -53,7 +53,3 @@ void ScoreWidget::IncreaseScores()
 	scoresText->GetText().setString(std::to_string(scores));
 }
 
-void ScoreWidget::baseScoresTextInit()
-{
-	
-}
