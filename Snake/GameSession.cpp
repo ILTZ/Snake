@@ -17,7 +17,7 @@ GameSession::GameSession(
 	gp{_gp}, 
 	logicField{_lField}, 
 	apple{_apple},
-	stepTime{10.f}, 
+	stepTime{1.f}, 
 	curPoints{0}, 
 	speedMyltiply{1.f}, 
 	appleOnBoard{false}
@@ -33,7 +33,7 @@ GameSession::GameSession(
 	timeWidget = std::make_shared<TimeWidget>(
 		configs.pathToBaseWidget.c_str(),
 		configs.pathToTextFont.c_str(),
-		100.f);
+		1.f);
 
 	_wnd->GetHUD().AddWidget(scoreWidget);
 	_wnd->GetHUD().AddWidget(timeWidget);
