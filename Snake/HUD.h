@@ -34,8 +34,8 @@ namespace Hud
 		{
 			std::unique_ptr<BaseWidget> widget;
 
-			float xPosition;
-			float yPosition;
+			std::string vectorText;
+			const sf::Vector2f widgetPos;
 		};
 
 	private:
@@ -58,6 +58,8 @@ namespace Hud
 		sf::Vector2f buttonsPos;
 		// Need for recreated buttons
 		sf::Vector2f currentScale;
+
+	private:
 
 	private:
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;

@@ -24,8 +24,13 @@ Button::Button(
 		btns[BtnState::RELEASED].rectShape->getOrigin().x,
 		btns[BtnState::RELEASED].rectShape->getOrigin().y + btnsSizeDifference.y);
 
-	text = new TextConf(_pathToFont, _btnText);
-
+	text = new BaseText(
+		_pathToFont,
+		_btnText,
+		25u,
+		sf::Color::Black,
+		sf::Text::Italic
+	);
 }
 
 Buttons::Button::~Button()
@@ -46,7 +51,7 @@ void Buttons::Button::Rescale(const sf::Vector2f& _newScale)
 	btns[BtnState::PRESSED].rectShape->setScale(_newScale);
 	btns[BtnState::RELEASED].rectShape->setScale(_newScale);
 
-	text->btnText.setScale(_newScale);
+	text->SetScale(_newScale);
 }
 
 void Buttons::Button::Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos)
@@ -65,13 +70,13 @@ void Buttons::Button::Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos)
 	}
 
 	btns[curState].rectShape->setPosition(_pos.x, nPosY);
-	text->btnText.setPosition(
+	text->SetPos(sf::Vector2f(
 		btns[curState].rectShape->getPosition().x,
-		btns[curState].rectShape->getPosition().y + tDif);
+		btns[curState].rectShape->getPosition().y + tDif));
 	
 
 	_wnd.draw(*btns[curState].rectShape);
-	_wnd.draw(text->btnText);
+	text->Draw(_wnd);
 }
 
 BtnPurpose Buttons::Button::GetBtnPurpose() const
@@ -115,22 +120,6 @@ Buttons::Button::BtnConf::BtnConf(const char* _pathToBtn) : mainText{new sf::Tex
 	rectShape->setTexture(&*mainText);
 	rectShape->setOrigin(static_cast<float>(mainText->getSize().x) / 2.f,
 						 static_cast<float>(mainText->getSize().y) / 2.f);
-}
-
-Buttons::Button::TextConf::TextConf(const char* _pathToFont, const std::string& _text) 
-{
-	textFont.loadFromFile(_pathToFont);
-
-	btnText.setString(_text);
-	btnText.setFont(textFont);
-	btnText.setCharacterSize(25);
-	btnText.setFillColor(sf::Color::Black);
-	btnText.setStyle(sf::Text::Italic);
-
-	btnText.setOrigin(
-		btnText.getGlobalBounds().width / 2.f,
-		btnText.getGlobalBounds().height);
-
 }
 
 BtnPurpose Buttons::operator++(BtnPurpose& _x)

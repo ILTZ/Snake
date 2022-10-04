@@ -3,12 +3,11 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include <unordered_map>
 #include <optional>
 
 #include "SmartPointer.h"
+#include "BaseText.h"
 
 namespace Buttons
 {
@@ -46,16 +45,8 @@ namespace Buttons
 			SmartPointer::SmartPointer<sf::RectangleShape>	rectShape;
 		};
 
-		struct TextConf
-		{
-			TextConf(const char* _pathToFont, const std::string& _text);
-
-			sf::Text btnText;
-			sf::Font textFont;
-		};
-
 	private:
-		SmartPointer::SmartPointer<TextConf>	text;
+		SmartPointer::SmartPointer<BaseText>	text;
 		std::unordered_map<BtnState, BtnConf>	btns;
 		BtnPurpose								btnPurpose;
 		BtnState								curState;

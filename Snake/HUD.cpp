@@ -171,7 +171,6 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 	{
 		el->Rescale(currentScale);
 	}
-
 }
 
 

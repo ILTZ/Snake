@@ -19,6 +19,7 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 		"Snake2D", 
 		style);// Window configurate }
 	
+
 	// Hud configurate {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
@@ -31,11 +32,12 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 	auto hudScale = det->CalculateAbsoluteScale(hud->GetHUDSize(), 
 		sf::Vector2u(configs.width / 4, 
 			configs.height));
-	hud->PrepButtons(currentMode);
-	hud->SetScale(hudScale);// Hud configurate }
+
+	hud->SetScale(hudScale);
+	hud->PrepButtons(currentMode);// Hud configurate }
+	
 
 	wnd->SetHud(hud);
-
 	handler.SetHud(hud);
 }
 
