@@ -93,6 +93,7 @@ namespace Hud
 
 	public:
 		void AddWidget(std::shared_ptr<BaseWidget> _widget);
+		void ClearWidgets();
 
 	private:
 		void fillBtnsArr(MODE _mode, int _lvlCount = 0);

@@ -43,6 +43,9 @@
     <Filter Include="Файлы заголовков\Game\Snake">
       <UniqueIdentifier>{1cb825f2-225a-425c-9d05-89784f6ba8ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Utilites">
+      <UniqueIdentifier>{88bda3fa-89b5-446b-95a5-8cfe82dd3f67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,19 +72,10 @@
     <ClCompile Include="SnakeBody.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigLoader.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicField.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="LevelConstructor.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="EventHandler.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="LogicField.cpp">
@@ -91,12 +85,6 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Apple.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Random.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ScaleDeterminant.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="BaseText.cpp">
@@ -116,6 +104,21 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Исходные файлы\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Исходные файлы\Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigLoader.cpp">
+      <Filter>Исходные файлы\Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelConstructor.cpp">
+      <Filter>Исходные файлы\Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Исходные файлы\Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleDeterminant.cpp">
+      <Filter>Исходные файлы\Utilites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

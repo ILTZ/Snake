@@ -43,6 +43,7 @@ GameSession::~GameSession()
 {
 	snake.reset();
 	gp.reset();
+	wnd->GetHUD().ClearWidgets();
 }
 
 Hud::MODE GameSession::GameFrame(Hud::MODE _curMode)

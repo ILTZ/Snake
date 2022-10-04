@@ -95,6 +95,11 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseWidget> _widget)
 	widgetArr.back()->SetScale(currentScale);
 }
 
+void Hud::HUD::ClearWidgets()
+{
+	widgetArr.clear();
+}
+
 void Hud::HUD::RealeseButtons()
 {
 	for (auto& el : btns)
