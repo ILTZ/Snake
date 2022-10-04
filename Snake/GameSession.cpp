@@ -17,7 +17,7 @@ GameSession::GameSession(
 	gp{_gp}, 
 	logicField{_lField}, 
 	apple{_apple},
-	stepTime{1.f}, 
+	stepTime{0.5f}, 
 	curPoints{0}, 
 	speedMyltiply{1.f}, 
 	appleOnBoard{false}
