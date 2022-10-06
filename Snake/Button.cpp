@@ -49,14 +49,15 @@ void Buttons::Button::SetState(BtnState _mode)
 
 void Buttons::Button::SetScale(const sf::Vector2f& _newScale)
 {
-	btns[BtnState::PRESSED].rectShape->setScale(_newScale);
-	btns[BtnState::RELEASED].rectShape->setScale(_newScale);
-
 	for (auto& el : btns)
 	{
+		el.second.rectShape->setScale(_newScale);
 		el.second.width		*= _newScale.x;
 		el.second.height	*= _newScale.y;
 	}
+
+	btnsSizeDifference.x *= _newScale.x;
+	btnsSizeDifference.y *= _newScale.y;
 
 	text->SetScale(_newScale);
 }
