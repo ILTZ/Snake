@@ -36,6 +36,6 @@ void ScoreWidget::SetPosition(const sf::Vector2f& _newPosition)
 void ScoreWidget::IncreaseScores()
 {
 	++scores;
-	widgetText->GetText().setString(std::string("Scores:") + std::to_string(scores));
+	widgetText->SetString(std::string("Scores:") + std::to_string(scores));
 }
 

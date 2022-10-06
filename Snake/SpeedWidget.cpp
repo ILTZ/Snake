@@ -24,7 +24,7 @@ SpeedWidget::SpeedWidget(SpeedWidget&& _other) noexcept :
 void SpeedWidget::IncreaseViewSpeed(float _delta)
 {
 	speedMultiply += _delta;
-	widgetText->GetText().setString(getSpeedString());
+	widgetText->SetString(getSpeedString());
 }
 
 void SpeedWidget::Draw(sf::RenderWindow& _target)

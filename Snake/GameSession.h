@@ -26,9 +26,10 @@ private:
 
 private:
 	Timer	timer;
-	float	stepTime			= 0.5f;
-	float	speedMyltiply		= 1.f;
-	float	deltaSpeed			= 0.25f;
+	float			stepTime				= 0.75f;
+	float			speedMyltiply			= 1.f;
+	const float		botBorderSpeedMultiply	= 0.25f;
+	float			deltaSpeed				= 0.25f;
 
 private:
 	unsigned int	curPoints		= 0u;

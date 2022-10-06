@@ -57,7 +57,7 @@ namespace Hud
 		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
 
 	private:
-		const unsigned int baseWidgetArraySize = 5;
+		const unsigned int baseWidgetArraySize = 3;
 		std::vector<std::shared_ptr<BaseWidget>> widgetArr;
 
 	public:

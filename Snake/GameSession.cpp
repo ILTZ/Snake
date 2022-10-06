@@ -93,9 +93,12 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 			++curPoints;
 			scoreWidget->IncreaseScores();
 
+			if (speedMyltiply <= (botBorderSpeedMultiply + botBorderSpeedMultiply / 2.f))
+				return; // No more speed
+
 			if (curPoints > 0u && (curPoints % 10u == 0u))
 			{
-				speedMyltiply *= deltaSpeed;
+				speedMyltiply -= deltaSpeed;
 				speedWidget->IncreaseViewSpeed(deltaSpeed);
 			}
 

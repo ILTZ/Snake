@@ -44,6 +44,6 @@ void BaseText::SetString(const std::string& _newString)
 {
 	message.setString(_newString);
 	message.setOrigin(
-		message.getGlobalBounds().width / 2.f,
-		message.getGlobalBounds().height);
+		message.getLocalBounds().width / 2.f,
+		message.getLocalBounds().height);
 }

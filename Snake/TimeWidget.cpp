@@ -1,5 +1,7 @@
 #include "TimeWidget.h"
 
+#include <sstream>
+
 TimeWidget::TimeWidget(
     const char* _pathToTexture, 
     const char* _pathToFont,
@@ -9,8 +11,8 @@ TimeWidget::TimeWidget(
     minuts{ 0u },
     seconds{ 0u }
 {
-    widgetText->SetString(std::string("Time:") + timeToString());
     widgetText->GetText().setFillColor(sf::Color::Cyan);
+    widgetText->SetString(std::string("Time:") + timeToString());
 }
 
 TimeWidget::TimeWidget(TimeWidget&& _other) noexcept : 
@@ -48,27 +50,27 @@ void TimeWidget::WorkCycle(bool _isWork)
     if (time.CheckInterval(timerInterval))
     {
         increaseTime();
-        widgetText->SetString(std::string("Time:")+
-            timeToString());
+        widgetText->SetString(std::string("Time:")+timeToString());
     }
 }
 
 std::string TimeWidget::timeToString()
 {
-    std::string temp;
+    std::ostringstream ss;
+    
     if (minuts < 10u)
     {
-        temp += "0";
+        ss << 0u;
     }
-    temp += std::to_string(minuts) += ":";
+    ss << minuts << ';';
 
     if (seconds < 10u)
     {
-        temp += "0";
+        ss << 0u;
     }
-    temp += std::to_string(seconds);
+    ss << seconds;
 
-    return temp;
+    return ss.str();
 }
 
 void TimeWidget::increaseTime()
