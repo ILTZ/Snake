@@ -44,8 +44,8 @@ namespace Buttons
 			SmartPointer::SmartPointer<sf::Texture>			mainText;
 			SmartPointer::SmartPointer<sf::RectangleShape>	rectShape;
 
-			float width;
-			float height;
+			float width		= 0.f;
+			float height	= 0.f;
 		};
 
 	private:
