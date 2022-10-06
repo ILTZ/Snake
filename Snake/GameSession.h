@@ -26,13 +26,13 @@ private:
 
 private:
 	Timer	timer;
-	float	stepTime;
-	float	speedMyltiply;
-	float	deltaSpeed;
+	float	stepTime			= 0.5f;
+	float	speedMyltiply		= 1.f;
+	float	deltaSpeed			= 0.25f;
 
 private:
-	unsigned int	curPoints;
-	bool			appleOnBoard;
+	unsigned int	curPoints		= 0u;
+	bool			appleOnBoard	= false;
 
 private:
 	bool pause = false;

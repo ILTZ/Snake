@@ -1,8 +1,8 @@
 {
     "mode":     "auto",
-    "width":    30,
-    "height":   30,
-    "startPos": [15,15],
+    "width":    20,
+    "height":   20,
+    "startPos": [10,10],
     "florPath": ".\\ResourcesConfigs\\Flor\\flor.png",
     "wallPath": ".\\ResourcesConfigs\\Shape\\wall.png",
     "waterPath":".\\ResourcesConfigs\\Water\\water.png",

@@ -1,13 +1,13 @@
 {
-    "RESOLUTION": [1600,1200],
+    "RESOLUTION": [1200,800],
     "BTN_PRESS": ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed2.png",
     "BTN_RELEASE": ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
     "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
     "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
     "BASE_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
-    "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\snakeHead.png",
-    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\snakeTorso.png",
+    "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\head2.png",
+    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\body2.png",
     "LVL_PATH": ".\\ResourcesConfigs\\LVLs"
     
 }

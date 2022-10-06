@@ -16,12 +16,7 @@ GameSession::GameSession(
 	snake{_pawn}, 
 	gp{_gp}, 
 	logicField{_lField}, 
-	apple{_apple},
-	stepTime{0.5f}, 
-	curPoints{0}, 
-	speedMyltiply{1.f},
-	deltaSpeed{0.25f},
-	appleOnBoard{false}
+	apple{_apple}
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 	auto configs = loader->GetHudConfigs();
@@ -98,9 +93,9 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 			++curPoints;
 			scoreWidget->IncreaseScores();
 
-			if (curPoints > 0 && (curPoints % 10 == 0))
+			if (curPoints > 0u && (curPoints % 10u == 0u))
 			{
-				speedMyltiply -= deltaSpeed;
+				speedMyltiply *= deltaSpeed;
 				speedWidget->IncreaseViewSpeed(deltaSpeed);
 			}
 
