@@ -4,24 +4,18 @@ TimeWidget::TimeWidget(
     const char* _pathToTexture, 
     const char* _pathToFont,
     float _timeInterval) :
-    BaseWidget{_pathToTexture},
+    InfoWidget{_pathToTexture, _pathToFont},
     timerInterval{_timeInterval},
     minuts{ 0u },
     seconds{ 0u }
 {
-    timeText = new BaseText(
-        _pathToFont,
-        timeToString(),
-        static_cast<unsigned int>(rectangleShape->getGlobalBounds().height / 2.f),
-        sf::Color::Cyan,
-        sf::Text::Italic);
-
+    widgetText->SetString(timeToString());
+    widgetText->GetText().setFillColor(sf::Color::Cyan);
 }
 
 TimeWidget::TimeWidget(TimeWidget&& _other) noexcept : 
-    BaseWidget{std::move(_other)},
+    InfoWidget{std::move(_other)},
     timerInterval{_other.timerInterval},
-    timeText{_other.timeText.Release()},
     minuts{ 0u },
     seconds{0u}
 {
@@ -31,19 +25,19 @@ TimeWidget::TimeWidget(TimeWidget&& _other) noexcept :
 void TimeWidget::Draw(sf::RenderWindow& _wnd)
 {
     _wnd.draw(*rectangleShape);
-    timeText->Draw(_wnd);
+    widgetText->Draw(_wnd);
 }
 
 void TimeWidget::SetScale(const sf::Vector2f& _newScale)
 {
     rectangleShape->setScale(_newScale);
-    timeText->SetScale(_newScale);
+    widgetText->SetScale(_newScale);
 }
 
 void TimeWidget::SetPosition(const sf::Vector2f& _newPosition)
 {
     rectangleShape->setPosition(_newPosition);
-    timeText->SetPos(_newPosition);
+    widgetText->SetPos(_newPosition);
 }
 
 void TimeWidget::WorkCycle(bool _isWork)
@@ -54,7 +48,8 @@ void TimeWidget::WorkCycle(bool _isWork)
     if (time.CheckInterval(timerInterval))
     {
         increaseTime();
-        timeText->GetText().setString(timeToString());
+        widgetText->SetString(std::string("Time:")+
+            timeToString());
     }
 }
 

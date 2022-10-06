@@ -1,16 +1,15 @@
 #ifndef TIME_WIDGET_H
 #define TIME_WIDGET_H
 
-#include "Widget.h"
-#include "Timer.h"
-#include "BaseText.h"
 
-class TimeWidget : public BaseWidget
+#include "Timer.h"
+#include "InfoWidget.h"
+
+class TimeWidget : public InfoWidget
 {
 private:
 	Timer time;
 	const float timerInterval;
-	SmartPointer::SmartPointer<BaseText> timeText;
 
 	unsigned int minuts;
 	unsigned int seconds;
