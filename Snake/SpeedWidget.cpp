@@ -1,11 +1,13 @@
 #include "SpeedWidget.h"
+#include <cmath>
 
 SpeedWidget::SpeedWidget(const char* _pathToTexture, const char* _pathToFont) :
 	InfoWidget{_pathToTexture, _pathToFont},
 	speedMultiply{1.f}
 {
 	widgetText->GetText().setFillColor(sf::Color::Green);
-	widgetText->GetText().setString(std::string("Speed x") + std::to_string(speedMultiply));
+	widgetText->SetString(std::string("Speed x") + 
+		std::to_string(std::round(speedMultiply * 100)/ 100));
 }
 
 SpeedWidget::SpeedWidget(SpeedWidget&& _other) noexcept :
@@ -18,7 +20,8 @@ SpeedWidget::SpeedWidget(SpeedWidget&& _other) noexcept :
 void SpeedWidget::IncreaseViewSpeed(float _delta)
 {
 	speedMultiply += _delta;
-	widgetText->GetText().setString(std::string("Speed x") + std::to_string(speedMultiply));
+	widgetText->GetText().setString(std::string("Speed x") + 
+		std::to_string(std::round(speedMultiply * 100) / 100));
 }
 
 void SpeedWidget::Draw(sf::RenderWindow& _target)

@@ -9,6 +9,7 @@
 
 #include "ScoreWidget.h"
 #include "TimeWidget.h"
+#include "SpeedWidget.h"
 
 class GameSession
 {
@@ -21,11 +22,13 @@ private:
 
 	std::shared_ptr<ScoreWidget>	scoreWidget;
 	std::shared_ptr<TimeWidget>		timeWidget;
+	std::shared_ptr<SpeedWidget>	speedWidget;
 
 private:
 	Timer	timer;
 	float	stepTime;
 	float	speedMyltiply;
+	float	deltaSpeed;
 
 private:
 	unsigned int	curPoints;

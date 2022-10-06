@@ -19,7 +19,8 @@ GameSession::GameSession(
 	apple{_apple},
 	stepTime{0.5f}, 
 	curPoints{0}, 
-	speedMyltiply{1.f}, 
+	speedMyltiply{1.f},
+	deltaSpeed{0.25f},
 	appleOnBoard{false}
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
@@ -35,7 +36,13 @@ GameSession::GameSession(
 		configs.pathToTextFont.c_str(),
 		1.f);
 
+	speedWidget = std::make_shared<SpeedWidget>(
+		configs.pathToBaseWidget.c_str(),
+		configs.pathToTextFont.c_str()
+		);
+
 	_wnd->GetHUD().AddWidget(scoreWidget);
+	_wnd->GetHUD().AddWidget(speedWidget);
 	_wnd->GetHUD().AddWidget(timeWidget);
 }
 
@@ -90,6 +97,13 @@ void GameSession::DoLogic(Hud::MODE& _curMode)
 			appleOnBoard = false;
 			++curPoints;
 			scoreWidget->IncreaseScores();
+
+			if (curPoints > 0 && (curPoints % 10 == 0))
+			{
+				speedMyltiply -= deltaSpeed;
+				speedWidget->IncreaseViewSpeed(deltaSpeed);
+			}
+
 		}
 	}
 }
