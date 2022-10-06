@@ -163,6 +163,7 @@
     <ClCompile Include="ScoreWidget.cpp" />
     <ClCompile Include="SnakeBody.cpp" />
     <ClCompile Include="SnakeParticle.cpp" />
+    <ClCompile Include="SpeedWidget.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimeWidget.cpp" />
     <ClCompile Include="Widget.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="SnakeBody.h" />
     <ClInclude Include="SnakeParticle.h" />
+    <ClInclude Include="SpeedWidget.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimeWidget.h" />
     <ClInclude Include="Widget.h" />
