@@ -9,7 +9,7 @@ TimeWidget::TimeWidget(
     minuts{ 0u },
     seconds{ 0u }
 {
-    widgetText->SetString(timeToString());
+    widgetText->SetString(std::string("Time:") + timeToString());
     widgetText->GetText().setFillColor(sf::Color::Cyan);
 }
 
