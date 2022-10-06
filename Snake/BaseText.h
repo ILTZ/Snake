@@ -32,7 +32,7 @@ public:
 	void Draw(sf::RenderWindow& _wnd);
 	void SetPos(const sf::Vector2f& _newPos);
 	void SetScale(const sf::Vector2f& _newScale);
-
+	void SetString(const std::string& _newString);
 };
 
 

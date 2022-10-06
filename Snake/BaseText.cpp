@@ -39,3 +39,11 @@ void BaseText::SetScale(const sf::Vector2f& _newScale)
 {
 	message.setScale(_newScale);
 }
+
+void BaseText::SetString(const std::string& _newString)
+{
+	message.setString(_newString);
+	message.setOrigin(
+		message.getGlobalBounds().width / 2.f,
+		message.getGlobalBounds().height);
+}
