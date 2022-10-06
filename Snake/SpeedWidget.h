@@ -24,6 +24,9 @@ public:
 	void SetScale(const sf::Vector2f& _newScale)		override;
 	void SetPosition(const sf::Vector2f& _newPosition)	override;
 
+private:
+	const std::string getSpeedString() const;
+
 };
 
 
