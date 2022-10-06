@@ -99,26 +99,31 @@ std::unique_ptr<GameSession> App::createGameSession()
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 	
 	auto level = loader->GetLVL(lvlSelected);
-
 	auto sp = loader->GetSnakeProp();
-	auto snake = createSnake(
+
+	// Snake {
+	auto snake = std::make_shared<Snake::SnakeBody>(
 		sp.pathToHead.c_str(),
-		sp.pathToTorso.c_str(), 
-		level);
+		sp.pathToTorso.c_str());
+
+	snake->SetPos(sf::Vector2u(
+		level->GetConfigs().startPosX,
+		level->GetConfigs().startPosY)); // Snake }
+
 	handler.SetPawn(snake);
 
+	auto gf = std::make_shared<GraphicField::GraphicField>(level);
+	auto lf = std::make_shared<Logic::LogicField>(level, snake);
+	auto apple = std::make_shared<Apple>(sp.pathToAple.c_str());
+
+	// Rescale all game objects {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant(
 		sf::Vector2u(wnd->get().getSize().x / 4 * 3, wnd->get().getSize().y),
 		sf::Vector2u(level->GetConfigs().width, level->GetConfigs().height));
 
-
-	auto gf = createGrapcfhicField(level);
-	auto lf = std::make_shared<Logic::LogicField>(level, snake);
-	auto apple = createApple(sp.pathToAple.c_str(), level);
-
 	gf->CalculateAndSetScale(*det);
 	snake->CalculateAndSetScale(*det);
-	apple->CalculateAndSetScale(*det);
+	apple->CalculateAndSetScale(*det); // Rescale all game objects }
 
 	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
 }
@@ -182,34 +187,6 @@ void App::drawMenu()
 
 	wnd->get().display();
 
-}
-
-std::shared_ptr<Snake::SnakeBody> App::createSnake(
-	const char* _pTh, 
-	const char* _pTt, 
-	auto _lvl) const
-{
-	auto snake = std::make_shared<Snake::SnakeBody>(_pTh, _pTt);
-
-	snake->SetPos(sf::Vector2u(
-		_lvl->GetConfigs().startPosX,
-		_lvl->GetConfigs().startPosY));
-
-	return snake;
-}
-
-std::shared_ptr<GraphicField::GraphicField> App::createGrapcfhicField(auto _lvl) const
-{
-	auto gf = std::make_shared<GraphicField::GraphicField>(_lvl);
-
-	return gf;
-}
-
-std::shared_ptr<Apple> App::createApple(const char* _pTa, auto _lvl) const
-{
-	auto apple = std::make_shared<Apple>(_pTa);
-	
-	return apple;
 }
 
 void App::setCurMode(Hud::MODE _mode)

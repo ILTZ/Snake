@@ -49,15 +49,6 @@ private:
 	void drawMenu();
 
 private:
-	std::shared_ptr<Snake::SnakeBody> createSnake(
-		const char* _pTh, 
-		const char* _pTt, 
-		auto _lvl)				const;
-
-	std::shared_ptr<Apple> createApple(const char* _pTa, auto _lvl)				const;
-	std::shared_ptr<GraphicField::GraphicField> createGrapcfhicField(auto _lvl)	const;
-
-private:
 	void setCurMode(Hud::MODE _mode);
 
 };

@@ -8,7 +8,7 @@ bool Logic::LogicField::SetApple(const sf::Vector2u& _applePos)
 	if (checkFieldLimits(_applePos))
 	{
 		if (curlvl->GetBlock(_applePos.x, _applePos.y) == LVLConstructor::LVLblock::FLOR &&
-			checkIntersectionWithPawn(_applePos))
+			!checkIntersectionWithPawn(_applePos))
 		{
 			applePos = _applePos;
 
