@@ -113,7 +113,7 @@ std::unique_ptr<GameSession> App::createGameSession()
 
 
 	auto gf = createGrapcfhicField(level);
-	auto lf = std::make_shared<Logic::LogicField>(level);
+	auto lf = std::make_shared<Logic::LogicField>(level, snake);
 	auto apple = createApple(sp.pathToAple.c_str(), level);
 
 	gf->CalculateAndSetScale(*det);
