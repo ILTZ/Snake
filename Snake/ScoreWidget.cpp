@@ -2,22 +2,15 @@
 
 ScoreWidget::ScoreWidget(const char* _pathToTexture,
 	const char* _pathToFont) :
-	BaseWidget{ _pathToTexture },
+	InfoWidget{_pathToTexture, _pathToFont},
 	scores{0u}
 {
-	scoresText = new BaseText(
-		_pathToFont,
-		std::to_string(scores),
-		static_cast<unsigned int>(rectangleShape->getSize().y / 2.f),
-		sf::Color::Red,
-		sf::Text::Italic
-	);
+	widgetText->SetString(std::to_string(scores));
 }
 
 ScoreWidget::ScoreWidget(ScoreWidget&& _other) noexcept :
-	BaseWidget{std::move(_other)}, 
-	scores{_other.scores},
-	scoresText{_other.scoresText.Release()}
+	InfoWidget{std::move(_other)}, 
+	scores{_other.scores}
 {
 	
 }
@@ -25,24 +18,24 @@ ScoreWidget::ScoreWidget(ScoreWidget&& _other) noexcept :
 void ScoreWidget::Draw(sf::RenderWindow& _wnd)
 {
 	_wnd.draw(*rectangleShape);
-	scoresText->Draw(_wnd);
+	widgetText->Draw(_wnd);
 }
 
 void ScoreWidget::SetScale(const sf::Vector2f& _newScale)
 {
 	rectangleShape->setScale(_newScale);
-	scoresText->SetScale(_newScale);
+	widgetText->SetScale(_newScale);
 }
 
 void ScoreWidget::SetPosition(const sf::Vector2f& _newPosition)
 {
 	rectangleShape->setPosition(_newPosition);
-	scoresText->SetPos(_newPosition);
+	widgetText->SetPos(_newPosition);
 }
 
 void ScoreWidget::IncreaseScores()
 {
 	++scores;
-	scoresText->GetText().setString(std::to_string(scores));
+	widgetText->GetText().setString(std::to_string(scores));
 }
 

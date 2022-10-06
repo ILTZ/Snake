@@ -1,14 +1,12 @@
 #ifndef SCOREWIDGET_H
 #define SCOREWIDGET_H
 
-#include "Widget.h"
-#include "BaseText.h"
+#include "InfoWidget.h"
 
-class ScoreWidget : public BaseWidget
+class ScoreWidget : public InfoWidget
 {
 private:
 	unsigned int scores;
-	SmartPointer::SmartPointer<BaseText> scoresText;
 
 public:
 	ScoreWidget(
