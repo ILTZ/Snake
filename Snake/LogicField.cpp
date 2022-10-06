@@ -28,8 +28,11 @@ const unsigned int Logic::LogicField::GetLVLH() const
 	return lvlH;
 }
 
-Logic::LogicField::LogicField(std::shared_ptr<LVLConstructor::Level> _lvl) : 
+Logic::LogicField::LogicField(
+	std::shared_ptr<LVLConstructor::Level> _lvl,
+	std::shared_ptr<Snake::SnakeBody> _snake) :
 	curlvl{_lvl}, 
+	snake{_snake},
 	lvlW{_lvl->GetConfigs().width},
 	lvlH{_lvl->GetConfigs().height}
 {
@@ -66,13 +69,19 @@ bool Logic::LogicField::checkFieldLimits(const sf::Vector2u& _pos)
 	return false;
 }
 
-bool Logic::LogicField::CheckSnakeCollisions(std::shared_ptr<BaseP::BasePawn> _snake)
+bool Logic::LogicField::checkIntersectionWithPawn(const sf::Vector2u& _obj)
 {
-	auto snake = std::dynamic_pointer_cast<Snake::SnakeBody>(_snake);
+	for (size_t i = 0; i < snake->GetCurLen(); ++i)
+	{
+		if (_obj == snake->GetPosOnIndex(static_cast<unsigned int>(i)))
+			return true;
+	}
 
-	if (!snake)
-		return false;
+	return false;
+}
 
+bool Logic::LogicField::CheckSnakeCollisions()
+{
 	sf::Vector2u head = snake->GetHeadPos();
 	for (size_t i = 1; i < snake->GetCurLen(); ++i)
 	{
