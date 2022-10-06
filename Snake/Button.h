@@ -43,6 +43,9 @@ namespace Buttons
 
 			SmartPointer::SmartPointer<sf::Texture>			mainText;
 			SmartPointer::SmartPointer<sf::RectangleShape>	rectShape;
+
+			float width;
+			float height;
 		};
 
 	private:
@@ -53,6 +56,7 @@ namespace Buttons
 		
 	private:
 		sf::Vector2f btnsSizeDifference;
+		sf::Vector2f btnPosition;
 
 	public:
 		Button(
@@ -69,15 +73,18 @@ namespace Buttons
 
 	public:
 		// Switch PRESSED || RELEASED
-		void SwitchCurrentState(BtnState _mode);
-		void Rescale(const sf::Vector2f& _newScale);
-		void Draw(sf::RenderWindow& _wnd, const sf::Vector2f& _pos);
+		void SetState(BtnState _mode);
+		void SetScale(const sf::Vector2f& _newScale);
+		void SetPosition(const sf::Vector2f& _newPosition);
+		void Draw(sf::RenderWindow& _wnd);
 
 	public:
 		BtnPurpose GetBtnPurpose()		const;
 		BtnState GetBtnState()			const;
 		bool GetTouch(float _x, float _y);
-
+	
+	private:
+		void calculateAndSetBtnsShift();
 	};
 }
 

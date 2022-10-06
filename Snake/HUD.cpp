@@ -34,9 +34,7 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 
 	for (int i = 0; i < btns.size(); ++i)
 	{
-		btns[i]->Draw(_wnd,
-			sf::Vector2f(buttonsPos.x,
-						(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1)));
+		btns[i]->Draw(_wnd);
 	}
 }
 
@@ -70,6 +68,13 @@ const sf::Vector2f Hud::HUD::GetButtonsPosition() const
 void Hud::HUD::SetButtonsPosition(const sf::Vector2f& _newPos)
 {
 	buttonsPos = _newPos;
+
+	for (size_t i = 0; i < btns.size(); ++i)
+	{
+		btns[i]->SetPosition(sf::Vector2f(
+			buttonsPos.x,
+			(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1)));
+	}
 }
 
 std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)
@@ -93,6 +98,14 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseWidget> _widget)
 
 	widgetArr.emplace_back(_widget);
 	widgetArr.back()->SetScale(currentScale);
+
+	for (size_t i = 0; i < widgetArr.size(); ++i)
+	{
+		widgetArr[i]->SetPosition(
+			sf::Vector2f(
+				hudPos.x + hudSprite->getGlobalBounds().width / 2.f,
+				(buttonsPos.y / static_cast<float>(widgetArr.size() + 1)) * static_cast<float>(i + 1)));
+	}
 }
 
 void Hud::HUD::ClearWidgets()
@@ -104,7 +117,7 @@ void Hud::HUD::RealeseButtons()
 {
 	for (auto& el : btns)
 	{
-		el->SwitchCurrentState(Buttons::BtnState::RELEASED);
+		el->SetState(Buttons::BtnState::RELEASED);
 	}
 }
 
@@ -183,7 +196,14 @@ void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
 
 	for (auto& el : btns)
 	{
-		el->Rescale(currentScale);
+		el->SetScale(currentScale);
+	}
+
+	for (size_t i = 0; i < btns.size(); ++i)
+	{
+		btns[i]->SetPosition(sf::Vector2f(
+			buttonsPos.x,
+			(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1)));
 	}
 }
 
@@ -191,11 +211,6 @@ void Hud::HUD::drawWidgets(sf::RenderWindow& _wnd)
 {
 	for (size_t i = 0; i < widgetArr.size(); ++i)
 	{
-		widgetArr[i]->SetPosition(
-			sf::Vector2f(
-				hudPos.x + hudSprite->getGlobalBounds().width / 2.f,
-				(buttonsPos.y / static_cast<float>(widgetArr.size() + 1)) * static_cast<float>(i + 1)));
-
 		widgetArr[i]->Draw(_wnd);
 	}
 }

@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Исходные файлы\HUD">
-      <UniqueIdentifier>{1e82f437-1371-4b2d-8f32-39227e1dbda8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\HUD\Widgets">
-      <UniqueIdentifier>{11fa3664-79b2-459b-938f-7d67399e684e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\AbstractBase">
       <UniqueIdentifier>{aecb1333-f215-47a9-a016-92544f7cb28f}</UniqueIdentifier>
     </Filter>
@@ -46,64 +40,52 @@
     <Filter Include="Исходные файлы\Utilites">
       <UniqueIdentifier>{88bda3fa-89b5-446b-95a5-8cfe82dd3f67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\AbstractBase">
+      <UniqueIdentifier>{8607bd7e-9e2f-4218-94a4-ee67d0112810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\RealBase">
+      <UniqueIdentifier>{c764a701-f183-48d2-86e4-04864758b373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Window">
+      <UniqueIdentifier>{7d6c9ba5-ad8e-4a96-9b72-7e2383b55b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Window\HUD">
+      <UniqueIdentifier>{1e82f437-1371-4b2d-8f32-39227e1dbda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Window\HUD\Widgets">
+      <UniqueIdentifier>{11fa3664-79b2-459b-938f-7d67399e684e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Game">
+      <UniqueIdentifier>{7f85e47c-7c6c-4812-ba25-b13238445871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Game\Snake">
+      <UniqueIdentifier>{a21a3067-a110-42a3-9482-e25de2a04765}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="App.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseDrawable.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="SnakeParticle.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="SnakeBody.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicField.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="LogicField.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSession.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Apple.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseText.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Widget.cpp">
-      <Filter>Исходные файлы\HUD\Widgets</Filter>
+      <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="TimeWidget.cpp">
-      <Filter>Исходные файлы\HUD\Widgets</Filter>
+      <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="ScoreWidget.cpp">
-      <Filter>Исходные файлы\HUD\Widgets</Filter>
+      <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Исходные файлы\HUD</Filter>
+      <Filter>Исходные файлы\Window\HUD</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Исходные файлы\HUD</Filter>
+      <Filter>Исходные файлы\Window\HUD</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Исходные файлы\Utilites</Filter>
@@ -119,6 +101,39 @@
     </ClCompile>
     <ClCompile Include="ScaleDeterminant.cpp">
       <Filter>Исходные файлы\Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDrawable.cpp">
+      <Filter>Исходные файлы\RealBase</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseText.cpp">
+      <Filter>Исходные файлы\RealBase</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Исходные файлы\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Исходные файлы\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Исходные файлы\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeBody.cpp">
+      <Filter>Исходные файлы\Game\Snake</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeParticle.cpp">
+      <Filter>Исходные файлы\Game\Snake</Filter>
+    </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>Исходные файлы\Game\Snake</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSession.cpp">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicField.cpp">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicField.cpp">
+      <Filter>Исходные файлы\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

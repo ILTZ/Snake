@@ -52,8 +52,6 @@ Hud::MODE GameSession::GameFrame(Hud::MODE _curMode)
 	if (!wnd->PollEvents())
 		return Hud::MODE::EXIT;
 
-	timeWidget->WorkCycle(!pause);
-
 	spawnApple(appleOnBoard);
 
 	wndDraw(_curMode);
@@ -71,6 +69,7 @@ void GameSession::MovePawn(Hud::MODE _curMode)
 	// if gemeState != PAUSE
 	if (_curMode == Hud::MODE::GAME_PROCESS)
 	{
+		timeWidget->WorkCycle(!pause);
 		if (timer.CheckInterval(stepTime * speedMyltiply))
 			snake->Move();
 	}
