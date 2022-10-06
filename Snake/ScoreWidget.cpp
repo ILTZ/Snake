@@ -14,13 +14,6 @@ ScoreWidget::ScoreWidget(const char* _pathToTexture,
 	);
 }
 
-ScoreWidget::ScoreWidget(const ScoreWidget& _other) : 
-	BaseWidget{ _other }, 
-	scores{ _other.scores }
-{
-	
-}
-
 ScoreWidget::ScoreWidget(ScoreWidget&& _other) noexcept :
 	BaseWidget{std::move(_other)}, 
 	scores{_other.scores},

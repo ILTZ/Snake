@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "SmartPointer.h"
+#include "BaseText.h"
 
 class BaseWidget
 {

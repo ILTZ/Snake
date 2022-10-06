@@ -14,7 +14,7 @@ public:
 	ScoreWidget(
 		const char* _pathToTexture,
 		const char* _pathToFont);
-	ScoreWidget(const ScoreWidget& _other);
+	ScoreWidget(const ScoreWidget& _other)	= delete;
 	ScoreWidget(ScoreWidget&& _other)		noexcept;
 
 public:

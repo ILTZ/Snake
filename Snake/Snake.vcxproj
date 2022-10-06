@@ -151,6 +151,7 @@
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GraphicField.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InfoWidget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
     <ClCompile Include="LogicField.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GraphicField.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="InfoWidget.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="LogicField.h" />

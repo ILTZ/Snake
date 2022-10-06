@@ -61,17 +61,14 @@
     <Filter Include="Исходные файлы\Game\Snake">
       <UniqueIdentifier>{a21a3067-a110-42a3-9482-e25de2a04765}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\App">
+      <UniqueIdentifier>{03dd7c99-f944-4f47-9e6b-f5926209b876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\App">
+      <UniqueIdentifier>{6d9fef22-cb4b-4423-a85c-4b7aefae8880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Widget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
@@ -135,14 +132,20 @@
     <ClCompile Include="LogicField.cpp">
       <Filter>Исходные файлы\Game</Filter>
     </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Исходные файлы\App</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Исходные файлы\Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы\App</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoWidget.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Widget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
@@ -223,6 +226,15 @@
     </ClInclude>
     <ClInclude Include="LogicField.h">
       <Filter>Файлы заголовков\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Файлы заголовков\App</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Файлы заголовков\Utilites</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoWidget.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
