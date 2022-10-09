@@ -16,8 +16,8 @@ class EventHandler
 public:
 	struct HandleResult
 	{
-		Hud::MODE		gameMode;
-		CLoader::LVLs   lvl;
+		APP_STATE::States	gameMode;
+		CLoader::LVLs		lvl;
 	};
 
 private:
@@ -44,7 +44,7 @@ public:
 		const std::optional<Keyboard::KeyEvent>&_keyEvent, 
 		APP_STATE::AppState& _state);
 
-	std::optional<HandleResult> HandleMouseEvent(
+	std::optional<CLoader::LVLs> HandleMouseEvent(
 		const std::optional<MS::MouseEvent>& _mouseEvent, 
 		APP_STATE::AppState& _state);
 

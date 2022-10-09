@@ -19,7 +19,9 @@ void EventHandler::SetHud(std::shared_ptr<Hud::HUD> _hud)
 	hud = _hud;
 }
 
-void EventHandler::HandleKeyEvent(const std::optional<Keyboard::KeyEvent>& _keyEvent, APP_STATE::AppState& _state)
+void EventHandler::HandleKeyEvent(
+	const std::optional<Keyboard::KeyEvent>& _keyEvent, 
+	APP_STATE::AppState& _state)
 {
 	if (!_state.CheckMovebleStates() || !_keyEvent.has_value())
 		return;
@@ -60,12 +62,12 @@ void EventHandler::HandleKeyEvent(const std::optional<Keyboard::KeyEvent>& _keyE
 	}
 }
 
-std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, APP_STATE::AppState& _state)
+std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
+	const std::optional<MS::MouseEvent>& _mouseEvent, 
+	APP_STATE::AppState& _state)
 {
-	std::optional<EventHandler::HandleResult> temp;
-
 	if (!_mouseEvent.has_value() || _state.CheckMovebleStates())
-		return temp;
+		return {};
 
 	if (_mouseEvent.value().isPressed)
 	{
@@ -84,18 +86,13 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 		if (button.has_value())
 		{
 			using namespace APP_STATE;
-
-			temp = EventHandler::HandleResult();
-
 			using bMod = Buttons::BtnPurpose;
-			using hMod = Hud::MODE;
 
 			switch (button.value())
 			{
 			case bMod::START:
 				{
 					_state.SetState(States::LVL_SELECT);
-					//temp.value().gameMode = Hud::MODE::LVL_SELECT;
 					SmartPointer::SmartPointer<CLoader::ConfigLoader> loader 
 						= new CLoader::ConfigLoader();
 
@@ -121,26 +118,28 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 				hud->PrepButtons(Hud::MODE::LEADERS);
 				break;
 
+
+			// Lvl selected {
 			case bMod::LVL_1:
-				temp.value().gameMode = hMod::LVL_SELECTED;
-				temp.value().lvl = CLoader::LVLs::LVL_1;
-				break;
+				_state.SetState(States::LVL_SELECTED);
+				return CLoader::LVLs::LVL_1;
+				
 			case bMod::LVL_2:
-				temp.value().gameMode = hMod::LVL_SELECTED;
-				temp.value().lvl = CLoader::LVLs::LVL_2;
-				break;
+				_state.SetState(States::LVL_SELECTED);
+				return CLoader::LVLs::LVL_2;
+				
 			case bMod::LVL_3:
-				temp.value().gameMode = hMod::LVL_SELECTED;
-				temp.value().lvl = CLoader::LVLs::LVL_3;
-				break;
+				_state.SetState(States::LVL_SELECTED);
+				return CLoader::LVLs::LVL_3;
+				
 			case bMod::LVL_4:
-				temp.value().gameMode = hMod::LVL_SELECTED;
-				temp.value().lvl = CLoader::LVLs::LVL_4;
-				break;
+				_state.SetState(States::LVL_SELECTED);
+				return CLoader::LVLs::LVL_4;
+				
 			case bMod::LVL_5:
-				temp.value().gameMode = hMod::LVL_SELECTED;
-				temp.value().lvl = CLoader::LVLs::LVL_5;
-				break;
+				_state.SetState(States::LVL_SELECTED);
+				return CLoader::LVLs::LVL_5;	// Lvl selected }
+					
 
 			case bMod::MAIN_MENU:
 				_state.SetState(States::MAIN_MENU);
@@ -153,8 +152,7 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 		}
 	}
 
-	return temp;
-	
+	return {};
 }
 
 

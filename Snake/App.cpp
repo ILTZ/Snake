@@ -118,14 +118,9 @@ void App::handleEvents()
 		handler.HandleKeyEvent(wnd->GetKeyboardEvent(), appState);
 		auto resM = handler.HandleMouseEvent(wnd->GetMouseEvent(), appState);
 
-
 		if (resM.has_value())
 		{
-			if (resM.value().gameMode == Hud::MODE::LVL_SELECTED)
-			{
-				lvlSelected = resM.value().lvl;
-				appState.SetState(APP_STATE::States::LVL_SELECTED);
-			}
+			lvlSelected = resM.value();
 		}
 	}
 }
