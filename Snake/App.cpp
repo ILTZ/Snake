@@ -79,6 +79,8 @@ int App::Run()
 
 std::unique_ptr<GameSession> App::createGameSession()
 {
+	std::lock_guard<std::mutex> lk(defMt);
+
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 	
 	auto level = loader->GetLVL(lvlSelected);
@@ -95,9 +97,9 @@ std::unique_ptr<GameSession> App::createGameSession()
 
 	handler.SetPawn(snake);
 
-	auto gf = std::make_shared<GraphicField::GraphicField>(level);
-	auto lf = std::make_shared<Logic::LogicField>(level, snake);
-	auto apple = std::make_shared<Apple>(sp.pathToAple.c_str());
+	auto gf		= std::make_shared<GraphicField::GraphicField>(level);
+	auto lf		= std::make_shared<Logic::LogicField>(level, snake);
+	auto apple	= std::make_shared<Apple>(sp.pathToAple.c_str());
 
 	// Rescale all game objects {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant(
@@ -116,12 +118,13 @@ void App::handleEvents()
 	while (!appState.ToExit())
 	{
 		handler.HandleKeyEvent(wnd->GetKeyboardEvent(), appState);
-		auto resM = handler.HandleMouseEvent(wnd->GetMouseEvent(), appState);
 
+
+		std::lock_guard<std::mutex> lk(defMt);
+
+		auto resM = handler.HandleMouseEvent(wnd->GetMouseEvent(), appState);
 		if (resM.has_value())
-		{
 			lvlSelected = resM.value();
-		}
 	}
 }
 
@@ -133,7 +136,6 @@ void App::wndProcesses()
 		return;
 	}
 
-	std::lock_guard<std::mutex> lk(defMt);
 	drawMenu();
 }
 
