@@ -42,7 +42,7 @@ App::App()
 			configs.height));
 
 	hud->SetScale(hudScale);
-	hud->PrepButtons(Hud::MODE::MAIN_MENU);// Hud configurate }
+	hud->PrepButtons(APP_STATE::States::MAIN_MENU);// Hud configurate }
 	
 
 	wnd->SetHud(hud);

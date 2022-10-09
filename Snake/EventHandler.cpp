@@ -53,7 +53,7 @@ void EventHandler::HandleKeyEvent(
 		case sf::Keyboard::Key::Escape:
 		case sf::Keyboard::Key::P:
 			_state.SetState(APP_STATE::States::GAME_PAUSE);
-			hud->PrepButtons(Hud::MODE::GAME_PAUSE);
+			hud->PrepButtons(_state.GetState());
 			break;
 
 		default:
@@ -96,7 +96,7 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 					SmartPointer::SmartPointer<CLoader::ConfigLoader> loader 
 						= new CLoader::ConfigLoader();
 
-					hud->PrepButtons(Hud::MODE::LVL_SELECT, loader->GetLvlCount());
+					hud->PrepButtons(States::LVL_SELECT, loader->GetLvlCount());
 				}
 				break;
 
@@ -110,12 +110,12 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 
 			case bMod::BACK:
 				_state.SetState(States::MAIN_MENU);
-				hud->PrepButtons(Hud::MODE::MAIN_MENU);
+				hud->PrepButtons(_state.GetState());
 				break;
 
 			case bMod::LEADER_BORD:
 				_state.SetState(States::LEADERS_VIEW);
-				hud->PrepButtons(Hud::MODE::LEADERS);
+				hud->PrepButtons(_state.GetState());
 				break;
 
 
@@ -143,7 +143,7 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 
 			case bMod::MAIN_MENU:
 				_state.SetState(States::MAIN_MENU);
-				hud->PrepButtons(Hud::MODE::MAIN_MENU);
+				hud->PrepButtons(_state.GetState());
 				break;
 
 			default:

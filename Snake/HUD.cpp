@@ -121,74 +121,69 @@ void Hud::HUD::RealeseButtons()
 	}
 }
 
-void Hud::HUD::PrepButtons(MODE _mode, int _lvlCount)
-{
-	fillBtnsArr(_mode, _lvlCount);
-}
-
-void Hud::HUD::fillBtnsArr(MODE _mode, int _lvlCount)
+void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 {
 	std::lock_guard<std::mutex> lock(defMutex);
 
 	btns.clear();
 
-	switch (_mode)
+	switch (_state)
 	{
-	case Hud::MODE::MAIN_MENU:
-			{
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Start"));
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Leaderbord"));
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Exit"));
-			}
-			break;
+	case APP_STATE::States::MAIN_MENU:
+	{
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Start"));
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Leaderbord"));
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Exit"));
+	}
+	break;
 
-	case Hud::MODE::LVL_SELECT:
-			{
-				assert(_lvlCount);
+	case APP_STATE::States::LVL_SELECT:
+	{
+		assert(_lvlCount);
 
-				Buttons::BtnPurpose tempB = Buttons::BtnPurpose::LVL_1;
-				for (int i = 0; i < _lvlCount; ++i)
-				{
-					btns.emplace_back(new Buttons::Button(tempB, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-						pathToFont.c_str(),
-						(std::string("LVL_") + std::to_string(i + 1)).c_str()
-					));
-					++tempB;
-				}
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Back"));
-			}	
-			break;
+		Buttons::BtnPurpose tempB = Buttons::BtnPurpose::LVL_1;
+		for (int i = 0; i < _lvlCount; ++i)
+		{
+			btns.emplace_back(new Buttons::Button(tempB, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+				pathToFont.c_str(),
+				(std::string("LVL_") + std::to_string(i + 1)).c_str()
+			));
+			++tempB;
+		}
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Back"));
+	}
+	break;
 
-	case Hud::MODE::LEADERS:
-			{
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Back"));
-			}
-			break;
+	case APP_STATE::States::LEADERS_VIEW:
+	{
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Back"));
+	}
+	break;
 
-	case Hud::MODE::GAME_PAUSE:
-			{
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Continue"));
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Main Menu"));
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Exit"));
-			}	
-			break;
+	case APP_STATE::States::GAME_PAUSE:
+	{
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Continue"));
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Main Menu"));
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Exit"));
+	}
+	break;
 
-	case Hud::MODE::GAME_OVER:
-			{
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Main Menu"));
-				btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-					pathToFont.c_str(), "Exit"));
-			}	
-			break;
+	case APP_STATE::States::GAME_OVER:
+	{
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Main Menu"));
+		btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			pathToFont.c_str(), "Exit"));
+	}
+	break;
 
 	default:
 		break;

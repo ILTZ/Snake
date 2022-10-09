@@ -83,7 +83,7 @@ void GameSession::DoLogic(APP_STATE::AppState& _state)
 		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions())
 		{
 			_state.SetState(APP_STATE::States::GAME_OVER);
-			wnd->GetHUD().PrepButtons(Hud::MODE::GAME_OVER);
+			wnd->GetHUD().PrepButtons(_state.GetState());
 		}
 		else if (logicField->CheckSnakeGowUp(snake->GetPos()))
 		{

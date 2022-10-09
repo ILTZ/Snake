@@ -12,6 +12,7 @@
 
 #include "Button.h"
 #include "Widget.h"
+#include "AppState.h"
 
 namespace Hud
 {
@@ -84,7 +85,7 @@ namespace Hud
 	public:
 		const sf::Vector2f GetButtonsPosition()					const;
 		void SetButtonsPosition(const sf::Vector2f& _newPos);
-		void PrepButtons(MODE _mode, int _lvlCount = 0);
+		void PrepButtons(APP_STATE::States _state, int _lvlCount = 0);
 
 		void RealeseButtons();
 		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(
@@ -96,7 +97,6 @@ namespace Hud
 		void ClearWidgets();
 
 	private:
-		void fillBtnsArr(MODE _mode, int _lvlCount = 0);
 		void drawWidgets(sf::RenderWindow& _wnd);
 	};
 }
