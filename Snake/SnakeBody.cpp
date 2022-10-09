@@ -59,42 +59,43 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 
 		firstMove = true;
 	}
+
 	switch (_dir)
 	{
-	case BaseP::Direction::TOP:
-		if (yDir != -1 && yDir != 1)
-		{
-			yDir = -1;
-			xDir = 0;
-		}
-		break;
+		case BaseP::Direction::TOP:
+			if (yDir != -1 && yDir != 1)
+			{
+				yDir = -1;
+				xDir = 0;
+			}
+			break;
 
-	case BaseP::Direction::DOWN:
-		if (yDir != 1 && yDir != -1)
-		{
-			yDir = 1;
-			xDir = 0;
-		}
-		break;
+		case BaseP::Direction::DOWN:
+			if (yDir != 1 && yDir != -1)
+			{
+				yDir = 1;
+				xDir = 0;
+			}
+			break;
 
-	case BaseP::Direction::RIGHT:
-		if (xDir != 1 && xDir != -1)
-		{
-			xDir = 1;
-			yDir = 0;
-		}
-		break;
+		case BaseP::Direction::RIGHT:
+			if (xDir != 1 && xDir != -1)
+			{
+				xDir = 1;
+				yDir = 0;
+			}
+			break;
 
-	case BaseP::Direction::LEFT:
-		if (xDir != -1 && xDir != 1)
-		{
-			xDir = -1;
-			yDir = 0;
-		}
-		break;
+		case BaseP::Direction::LEFT:
+			if (xDir != -1 && xDir != 1)
+			{
+				xDir = -1;
+				yDir = 0;
+			}
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 }
 

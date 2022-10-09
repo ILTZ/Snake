@@ -30,6 +30,7 @@ private:
 	float			speedMyltiply			= 1.f;
 	const float		botBorderSpeedMultiply	= 0.25f;
 	float			deltaSpeed				= 0.25f;
+	unsigned int	appleBorder				= 20u;
 
 private:
 	unsigned int	curPoints		= 0u;
