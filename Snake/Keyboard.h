@@ -15,8 +15,21 @@ namespace Keyboard
 		bool isPressed;
 	};
 
+	struct TextEvent
+	{
+		TextEvent(const sf::Event& _ev);
+
+		char symbol;
+		bool shiftPressed;
+
+		char GetChar();
+	};
+
 	class Keyboard : public ControlBase::ControlBase<KeyEvent>
 	{
+	private:
+		std::queue<TextEvent> textQ;
+
 	public:
 		Keyboard() = default;
 
@@ -27,10 +40,12 @@ namespace Keyboard
 	public:
 		void AddPressEvent(const sf::Event& _ev)	override;
 		void AddReleaseEvent(const sf::Event& _ev)	override;
-
+		
+		void AddCharEvent(const sf::Event& _ev);
+		std::optional<TextEvent> GetCharEvent();
 
 	private:
-
+		void flushTextQ();
 	};
 }
 
