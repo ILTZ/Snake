@@ -1,11 +1,19 @@
 #include "App.h"
 
-#include "LogicField.h"
 #include "ScaleDeterminant.h"
+#include "ConfigLoader.h"
+
+#include "Apple.h"
+#include "SnakeBody.h"
+
+#include "GraphicField.h"
+#include "LogicField.h"
+
+#include "HUD.h"
 
 #include <thread>
 
-App::App() : currentMode{Hud::MODE::MAIN_MENU}
+App::App() 
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
@@ -34,7 +42,7 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 			configs.height));
 
 	hud->SetScale(hudScale);
-	hud->PrepButtons(currentMode);// Hud configurate }
+	hud->PrepButtons(Hud::MODE::MAIN_MENU);// Hud configurate }
 	
 
 	wnd->SetHud(hud);
@@ -118,9 +126,6 @@ void App::handleEvents()
 				lvlSelected = resM.value().lvl;
 				appState.SetState(APP_STATE::States::LVL_SELECTED);
 			}
-
-			
-			setCurMode(resM.value().gameMode);
 		}
 	}
 }
@@ -166,11 +171,5 @@ void App::drawMenu()
 	wnd->get().display();
 }
 
-void App::setCurMode(Hud::MODE _mode)
-{
-	std::lock_guard<std::mutex> lk(defMt);
-
-	currentMode = _mode;
-}
 
 

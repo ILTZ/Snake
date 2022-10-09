@@ -2,14 +2,8 @@
 #define APP_H
 
 #include "MainWindow.h"
-#include "SnakeBody.h"
-#include "GraphicField.h"
-#include "HUD.h"
-#include "EventHandler.h"
-#include "Timer.h"
-#include "ConfigLoader.h"
 #include "GameSession.h"
-#include "Apple.h"
+#include "EventHandler.h"
 #include "AppState.h"
 
 
@@ -22,7 +16,6 @@ private:
 	EventHandler				handler;
 
 private:
-	Hud::MODE		currentMode;
 	APP_STATE::AppState appState;
 
 private:
@@ -50,9 +43,6 @@ private:
 private:
 	void wndProcesses();
 	void drawMenu();
-
-private:
-	void setCurMode(Hud::MODE _mode);
 
 };
 
