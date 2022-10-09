@@ -14,7 +14,9 @@ namespace ControlBase
 		const unsigned int keyBuffer = 16u;
 		std::queue<T> eventsQ;
 		void flushQ();
-		void trimBuffer(std::queue<T>& _que);
+
+		template <typename U>
+		void trimBuffer(std::queue<U>& _que);
 
 	public:
 
@@ -33,7 +35,8 @@ namespace ControlBase
 	}
 
 	template<class T>
-	inline void ControlBase<T>::trimBuffer(std::queue<T>& _que)
+	template<typename U>
+	inline void ControlBase<T>::trimBuffer(std::queue<U>& _que)
 	{
 		while (_que.size() > keyBuffer)
 			_que.pop();

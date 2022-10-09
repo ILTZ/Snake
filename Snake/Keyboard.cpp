@@ -20,7 +20,8 @@ void Keyboard::Keyboard::AddReleaseEvent(const sf::Event& _ev)
 
 void Keyboard::Keyboard::AddCharEvent(const sf::Event& _ev)
 {
-	textQ.push(_ev);
+	textQ.push(TextEvent(_ev));
+	trimBuffer(textQ);
 }
 
 std::optional<Keyboard::TextEvent> Keyboard::Keyboard::GetCharEvent()
