@@ -14,8 +14,12 @@ namespace MainWin
 	class MainWindow
 	{
 	private:
-		const int wWidth;
-		const int wHeight;
+		const unsigned int wWidth;
+		const unsigned int wHeight;
+	
+	private:
+		const float hudPart			= 0.25f;
+		const float gameFieldPart	= 0.75f;
 
 	private:
 		sf::RenderWindow			wnd;
@@ -23,8 +27,8 @@ namespace MainWin
 
 	public:
 		MainWindow(
-			int _width = 1600, 
-			int _height = 1200, 
+			unsigned int _width = 1600u, 
+			unsigned int _height = 1200u, 
 			const std::string& _title = "DefaultTitle",
 			int32_t _style = sf::Style::Titlebar | sf::Style::Close, 
 			const sf::ContextSettings& _settings = sf::ContextSettings());
@@ -44,8 +48,12 @@ namespace MainWin
 		void		DrawButtons();
 
 	public:
+		const sf::Vector2u GetHudTargetSize()		const;
+		const sf::Vector2u GetGameFieldTargetSize() const;
+
+	public:
 		std::optional<Keyboard::KeyEvent>		GetKeyboardEvent();
-		std::optional<MS::MouseEvent>	GetMouseEvent();
+		std::optional<MS::MouseEvent>			GetMouseEvent();
 
 	private:
 		MS::Mouse mouse;

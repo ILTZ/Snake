@@ -2,13 +2,13 @@
 #include "ConfigLoader.h"
 
 #include <SFML/Window/Event.hpp>
-
+#include <cassert>
 
 using namespace MainWin;
 
 MainWindow::MainWindow(
-	int _width, 
-	int _height, 
+	unsigned int _width, 
+	unsigned int _height, 
 	const std::string& _title, 
 	int32_t _style, 
 	const sf::ContextSettings& _settings) :
@@ -22,18 +22,34 @@ MainWindow::MainWindow(
 
 void MainWin::MainWindow::DrawHUD()
 {
-	if (wnd.isOpen() && hud.get())
-	{
-		hud->DrawHUD(wnd);
-	}
+	assert(hud.get());
+
+	if (wnd.isOpen())
+		hud->DrawHUD(wnd);	
 }
 
 void MainWin::MainWindow::DrawButtons()
 {
-	if (wnd.isOpen() && hud.get())
-	{
-		hud->DrawButtons(wnd);
-	}
+	assert(hud.get());
+
+	if (wnd.isOpen())
+		hud->DrawButtons(wnd);	
+}
+
+const sf::Vector2u MainWin::MainWindow::GetHudTargetSize() const
+{
+	return sf::Vector2u(
+		static_cast<unsigned int>(static_cast<float>(wWidth) * hudPart),
+		wHeight
+	);
+}
+
+const sf::Vector2u MainWin::MainWindow::GetGameFieldTargetSize() const
+{
+	return sf::Vector2u(
+		static_cast<unsigned int>(static_cast<float>(wWidth) * gameFieldPart),
+		wHeight
+	);
 }
 
 void MainWin::MainWindow::Draw(BaseD& _whatDraw)
@@ -86,7 +102,7 @@ void MainWin::MainWindow::SetHud(std::shared_ptr<Hud::HUD> _hud)
 	hud = _hud;
 	// Last quarter of the window
 	hud->SetHudPosition(sf::Vector2f(
-		static_cast<float>(wnd.getSize().x) * 0.75f, 0.f));
+		static_cast<float>(wnd.getSize().x) * (1.f - hudPart), 0.f));
 	// Midle of the window
 	hud->SetButtonsPosition(sf::Vector2f(
 		static_cast<float>(wnd.getSize().x) / 2.f,

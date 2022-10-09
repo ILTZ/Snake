@@ -37,9 +37,9 @@ App::App()
 		configs.pathToPressBtn.c_str(), 
 		configs.pathToTextFont.c_str());
 	
-	auto hudScale = det->CalculateAbsoluteScale(hud->GetHUDSize(), 
-		sf::Vector2u(configs.width / 4, 
-			configs.height));
+	auto hudScale = det->CalculateAbsoluteScale(
+		hud->GetHUDSize(), 
+		wnd->GetHudTargetSize());
 
 	hud->SetScale(hudScale);
 	hud->PrepButtons(APP_STATE::States::MAIN_MENU);// Hud configurate }
@@ -103,7 +103,7 @@ std::unique_ptr<GameSession> App::createGameSession()
 
 	// Rescale all game objects {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant(
-		sf::Vector2u(wnd->get().getSize().x / 4 * 3, wnd->get().getSize().y),
+		wnd->GetGameFieldTargetSize(),
 		sf::Vector2u(level->GetConfigs().width, level->GetConfigs().height));
 
 	gf->CalculateAndSetScale(*det);
