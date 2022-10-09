@@ -112,7 +112,7 @@ void GameSession::spawnApple(bool _appleOnBoard)
 		return;
 
 	RND::RandomINT rnd;
-	unsigned int nul = 0;
+	const unsigned int nul = 0;
 	unsigned int x = rnd.GetValue(nul, logicField->GetLVLW() - 1);
 	unsigned int y = rnd.GetValue(nul, logicField->GetLVLH() - 1);
 
