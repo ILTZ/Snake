@@ -10,6 +10,8 @@
 #include "ConfigLoader.h"
 #include "GameSession.h"
 #include "Apple.h"
+#include "AppState.h"
+
 
 using namespace MainWin;
 
@@ -21,7 +23,8 @@ private:
 
 private:
 	Hud::MODE		currentMode;
-	
+	APP_STATE::AppState appState;
+
 private:
 	CLoader::LVLs	lvlSelected;
 

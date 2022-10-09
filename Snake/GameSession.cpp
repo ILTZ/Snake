@@ -48,28 +48,29 @@ GameSession::~GameSession()
 	wnd->GetHUD().ClearWidgets();
 }
 
-Hud::MODE GameSession::GameFrame(Hud::MODE _curMode)
+void GameSession::GameFrame(APP_STATE::AppState& _state)
 {
 	// if player press <exit> key on window
 	if (!wnd->PollEvents())
-		return Hud::MODE::EXIT;
+	{
+		_state.ExitApp();
+		return;
+	}
 
 	spawnApple(appleOnBoard);
 
-	wndDraw(_curMode);
+	wndDraw(_state);
 
-	DoLogic(_curMode);
+	DoLogic(_state);
 
-	MovePawn(_curMode);
+	MovePawn(_state);
 	
-
-	return _curMode;
 }
 
-void GameSession::MovePawn(Hud::MODE _curMode)
+void GameSession::MovePawn(const APP_STATE::AppState& _state)
 {
 	// if gemeState != PAUSE
-	if (_curMode == Hud::MODE::GAME_PROCESS)
+	if (_state.GetState() == APP_STATE::States::GAME_PROCESS)
 	{
 		timeWidget->WorkCycle(!pause);
 		if (timer.CheckInterval(stepTime * speedMyltiply))
@@ -77,13 +78,13 @@ void GameSession::MovePawn(Hud::MODE _curMode)
 	}
 }
 
-void GameSession::DoLogic(Hud::MODE& _curMode)
+void GameSession::DoLogic(APP_STATE::AppState& _state)
 {
-	if (_curMode != Hud::MODE::GAME_OVER)
+	if (_state.GetState() != APP_STATE::States::GAME_OVER)
 	{
 		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions())
 		{
-			_curMode = Hud::MODE::GAME_OVER;
+			_state.SetState(APP_STATE::States::GAME_OVER);
 			wnd->GetHUD().PrepButtons(Hud::MODE::GAME_OVER);
 		}
 		else if (logicField->CheckSnakeGowUp(snake->GetPos()))
@@ -126,20 +127,20 @@ void GameSession::spawnApple(bool _appleOnBoard)
 	appleOnBoard = true;
 }
 
-void GameSession::wndDraw(Hud::MODE _curMode)
+void GameSession::wndDraw(const APP_STATE::AppState& _state)
 {
 	wnd->get().clear();
 
-	switch (_curMode)
+	switch (_state.GetState())
 	{
-	case Hud::MODE::GAME_PROCESS:
+	case APP_STATE::States::GAME_PROCESS:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);
 		wnd->DrawHUD();
 		break;
 
-	case Hud::MODE::GAME_PAUSE:
+	case APP_STATE::States::GAME_PAUSE:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);
@@ -147,7 +148,7 @@ void GameSession::wndDraw(Hud::MODE _curMode)
 		wnd->DrawButtons();
 		break;
 
-	case Hud::MODE::GAME_OVER:
+	case APP_STATE::States::GAME_OVER:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);

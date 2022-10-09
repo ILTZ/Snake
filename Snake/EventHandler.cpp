@@ -1,7 +1,9 @@
 #include "EventHandler.h"
 
 
-EventHandler::EventHandler(std::shared_ptr<Hud::HUD> _hud, std::shared_ptr<BaseP::BasePawn> _snakePawn)
+EventHandler::EventHandler(
+	std::shared_ptr<Hud::HUD> _hud, 
+	std::shared_ptr<BaseP::BasePawn> _snakePawn)
 	: hud{_hud}, pawn{_snakePawn}
 {
 
@@ -17,12 +19,10 @@ void EventHandler::SetHud(std::shared_ptr<Hud::HUD> _hud)
 	hud = _hud;
 }
 
-std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<Keyboard::KeyEvent>& _keyEvent, Hud::MODE _mode)
+void EventHandler::HandleKeyEvent(const std::optional<Keyboard::KeyEvent>& _keyEvent, APP_STATE::AppState& _state)
 {
-	std::optional<Hud::MODE> temp;
-
-	if ((_mode != Hud::MODE::GAME_PROCESS) || !_keyEvent.has_value())
-		return temp;
+	if (!_state.CheckMovebleStates() || !_keyEvent.has_value())
+		return;
 
 	if (!_keyEvent.value().isPressed)
 	{
@@ -50,7 +50,7 @@ std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<Keyboa
 
 		case sf::Keyboard::Key::Escape:
 		case sf::Keyboard::Key::P:
-			temp = Hud::MODE::GAME_PAUSE;
+			_state.SetState(APP_STATE::States::GAME_PAUSE);
 			hud->PrepButtons(Hud::MODE::GAME_PAUSE);
 			break;
 
@@ -58,29 +58,33 @@ std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<Keyboa
 			break;
 		}
 	}
-	return temp;
 }
 
-std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode)
+std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, APP_STATE::AppState& _state)
 {
 	std::optional<EventHandler::HandleResult> temp;
 
-	if (!_mouseEvent.has_value() || _mode == Hud::MODE::GAME_PROCESS)
+	if (!_mouseEvent.has_value() || _state.CheckMovebleStates())
 		return temp;
 
 	if (_mouseEvent.value().isPressed)
 	{
-		hud->CheckButtonsTouch(static_cast<float>(_mouseEvent.value().wPos.x), 
+		hud->CheckButtonsTouch(
+			static_cast<float>(_mouseEvent.value().wPos.x), 
 			static_cast<float>(_mouseEvent.value().wPos.y));
 	}
 	else
 	{
-		auto button = hud->CheckButtonsTouch(static_cast<float>(_mouseEvent.value().wPos.x), 
+		auto button = hud->CheckButtonsTouch(
+			static_cast<float>(_mouseEvent.value().wPos.x), 
 			static_cast<float>(_mouseEvent.value().wPos.y));
+
 		hud->RealeseButtons();
 
 		if (button.has_value())
 		{
+			using namespace APP_STATE;
+
 			temp = EventHandler::HandleResult();
 
 			using bMod = Buttons::BtnPurpose;
@@ -90,7 +94,8 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 			{
 			case bMod::START:
 				{
-					temp.value().gameMode = Hud::MODE::LVL_SELECT;
+					_state.SetState(States::LVL_SELECT);
+					//temp.value().gameMode = Hud::MODE::LVL_SELECT;
 					SmartPointer::SmartPointer<CLoader::ConfigLoader> loader 
 						= new CLoader::ConfigLoader();
 
@@ -99,20 +104,20 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 				break;
 
 			case bMod::EXIT:
-				temp.value().gameMode = hMod::EXIT;
+				_state.ExitApp();
 				break;
 
 			case bMod::CONTINUE:
-				temp.value().gameMode = hMod::GAME_PROCESS;
+				_state.SetState(States::GAME_PROCESS);
 				break;
 
 			case bMod::BACK:
-				temp.value().gameMode = hMod::MAIN_MENU;
+				_state.SetState(States::MAIN_MENU);
 				hud->PrepButtons(Hud::MODE::MAIN_MENU);
 				break;
 
 			case bMod::LEADER_BORD:
-				temp.value().gameMode = hMod::LEADERS;
+				_state.SetState(States::LEADERS_VIEW);
 				hud->PrepButtons(Hud::MODE::LEADERS);
 				break;
 
@@ -138,9 +143,8 @@ std::optional<EventHandler::HandleResult> EventHandler::HandleMouseEvent(const s
 				break;
 
 			case bMod::MAIN_MENU:
-				temp.value().gameMode = hMod::MAIN_MENU;
+				_state.SetState(States::MAIN_MENU);
 				hud->PrepButtons(Hud::MODE::MAIN_MENU);
-
 				break;
 
 			default:

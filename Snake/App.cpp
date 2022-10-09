@@ -39,6 +39,8 @@ App::App() : currentMode{Hud::MODE::MAIN_MENU}
 
 	wnd->SetHud(hud);
 	handler.SetHud(hud);
+
+	appState.SetState(APP_STATE::States::MAIN_MENU);
 }
 
 int App::Run()
@@ -48,46 +50,19 @@ int App::Run()
 		});
 
 	
-	auto checkGameSessionMods = [](Hud::MODE _mode) -> bool
-	{
-		switch (_mode)
-		{
-		case Hud::MODE::GAME_PROCESS:
-		case Hud::MODE::GAME_PAUSE:
-		case Hud::MODE::GAME_OVER:
-			return true;
-
-		default:
-			return false;
-		}
-	};
-
-	while (currentMode != Hud::MODE::EXIT)
+	while (!appState.ToExit())
 	{
 		wndProcesses();
-
-		
-		if (currentMode == Hud::MODE::LVL_SELECTED) 
+		if (appState.GetState() == APP_STATE::States::LVL_SELECTED)
 		{
+			auto session = createGameSession();
+			appState.SetState(APP_STATE::States::GAME_PROCESS);
 
-			auto session = createGameSession(); // <GameSession> life time is start now {
-			setCurMode(Hud::MODE::GAME_PROCESS);
-
-			// May <GameSession> control render process in GAME_PROCESS time
-			while (checkGameSessionMods(currentMode))
+			while (appState.CheckGameProcessStates())
 			{
-				auto mode = session->GameFrame(currentMode);
-
-				// difference between threads(<event handler> is faster switch currentMode of app)
-				if (currentMode != Hud::MODE::MAIN_MENU &&
-					currentMode != Hud::MODE::EXIT &&
-					currentMode != Hud::MODE::GAME_PAUSE)
-				{
-					setCurMode(mode);
-				}
-
+				session->GameFrame(appState);
 			}
-		}// <GameSession> life time is end }
+		}
 	}
 
 	return 0;
@@ -130,18 +105,21 @@ std::unique_ptr<GameSession> App::createGameSession()
 
 void App::handleEvents()
 {
-	while (currentMode != Hud::MODE::EXIT)
+	while (!appState.ToExit())
 	{
-		auto resK = handler.HandleKeyEvent(wnd->GetKeyboardEvent(), currentMode);
-		auto resM = handler.HandleMouseEvent(wnd->GetMouseEvent(), currentMode);
+		handler.HandleKeyEvent(wnd->GetKeyboardEvent(), appState);
+		auto resM = handler.HandleMouseEvent(wnd->GetMouseEvent(), appState);
 
-		if (resK.has_value())
-			setCurMode(resK.value());
 
 		if (resM.has_value())
 		{
-			if (resM.value().gameMode == Hud::MODE::LVL_SELECTED) 
+			if (resM.value().gameMode == Hud::MODE::LVL_SELECTED)
+			{
 				lvlSelected = resM.value().lvl;
+				appState.SetState(APP_STATE::States::LVL_SELECTED);
+			}
+
+			
 			setCurMode(resM.value().gameMode);
 		}
 	}
@@ -151,7 +129,7 @@ void App::wndProcesses()
 {
 	if (!wnd->PollEvents()) // .. if player press <EXIT> key on window
 	{
-		setCurMode(Hud::MODE::EXIT);
+		appState.ExitApp();
 		return;
 	}
 
@@ -163,21 +141,21 @@ void App::drawMenu()
 {
 	wnd->get().clear();
 
-	switch (currentMode)
+	switch (appState.GetState())
 	{
-	case Hud::MODE::MAIN_MENU:
+	case APP_STATE::States::MAIN_MENU:
 		wnd->DrawButtons();
 		break;
 
-	case Hud::MODE::LVL_SELECT:
+	case APP_STATE::States::LVL_SELECT:
 		wnd->DrawButtons();
 		break;
 
-	case Hud::MODE::LEADERS:
+	case APP_STATE::States::LEADERS_VIEW:
 		wnd->DrawButtons();
 		break;
 
-	case Hud::MODE::EXIT:
+	case APP_STATE::States::EXIT:
 		return;
 		break;
 
@@ -186,7 +164,6 @@ void App::drawMenu()
 	}
 
 	wnd->get().display();
-
 }
 
 void App::setCurMode(Hud::MODE _mode)

@@ -147,6 +147,9 @@
     <ClCompile Include="SpeedWidget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="AppState.cpp">
+      <Filter>Исходные файлы\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Widget.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="SpeedWidget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="AppState.h">
+      <Filter>Файлы заголовков\App</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

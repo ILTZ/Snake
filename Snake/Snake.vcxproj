@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Apple.cpp" />
+    <ClCompile Include="AppState.cpp" />
     <ClCompile Include="BaseDrawable.cpp" />
     <ClCompile Include="BaseText.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Apple.h" />
+    <ClInclude Include="AppState.h" />
     <ClInclude Include="BaseD.h" />
     <ClInclude Include="BaseDrawable.h" />
     <ClInclude Include="BasePawn.h" />

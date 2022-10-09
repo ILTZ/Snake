@@ -11,6 +11,8 @@
 #include "TimeWidget.h"
 #include "SpeedWidget.h"
 
+#include "AppState.h"
+
 class GameSession
 {
 private:
@@ -54,18 +56,18 @@ public:
 	GameSession operator=(const GameSession&)	= delete;
 
 public:
-	Hud::MODE GameFrame(Hud::MODE _curMode);
+	void  GameFrame(APP_STATE::AppState& _state);
 
 private:
-	void MovePawn(Hud::MODE _curMode);
-	void DoLogic(Hud::MODE& _curMode);
+	void MovePawn(const APP_STATE::AppState& _state);
+	void DoLogic(APP_STATE::AppState& _state);
 
 private:
 	// Chouse the position of <Apple> and set it coords on the <LogicField>
 	void spawnApple(bool _appleOnBoard);
 
 private:
-	void wndDraw(Hud::MODE _curMode);
+	void wndDraw(const APP_STATE::AppState& _state);
 };
 
 

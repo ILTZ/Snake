@@ -9,6 +9,8 @@
 
 #include "ConfigLoader.h"
 
+#include "AppState.h"
+
 class EventHandler
 {
 public:
@@ -25,19 +27,26 @@ private:
 
 public:
 	EventHandler() = default;
-	EventHandler(std::shared_ptr<Hud::HUD> _hud, std::shared_ptr<BaseP::BasePawn> _snakePawn);
+	EventHandler(
+		std::shared_ptr<Hud::HUD> _hud, 
+		std::shared_ptr<BaseP::BasePawn> _snakePawn);
 
 public:
-	EventHandler(const EventHandler&) = delete;
-	EventHandler& operator=(const EventHandler&) = delete;
+	EventHandler(const EventHandler&)				= delete;
+	EventHandler& operator=(const EventHandler&)	= delete;
 
 public:
 	void SetPawn(std::shared_ptr<BaseP::BasePawn> _pawn);
 	void SetHud(std::shared_ptr<Hud::HUD> _hud);
 
 public:
-	std::optional<Hud::MODE> HandleKeyEvent(const std::optional<Keyboard::KeyEvent>&_keyEvent, Hud::MODE _mode);
-	std::optional<HandleResult> HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode);
+	void						HandleKeyEvent(
+		const std::optional<Keyboard::KeyEvent>&_keyEvent, 
+		APP_STATE::AppState& _state);
+
+	std::optional<HandleResult> HandleMouseEvent(
+		const std::optional<MS::MouseEvent>& _mouseEvent, 
+		APP_STATE::AppState& _state);
 
 private:
 
