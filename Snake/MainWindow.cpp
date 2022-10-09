@@ -98,7 +98,7 @@ Hud::HUD& MainWin::MainWindow::GetHUD()
 	return *hud;
 }
 
-std::optional<KB::KeyEvent> MainWin::MainWindow::GetKeyboardEvent()
+std::optional<Keyboard::KeyEvent> MainWin::MainWindow::GetKeyboardEvent()
 {
 	return kb.GetEvent();
 }

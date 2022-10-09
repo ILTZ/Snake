@@ -5,7 +5,7 @@
 #include "ControlBase.h"
 
 // Include keyboard class 
-namespace KB
+namespace Keyboard
 {
 	struct KeyEvent
 	{
@@ -17,11 +17,8 @@ namespace KB
 
 	class Keyboard : public ControlBase::ControlBase<KeyEvent>
 	{
-	private:
-		std::unique_ptr<sf::Keyboard> kb;
-
 	public:
-		Keyboard();
+		Keyboard() = default;
 
 	public:
 		Keyboard(const Keyboard&) = delete;

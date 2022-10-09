@@ -36,7 +36,7 @@ public:
 	void SetHud(std::shared_ptr<Hud::HUD> _hud);
 
 public:
-	std::optional<Hud::MODE> HandleKeyEvent(const std::optional<KB::KeyEvent>&_keyEvent, Hud::MODE _mode);
+	std::optional<Hud::MODE> HandleKeyEvent(const std::optional<Keyboard::KeyEvent>&_keyEvent, Hud::MODE _mode);
 	std::optional<HandleResult> HandleMouseEvent(const std::optional<MS::MouseEvent>& _mouseEvent, Hud::MODE _mode);
 
 private:

@@ -44,12 +44,12 @@ namespace MainWin
 		void		DrawButtons();
 
 	public:
-		std::optional<KB::KeyEvent>		GetKeyboardEvent();
+		std::optional<Keyboard::KeyEvent>		GetKeyboardEvent();
 		std::optional<MS::MouseEvent>	GetMouseEvent();
 
 	private:
 		MS::Mouse mouse;
-		KB::Keyboard kb;
+		Keyboard::Keyboard kb;
 
 	};
 }

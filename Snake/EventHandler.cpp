@@ -17,7 +17,7 @@ void EventHandler::SetHud(std::shared_ptr<Hud::HUD> _hud)
 	hud = _hud;
 }
 
-std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<KB::KeyEvent>& _keyEvent, Hud::MODE _mode)
+std::optional<Hud::MODE> EventHandler::HandleKeyEvent(const std::optional<Keyboard::KeyEvent>& _keyEvent, Hud::MODE _mode)
 {
 	std::optional<Hud::MODE> temp;
 
