@@ -27,9 +27,9 @@ namespace BDR
 		BaseDrawableRectangle& operator=(const BaseDrawableRectangle&) = delete;
 
 	public:
-		virtual void Draw(sf::RenderWindow& _target) = 0;
-		virtual void SetScale(const sf::Vector2f& _newScale) = 0;
-		virtual void SetPosition(const sf::Vector2f& _newPosition) = 0;
+		virtual void Draw(sf::RenderWindow& _target)				= 0;
+		virtual void SetScale(const sf::Vector2f& _newScale)		= 0;
+		virtual void SetPosition(const sf::Vector2f& _newPosition)	= 0;
 
 	};
 }

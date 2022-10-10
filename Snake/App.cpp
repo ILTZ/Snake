@@ -95,6 +95,8 @@ std::unique_ptr<GameSession> App::createGameSession()
 		level->GetConfigs().startPosX,
 		level->GetConfigs().startPosY)); // Snake }
 
+	
+
 	handler.SetPawn(snake);
 
 	auto gf		= std::make_shared<GraphicField::GraphicField>(level);
@@ -109,6 +111,8 @@ std::unique_ptr<GameSession> App::createGameSession()
 	gf->CalculateAndSetScale(*det);
 	snake->CalculateAndSetScale(*det);
 	apple->CalculateAndSetScale(*det); // Rescale all game objects }
+
+	
 
 	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
 }

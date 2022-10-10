@@ -1,11 +1,11 @@
 #ifndef APPLE_H
 #define APPLE_H
 
-#include "BaseDrawable.h"
+#include "BaseDrawableCircle.h"
 #include "BaseScalable.h"
 
 
-class Apple : public BaseDrawable::BaseDrawableCircle, public BaseScalable
+class Apple : public BDC::BaseDrawableCircle, public BaseScalable
 {
 private:
 

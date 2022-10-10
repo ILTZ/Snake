@@ -8,6 +8,7 @@
 
 #include "SmartPointer.h"
 #include "BaseText.h"
+#include "BaseDrawable.h"
 
 namespace Buttons
 {
@@ -33,7 +34,7 @@ namespace Buttons
 	};
 	BtnPurpose operator++(BtnPurpose& _x);
 
-	class Button
+	class Button : public BaseDrawable
 	{
 	private:
 		struct BtnConf
@@ -56,7 +57,6 @@ namespace Buttons
 		
 	private:
 		sf::Vector2f btnsSizeDifference;
-		sf::Vector2f btnPosition;
 
 	public:
 		Button(
@@ -74,9 +74,10 @@ namespace Buttons
 	public:
 		// Switch PRESSED || RELEASED
 		void SetState(BtnState _mode);
-		void SetScale(const sf::Vector2f& _newScale);
-		void SetPosition(const sf::Vector2f& _newPosition);
-		void Draw(sf::RenderWindow& _wnd);
+
+		void SetScale(const sf::Vector2f& _newScale)		override;
+		void SetPosition(const sf::Vector2f& _newPos)		override;
+		void Draw(sf::RenderWindow& _wnd)					override;
 
 	public:
 		BtnPurpose GetBtnPurpose()		const;
@@ -84,7 +85,7 @@ namespace Buttons
 		bool GetTouch(float _x, float _y);
 	
 	private:
-		void calculateAndSetBtnsShift();
+		void calculateAndSetBtnsShift(const sf::Vector2f& _btnPos);
 	};
 }
 

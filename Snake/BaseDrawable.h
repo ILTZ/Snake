@@ -1,52 +1,30 @@
-#ifndef BDRAW_H
-#define BDRAW_H
+#ifndef BASE_DRAWABLE_H
+#define BASE_DRAWABLE_H
 
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
 
-
-#include "SmartPointer.h"
-#include "BaseD.h"
-
-namespace BaseDrawable
+class BaseDrawable
 {
-	class BaseDrawableCircle : public BaseD
-	{
-	protected:
-		SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
-		SmartPointer::SmartPointer<sf::Texture>		baseTexture;
+protected:
+	sf::Vector2f currentPosition;
+	sf::Vector2f currentScale;
 
-		sf::Vector2u currentPosition;
-		sf::Vector2f currentScale;
+public:
+	virtual void SetPosition(const sf::Vector2f& _newPos)	= 0;
+	virtual void SetScale(const sf::Vector2f& _newScale)	= 0;
+	virtual void Draw(sf::RenderWindow& _wnd)				= 0;
 
-		float width = 0.f;
-		float height = 0.f;
+	virtual const sf::Vector2f GetPosition()	const { return currentPosition; }
+	virtual const sf::Vector2f GetScale()		const { return currentScale; }
 
-	public:
-		BaseDrawableCircle(const char* _pathToTexture, float _radius = 20.f);
-		BaseDrawableCircle(const BaseDrawableCircle& _other);
-		BaseDrawableCircle& operator=(const BaseDrawableCircle& _other);
-		BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept;
+	virtual ~BaseDrawable() {};
 
-	public:
-		virtual ~BaseDrawableCircle();
-
-	public:
-		void SetPos(const sf::Vector2u& _newPos)		override;
-		void Draw(sf::RenderWindow& _wnd)				override;
-		void SetScale(const sf::Vector2f& _newScale)	override;
-		const sf::Vector2f GetScale()					const;
-
-	public:
-		const sf::Vector2u& GetPos() const;
-		const sf::Vector2f GetSize() const;
-
-	private:
-		void changeRotation(const sf::Vector2u& _newPos);
-	};
-
+private:
+	
 };
 
-#endif
+
+
+#endif // !BASE_DRAWABLE_H
 

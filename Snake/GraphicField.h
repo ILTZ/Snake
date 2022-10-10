@@ -4,15 +4,16 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <unordered_map>
+#include <memory>
 
-#include "BaseD.h"
 #include "SmartPointer.h"
 #include "LevelConstructor.h"
 #include "BaseScalable.h"
+#include "BaseDrawable.h"
 
 namespace GraphicField
 {
-	class GraphicField : public BaseD, public BaseScalable
+	class GraphicField : public BaseDrawable, public BaseScalable
 	{
 	private:
 		struct Sprite
@@ -41,15 +42,15 @@ namespace GraphicField
 		GraphicField& operator=(const GraphicField&)	= delete;
 
 	public:
-		void Draw(sf::RenderWindow& _wnd) override;
-		void SetScale(const sf::Vector2f& _newScale);
+		void Draw(sf::RenderWindow& _wnd)				override;
+		void SetScale(const sf::Vector2f& _newScale)	override;
 
 	public:
 		void CalculateAndSetScale(const ScaleDeterminant& _det) override;
 
 	private:
 		// no need
-		virtual void SetPos(const sf::Vector2u& _pos) override {};
+		virtual void SetPosition(const sf::Vector2f& _newPos) override {};
 
 	};
 }

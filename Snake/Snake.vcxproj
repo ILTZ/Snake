@@ -144,7 +144,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Apple.cpp" />
     <ClCompile Include="AppState.cpp" />
-    <ClCompile Include="BaseDrawable.cpp" />
+    <ClCompile Include="BaseDrawableCircle.cpp" />
     <ClCompile Include="BaseText.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
@@ -154,6 +154,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InfoWidget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LeaderBord.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
     <ClCompile Include="LogicField.cpp" />
     <ClCompile Include="main.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="AppState.h" />
     <ClInclude Include="BaseD.h" />
     <ClInclude Include="BaseDrawable.h" />
+    <ClInclude Include="BaseDrawableCircle.h" />
     <ClInclude Include="BasePawn.h" />
     <ClInclude Include="BasePlayerControlObj.h" />
     <ClInclude Include="BaseScalable.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="InfoWidget.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LeaderBord.h" />
     <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="LogicField.h" />
     <ClInclude Include="MainWindow.h" />

@@ -8,6 +8,7 @@
 #include "Keyboard.h"
 #include "HUD.h"
 #include "BaseD.h"
+#include "BaseDrawable.h"
 
 namespace MainWin
 {
@@ -38,6 +39,8 @@ namespace MainWin
 
 	public: //wnd funcs
 		void				Draw(BaseD& _whatDraw);
+		void				Draw(BaseDrawable& _whatDraw);
+
 		bool				PollEvents();
 		sf::RenderWindow&	get();
 

@@ -8,7 +8,7 @@
 GameSession::GameSession(
 	MainWin::MainWindow*						_wnd, 
 	std::shared_ptr<Base::BasePlayerControlObj> _pawn,
-	std::shared_ptr<BaseD>						_gp,
+	std::shared_ptr<BaseDrawable>				_gp,
 	std::shared_ptr<Logic::LogicField>			_lField,
 	std::shared_ptr<BaseD> _apple
 	) :

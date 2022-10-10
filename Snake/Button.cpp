@@ -1,7 +1,4 @@
 #include "Button.h"
-#include <iostream>
-
-#define LOG(str) {std::cout << str << std::endl;}
 
 using namespace Buttons;
 
@@ -36,19 +33,18 @@ Button::Button(
 Buttons::Button::~Button()
 {
 
-#ifndef NDEBUG
-	LOG("DEstr btn");
-#endif
 }
 
 void Buttons::Button::SetState(BtnState _mode)
 {
 	curState = _mode;
-	calculateAndSetBtnsShift();
+	calculateAndSetBtnsShift(currentPosition);
 }
 
 void Buttons::Button::SetScale(const sf::Vector2f& _newScale)
 {
+	currentScale = _newScale;
+
 	for (auto& el : btns)
 	{
 		el.second.rectShape->setScale(_newScale);
@@ -62,10 +58,10 @@ void Buttons::Button::SetScale(const sf::Vector2f& _newScale)
 	text->SetScale(_newScale);
 }
 
-void Buttons::Button::SetPosition(const sf::Vector2f& _newPosition)
+void Buttons::Button::SetPosition(const sf::Vector2f& _newPos)
 {
-	btnPosition = _newPosition;
-	calculateAndSetBtnsShift();
+	currentPosition = _newPos;
+	calculateAndSetBtnsShift(currentPosition);
 }
 
 void Buttons::Button::Draw(sf::RenderWindow& _wnd)
@@ -104,9 +100,9 @@ bool Buttons::Button::GetTouch(float _x, float _y)
 	return false;
 }
 
-void Buttons::Button::calculateAndSetBtnsShift()
+void Buttons::Button::calculateAndSetBtnsShift(const sf::Vector2f& _btnPos)
 {
-	auto nPosY = btnPosition.y;
+	auto nPosY = _btnPos.y;
 	auto tDif = 0.f;
 
 	if (curState == BtnState::PRESSED)
@@ -119,7 +115,7 @@ void Buttons::Button::calculateAndSetBtnsShift()
 		nPosY -= btnsSizeDifference.y;
 	}
 
-	btns[curState].rectShape->setPosition(btnPosition.x, nPosY);
+	btns[curState].rectShape->setPosition(_btnPos.x, nPosY);
 	text->SetPos(sf::Vector2f(
 		btns[curState].rectShape->getPosition().x,
 		btns[curState].rectShape->getPosition().y + tDif));

@@ -69,9 +69,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseDrawableRectangle.cpp">
-      <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="TimeWidget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
@@ -99,7 +96,7 @@
     <ClCompile Include="ScaleDeterminant.cpp">
       <Filter>Исходные файлы\Utilites</Filter>
     </ClCompile>
-    <ClCompile Include="BaseDrawable.cpp">
+    <ClCompile Include="BaseDrawableCircle.cpp">
       <Filter>Исходные файлы\RealBase</Filter>
     </ClCompile>
     <ClCompile Include="BaseText.cpp">
@@ -150,11 +147,14 @@
     <ClCompile Include="AppState.cpp">
       <Filter>Исходные файлы\App</Filter>
     </ClCompile>
+    <ClCompile Include="BaseDrawableRectangle.cpp">
+      <Filter>Исходные файлы\AbstractBase</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaderBord.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseDrawableRectangle.h">
-      <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="TimeWidget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
@@ -188,7 +188,7 @@
     <ClInclude Include="Keyboard.h">
       <Filter>Файлы заголовков\Window</Filter>
     </ClInclude>
-    <ClInclude Include="BaseDrawable.h">
+    <ClInclude Include="BaseDrawableCircle.h">
       <Filter>Файлы заголовков\RealBase</Filter>
     </ClInclude>
     <ClInclude Include="ControlBase.h">
@@ -247,6 +247,15 @@
     </ClInclude>
     <ClInclude Include="AppState.h">
       <Filter>Файлы заголовков\App</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDrawableRectangle.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderBord.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDrawable.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

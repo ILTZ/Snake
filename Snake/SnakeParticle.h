@@ -2,11 +2,11 @@
 #define SNAKEPARTICLE_H
 
 #include <string>
-#include "BaseDrawable.h"
+#include "BaseDrawableCircle.h"
 
 namespace SnakePart
 {
-	class SnakeParticle : public BaseDrawable::BaseDrawableCircle
+	class SnakeParticle : public BDC::BaseDrawableCircle
 	{
 	private:
 		//const std::string pathToTexture;
