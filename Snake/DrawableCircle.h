@@ -31,6 +31,9 @@ public:
 
 	const sf::Vector2f GetSize() const;
 
+protected:
+	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const;
+
 private:
 	void changeRotation(const sf::Vector2f& _newPos);
 

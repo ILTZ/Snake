@@ -10,7 +10,7 @@ GameSession::GameSession(
 	std::shared_ptr<Base::BasePlayerControlObj> _pawn,
 	std::shared_ptr<BaseDrawable>				_gp,
 	std::shared_ptr<Logic::LogicField>			_lField,
-	std::shared_ptr<BaseD> _apple
+	std::shared_ptr<Apple>				_apple
 	) :
 	wnd{_wnd},
 	snake{_pawn}, 

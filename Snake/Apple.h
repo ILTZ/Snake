@@ -1,11 +1,12 @@
 #ifndef APPLE_H
 #define APPLE_H
 
-#include "BaseDrawableCircle.h"
+#include "MoveOnBoardBaseObj.h"
 #include "BaseScalable.h"
+#include "DrawableCircle.h"
 
 
-class Apple : public BDC::BaseDrawableCircle, public BaseScalable
+class Apple : public DrawableCircle, public BaseScalable, public MoveOnBoardBaseObj
 {
 private:
 
@@ -18,6 +19,8 @@ public:
 	Apple& operator=(const Apple&)	= delete;
 
 	void CalculateAndSetScale(const ScaleDeterminant& _det) override;
+
+	void SetPos(const sf::Vector2u& _newPos) override;
 
 private:
 

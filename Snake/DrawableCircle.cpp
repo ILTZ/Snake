@@ -70,6 +70,8 @@ void DrawableCircle::SetPosition(const sf::Vector2f& _newPos)
 {
 	baseFigure->setPosition(_newPos);
 	changeRotation(_newPos);
+
+	currentPosition = _newPos;
 }
 
 void DrawableCircle::SetScale(const sf::Vector2f& _newScale)
@@ -91,6 +93,13 @@ void DrawableCircle::Draw(sf::RenderWindow& _wnd)
 const sf::Vector2f DrawableCircle::GetSize() const
 {
 	return sf::Vector2f(width, height);
+}
+
+const sf::Vector2f DrawableCircle::calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const
+{
+	return sf::Vector2f(
+		static_cast<float>(_fieldPos.x) * width + baseFigure->getRadius(),
+		static_cast<float>(_fieldPos.y) * height + height / 2.f);
 }
 
 void DrawableCircle::changeRotation(const sf::Vector2f& _newPos)

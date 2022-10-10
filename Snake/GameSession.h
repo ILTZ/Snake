@@ -5,7 +5,6 @@
 #include "Timer.h"
 #include "LogicField.h"
 #include "BasePlayerControlObj.h"
-#include "BaseDrawableCircle.h"
 
 #include "ScoreWidget.h"
 #include "TimeWidget.h"
@@ -13,6 +12,7 @@
 
 #include "AppState.h"
 #include "BaseDrawable.h"
+#include "Apple.h"
 
 class GameSession
 {
@@ -21,7 +21,7 @@ private:
 	std::shared_ptr<Base::BasePlayerControlObj>		snake;
 	std::shared_ptr<BaseDrawable>					gp;
 	std::shared_ptr<Logic::LogicField>				logicField;
-	std::shared_ptr<BaseD>							apple;
+	std::shared_ptr<Apple>					apple;
 
 	std::shared_ptr<ScoreWidget>	scoreWidget;
 	std::shared_ptr<TimeWidget>		timeWidget;
@@ -46,9 +46,9 @@ public:
 	GameSession(
 		MainWin::MainWindow*						_wnd, 
 		std::shared_ptr<Base::BasePlayerControlObj> _pawn,
-		std::shared_ptr<BaseDrawable>						_gp,
+		std::shared_ptr<BaseDrawable>				_gp,
 		std::shared_ptr<Logic::LogicField>			_lField,
-		std::shared_ptr<BaseD>						_apple);
+		std::shared_ptr<Apple>						_apple);
 
 	~GameSession();
 

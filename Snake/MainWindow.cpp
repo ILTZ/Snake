@@ -52,11 +52,6 @@ const sf::Vector2u MainWin::MainWindow::GetGameFieldTargetSize() const
 	);
 }
 
-void MainWin::MainWindow::Draw(BaseD& _whatDraw)
-{
-	_whatDraw.Draw(wnd);
-}
-
 void MainWin::MainWindow::Draw(BaseDrawable& _whatDraw)
 {
 	_whatDraw.Draw(wnd);

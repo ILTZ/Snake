@@ -17,8 +17,6 @@ public:
 	void SetPos(const sf::Vector2u& _newPos)		override;
 	void SetScale(const sf::Vector2f& _newScale)	override;
 
-private:
-	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2u& _fieldPos);
 };
 
 

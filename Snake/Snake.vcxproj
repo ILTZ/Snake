@@ -144,7 +144,6 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Apple.cpp" />
     <ClCompile Include="AppState.cpp" />
-    <ClCompile Include="BaseDrawableCircle.cpp" />
     <ClCompile Include="BaseText.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
@@ -166,7 +165,6 @@
     <ClCompile Include="ScoreWidget.cpp" />
     <ClCompile Include="SnakeBody.cpp" />
     <ClCompile Include="SnakePart.cpp" />
-    <ClCompile Include="SnakeParticle.cpp" />
     <ClCompile Include="SpeedWidget.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimeWidget.cpp" />
@@ -176,9 +174,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Apple.h" />
     <ClInclude Include="AppState.h" />
-    <ClInclude Include="BaseD.h" />
     <ClInclude Include="BaseDrawable.h" />
-    <ClInclude Include="BaseDrawableCircle.h" />
     <ClInclude Include="BasePawn.h" />
     <ClInclude Include="BasePlayerControlObj.h" />
     <ClInclude Include="BaseScalable.h" />
@@ -205,7 +201,6 @@
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="SnakeBody.h" />
     <ClInclude Include="SnakePart.h" />
-    <ClInclude Include="SnakeParticle.h" />
     <ClInclude Include="SpeedWidget.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimeWidget.h" />

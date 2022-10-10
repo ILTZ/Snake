@@ -11,7 +11,7 @@
 namespace Snake
 {
 
-	class SnakeBody : public Base::BasePlayerControlObj, public BaseScalable
+	class SnakeBody final : public Base::BasePlayerControlObj, public BaseScalable
 	{
 	private:
 		const std::string headTPath;
@@ -44,7 +44,11 @@ namespace Snake
 		void Draw(sf::RenderWindow& _wnd)						override;
 		void SetScale(const sf::Vector2f& _newScale)			override;
 		//<BaseD> funcs }
-		
+	private:
+		void SetPosition(const sf::Vector2f& _newPos) override{};
+
+	public:
+
 		//<BasePawn> funcs {
 		void Move()								override;
 		void SetDir(BaseP::Direction _dir)		override;

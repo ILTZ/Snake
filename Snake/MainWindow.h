@@ -7,7 +7,6 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "HUD.h"
-#include "BaseD.h"
 #include "BaseDrawable.h"
 
 namespace MainWin
@@ -38,7 +37,6 @@ namespace MainWin
 		MainWindow& operator=	(const MainWindow&) = delete;
 
 	public: //wnd funcs
-		void				Draw(BaseD& _whatDraw);
 		void				Draw(BaseDrawable& _whatDraw);
 
 		bool				PollEvents();
