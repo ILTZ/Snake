@@ -6,8 +6,7 @@
 
 #include "BasePlayerControlObj.h"
 #include "BaseScalable.h"
-#include "SnakeParticle.h"
-
+#include "SnakePart.h"
 
 namespace Snake
 {
@@ -24,7 +23,7 @@ namespace Snake
 		bool	firstMove	= false;
 
 	private:
-		std::vector<SnakePart::SnakeParticle>	body;
+		std::vector<SnakePart>	body;
 		const unsigned int						snakeStartSize	= 4;
 
 	private:

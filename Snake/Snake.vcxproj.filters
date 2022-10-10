@@ -153,6 +153,12 @@
     <ClCompile Include="LeaderBord.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="SnakePart.cpp">
+      <Filter>Исходные файлы\Game\Snake</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableCircle.cpp">
+      <Filter>Исходные файлы\RealBase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TimeWidget.h">
@@ -256,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="BaseDrawable.h">
       <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveOnBoardBaseObj.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableCircle.h">
+      <Filter>Файлы заголовков\RealBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SnakePart.h">
+      <Filter>Файлы заголовков\Game\Snake</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

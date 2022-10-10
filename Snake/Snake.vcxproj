@@ -148,6 +148,7 @@
     <ClCompile Include="BaseText.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
+    <ClCompile Include="DrawableCircle.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GraphicField.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="ScaleDeterminant.cpp" />
     <ClCompile Include="ScoreWidget.cpp" />
     <ClCompile Include="SnakeBody.cpp" />
+    <ClCompile Include="SnakePart.cpp" />
     <ClCompile Include="SnakeParticle.cpp" />
     <ClCompile Include="SpeedWidget.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -184,6 +186,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ControlBase.h" />
+    <ClInclude Include="DrawableCircle.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GraphicField.h" />
@@ -195,11 +198,13 @@
     <ClInclude Include="LogicField.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MoveOnBoardBaseObj.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="ScaleDeterminant.h" />
     <ClInclude Include="ScoreWidget.h" />
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="SnakeBody.h" />
+    <ClInclude Include="SnakePart.h" />
     <ClInclude Include="SnakeParticle.h" />
     <ClInclude Include="SpeedWidget.h" />
     <ClInclude Include="Timer.h" />

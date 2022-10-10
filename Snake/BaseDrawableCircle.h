@@ -9,6 +9,7 @@
 #include "SmartPointer.h"
 #include "BaseD.h"
 
+
 // Base Drawable Circle
 namespace BDC
 {

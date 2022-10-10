@@ -174,12 +174,12 @@ void Snake::SnakeBody::fillBody(
 	{
 		if (i < 1)
 		{
-			body.emplace_back(SnakePart::SnakeParticle(_pathToHead));
+			body.emplace_back(SnakePart(_pathToHead));
 			body.back().SetPos(sf::Vector2u());
 			continue;
 		}
 
-		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
+		body.emplace_back(SnakePart(_pathToTorso));
 		body.back().SetPos(sf::Vector2u());
 	}
 
@@ -196,7 +196,7 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 			body[body.size() - 1].GetPos().y };
 		sf::Vector2f scale = body[body.size() - 1].GetScale();
 
-		body.emplace_back(SnakePart::SnakeParticle(_pathToTorso));
+		body.emplace_back(SnakePart(_pathToTorso));
 		body.back().SetPos(pos);
 		body.back().SetScale(scale);
 	}

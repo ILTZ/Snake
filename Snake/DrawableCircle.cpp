@@ -1,12 +1,12 @@
-#include "BaseDrawableCircle.h"
+#include "DrawableCircle.h"
 
-BDC::BaseDrawableCircle::BaseDrawableCircle(const char* _pathToTexture, float _radius)
+DrawableCircle::DrawableCircle(const char* _pathToTexture, float _radius)
 {
 	baseTexture = new sf::Texture();
 	baseTexture->loadFromFile(_pathToTexture);
 
-	width	= static_cast<float>(baseTexture->getSize().x);
-	height	= static_cast<float>(baseTexture->getSize().y);
+	width = static_cast<float>(baseTexture->getSize().x);
+	height = static_cast<float>(baseTexture->getSize().y);
 
 	baseFigure = new sf::CircleShape(width / 2.f);
 	baseFigure->setRotation(0);
@@ -14,7 +14,7 @@ BDC::BaseDrawableCircle::BaseDrawableCircle(const char* _pathToTexture, float _r
 	baseFigure->setOrigin(width / 2.f, height / 2.f);
 }
 
-BDC::BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _other)
+DrawableCircle::DrawableCircle(const DrawableCircle& _other)
 {
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
@@ -30,7 +30,7 @@ BDC::BaseDrawableCircle::BaseDrawableCircle(const BaseDrawableCircle& _other)
 	currentPosition = _other.currentPosition;
 }
 
-BDC::BaseDrawableCircle& BDC::BaseDrawableCircle::operator=(const BaseDrawableCircle& _other)
+DrawableCircle& DrawableCircle::operator=(const DrawableCircle& _other)
 {
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
@@ -48,7 +48,7 @@ BDC::BaseDrawableCircle& BDC::BaseDrawableCircle::operator=(const BaseDrawableCi
 	return *this;
 }
 
-BDC::BaseDrawableCircle::BaseDrawableCircle(BaseDrawableCircle&& _other) noexcept
+DrawableCircle::DrawableCircle(DrawableCircle&& _other) noexcept
 {
 	if (this != &_other)
 	{
@@ -62,56 +62,38 @@ BDC::BaseDrawableCircle::BaseDrawableCircle(BaseDrawableCircle&& _other) noexcep
 	}
 }
 
-BDC::BaseDrawableCircle::~BaseDrawableCircle()
+DrawableCircle::~DrawableCircle()
 {
 }
 
-void BDC::BaseDrawableCircle::SetPos(const sf::Vector2u& _newPos)
+void DrawableCircle::SetPosition(const sf::Vector2f& _newPos)
 {
+	baseFigure->setPosition(_newPos);
 	changeRotation(_newPos);
-	currentPosition = _newPos;
-
-	baseFigure->setPosition(sf::Vector2f(
-		static_cast<float>(currentPosition.x) * width + baseFigure->getRadius(),
-		static_cast<float>(currentPosition.y) * height + height / 2.f));
 }
 
-const sf::Vector2u& BDC::BaseDrawableCircle::GetPos() const
+void DrawableCircle::SetScale(const sf::Vector2f& _newScale)
 {
-	return currentPosition;
-}
-
-void BDC::BaseDrawableCircle::Draw(sf::RenderWindow& _wnd)
-{
-	_wnd.draw(*baseFigure);
-}
-
-void BDC::BaseDrawableCircle::SetScale(const sf::Vector2f& _newScale)
-{
-	width	*= _newScale.x;
-	height	*= _newScale.y;
+	width *= _newScale.x;
+	height *= _newScale.y;
 
 	currentScale = _newScale;
 
 	baseFigure->setRadius(baseFigure->getRadius() * _newScale.x);
 	baseFigure->setOrigin(baseFigure->getRadius(), baseFigure->getRadius());
-
-	baseFigure->setPosition(sf::Vector2f(
-		static_cast<float>(currentPosition.x) * width + baseFigure->getRadius(),
-		static_cast<float>(currentPosition.y) * height + height / 2.f));
 }
 
-const sf::Vector2f BDC::BaseDrawableCircle::GetScale() const
+void DrawableCircle::Draw(sf::RenderWindow& _wnd)
 {
-	return currentScale;
+	_wnd.draw(*baseFigure);
 }
 
-const sf::Vector2f BDC::BaseDrawableCircle::GetSize() const
+const sf::Vector2f DrawableCircle::GetSize() const
 {
 	return sf::Vector2f(width, height);
 }
 
-void BDC::BaseDrawableCircle::changeRotation(const sf::Vector2u& _newPos)
+void DrawableCircle::changeRotation(const sf::Vector2f& _newPos)
 {
 	if (_newPos.y > currentPosition.y)
 	{
