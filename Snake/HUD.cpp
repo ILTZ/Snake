@@ -92,7 +92,7 @@ std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float 
 	return temp;
 }
 
-void Hud::HUD::AddWidget(std::shared_ptr<BaseWidget> _widget)
+void Hud::HUD::AddWidget(std::shared_ptr<InfoWidget> _widget)
 {
 	assert(widgetArr.size() != baseWidgetArraySize);
 

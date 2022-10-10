@@ -1,7 +1,7 @@
 #include "InfoWidget.h"
 
 InfoWidget::InfoWidget(const char* _pathToTexture, const char* _pathToFont) :
-	BaseWidget{_pathToTexture}
+	BaseDrawableRectangle{_pathToTexture}
 {
 	widgetText = new BaseText(
 		_pathToFont,
@@ -13,7 +13,7 @@ InfoWidget::InfoWidget(const char* _pathToTexture, const char* _pathToFont) :
 }
 
 InfoWidget::InfoWidget(InfoWidget&& _other) noexcept :
-	BaseWidget{std::move(_other)}, widgetText{_other.widgetText.Release()}
+	BaseDrawableRectangle{std::move(_other)}, widgetText{_other.widgetText.Release()}
 {
 
 }

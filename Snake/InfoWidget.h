@@ -2,9 +2,10 @@
 #define INFO_WIDGET_H
 
 #include "BaseText.h"
-#include "Widget.h"
+#include "BaseDrawableRectangle.h"
 
-class InfoWidget : public BaseWidget
+
+class InfoWidget : public BDR::BaseDrawableRectangle
 {
 protected:
 	SmartPointer::SmartPointer<BaseText> widgetText;

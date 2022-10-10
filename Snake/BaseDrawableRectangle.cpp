@@ -1,6 +1,8 @@
-#include "Widget.h"
+#include "BaseDrawableRectangle.h"
 
-BaseWidget::BaseWidget(const char* _pathToText) : mainTexture{new sf::Texture()}
+using namespace BDR;
+
+BaseDrawableRectangle::BaseDrawableRectangle(const char* _pathToText) : mainTexture{new sf::Texture()}
 {
 	mainTexture->loadFromFile(_pathToText);
 
@@ -14,7 +16,7 @@ BaseWidget::BaseWidget(const char* _pathToText) : mainTexture{new sf::Texture()}
 	rectangleShape->setTexture(&*mainTexture);
 }
 
-BaseWidget::BaseWidget(const BaseWidget& _other) : mainTexture{new sf::Texture(*_other.mainTexture)}
+BaseDrawableRectangle::BaseDrawableRectangle(const BaseDrawableRectangle& _other) : mainTexture{new sf::Texture(*_other.mainTexture)}
 {
 	const float xSize = static_cast<float>(mainTexture->getSize().x);
 	const float ySize = static_cast<float>(mainTexture->getSize().y);
@@ -26,7 +28,7 @@ BaseWidget::BaseWidget(const BaseWidget& _other) : mainTexture{new sf::Texture(*
 	rectangleShape->setTexture(&*mainTexture);
 }
 
-BaseWidget::BaseWidget(BaseWidget&& _other) noexcept
+BaseDrawableRectangle::BaseDrawableRectangle(BaseDrawableRectangle&& _other) noexcept
 {
 	if (this != &_other)
 	{
@@ -35,16 +37,16 @@ BaseWidget::BaseWidget(BaseWidget&& _other) noexcept
 	}
 }
 
-BaseWidget::~BaseWidget()
+BaseDrawableRectangle::~BaseDrawableRectangle()
 {
 }
 
-void BaseWidget::SetScale(const sf::Vector2f& _newScale)
+void BaseDrawableRectangle::SetScale(const sf::Vector2f& _newScale)
 {
 	rectangleShape->setScale(_newScale);
 }
 
-void BaseWidget::SetPosition(const sf::Vector2f& _newPosition)
+void BaseDrawableRectangle::SetPosition(const sf::Vector2f& _newPosition)
 {
 	rectangleShape->setPosition(_newPosition);
 }

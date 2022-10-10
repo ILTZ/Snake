@@ -11,7 +11,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Button.h"
-#include "Widget.h"
+#include "InfoWidget.h"
 #include "AppState.h"
 
 namespace Hud
@@ -59,7 +59,7 @@ namespace Hud
 
 	private:
 		const unsigned int baseWidgetArraySize = 3;
-		std::vector<std::shared_ptr<BaseWidget>> widgetArr;
+		std::vector<std::shared_ptr<InfoWidget>> widgetArr;
 
 	public:
 		HUD(
@@ -93,7 +93,7 @@ namespace Hud
 			float _y);
 
 	public:
-		void AddWidget(std::shared_ptr<BaseWidget> _widget);
+		void AddWidget(std::shared_ptr<InfoWidget> _widget);
 		void ClearWidgets();
 
 	private:

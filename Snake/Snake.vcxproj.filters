@@ -69,7 +69,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Widget.cpp">
+    <ClCompile Include="BaseDrawableRectangle.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="TimeWidget.cpp">
@@ -152,7 +152,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Widget.h">
+    <ClInclude Include="BaseDrawableRectangle.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="TimeWidget.h">
