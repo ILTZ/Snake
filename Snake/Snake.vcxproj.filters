@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Файлы заголовков\AbstractBase">
-      <UniqueIdentifier>{aecb1333-f215-47a9-a016-92544f7cb28f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\Window">
       <UniqueIdentifier>{561eef3a-5f80-458a-9e65-8b8fb05d4c23}</UniqueIdentifier>
     </Filter>
@@ -24,9 +21,6 @@
     </Filter>
     <Filter Include="Файлы заголовков\Window\HUD\Widgets">
       <UniqueIdentifier>{27ec6def-ede0-46d9-9ece-51966b9bdf2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\RealBase">
-      <UniqueIdentifier>{00028d66-f59a-4214-b6e8-686e4024eda7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\Utilites">
       <UniqueIdentifier>{aefb94b1-5e67-4a67-8347-cf2c4f04a3f3}</UniqueIdentifier>
@@ -39,12 +33,6 @@
     </Filter>
     <Filter Include="Исходные файлы\Utilites">
       <UniqueIdentifier>{88bda3fa-89b5-446b-95a5-8cfe82dd3f67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\AbstractBase">
-      <UniqueIdentifier>{8607bd7e-9e2f-4218-94a4-ee67d0112810}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\RealBase">
-      <UniqueIdentifier>{c764a701-f183-48d2-86e4-04864758b373}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\Window">
       <UniqueIdentifier>{7d6c9ba5-ad8e-4a96-9b72-7e2383b55b1a}</UniqueIdentifier>
@@ -66,6 +54,24 @@
     </Filter>
     <Filter Include="Исходные файлы\App">
       <UniqueIdentifier>{6d9fef22-cb4b-4423-a85c-4b7aefae8880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Base">
+      <UniqueIdentifier>{12d04e8b-a9e6-4854-a7ce-a1fd614b2522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Base\AbstractBase">
+      <UniqueIdentifier>{aecb1333-f215-47a9-a016-92544f7cb28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Base\RealBase">
+      <UniqueIdentifier>{00028d66-f59a-4214-b6e8-686e4024eda7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Base">
+      <UniqueIdentifier>{8c1839d8-9cff-4438-b69e-db117fdc2bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Base\AbstractBase">
+      <UniqueIdentifier>{8607bd7e-9e2f-4218-94a4-ee67d0112810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Base\RealBase">
+      <UniqueIdentifier>{c764a701-f183-48d2-86e4-04864758b373}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +103,7 @@
       <Filter>Исходные файлы\Utilites</Filter>
     </ClCompile>
     <ClCompile Include="BaseText.cpp">
-      <Filter>Исходные файлы\RealBase</Filter>
+      <Filter>Исходные файлы\Base\RealBase</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>Исходные файлы\Window</Filter>
@@ -148,10 +154,10 @@
       <Filter>Исходные файлы\Game\Snake</Filter>
     </ClCompile>
     <ClCompile Include="DrawableCircle.cpp">
-      <Filter>Исходные файлы\RealBase</Filter>
+      <Filter>Исходные файлы\Base\RealBase</Filter>
     </ClCompile>
     <ClCompile Include="DrawableRectangle.cpp">
-      <Filter>Исходные файлы\RealBase</Filter>
+      <Filter>Исходные файлы\Base\RealBase</Filter>
     </ClCompile>
     <ClCompile Include="Layout.cpp">
       <Filter>Исходные файлы</Filter>
@@ -171,13 +177,13 @@
       <Filter>Файлы заголовков\Window\HUD</Filter>
     </ClInclude>
     <ClInclude Include="BaseScalable.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
+      <Filter>Файлы заголовков\Base\AbstractBase</Filter>
     </ClInclude>
     <ClInclude Include="BasePawn.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
+      <Filter>Файлы заголовков\Base\AbstractBase</Filter>
     </ClInclude>
     <ClInclude Include="BasePlayerControlObj.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
+      <Filter>Файлы заголовков\Base\AbstractBase</Filter>
     </ClInclude>
     <ClInclude Include="MainWindow.h">
       <Filter>Файлы заголовков\Window</Filter>
@@ -189,10 +195,10 @@
       <Filter>Файлы заголовков\Window</Filter>
     </ClInclude>
     <ClInclude Include="ControlBase.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
+      <Filter>Файлы заголовков\Base\AbstractBase</Filter>
     </ClInclude>
     <ClInclude Include="BaseText.h">
-      <Filter>Файлы заголовков\RealBase</Filter>
+      <Filter>Файлы заголовков\Base\RealBase</Filter>
     </ClInclude>
     <ClInclude Include="ScaleDeterminant.h">
       <Filter>Файлы заголовков\Utilites</Filter>
@@ -246,19 +252,19 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="BaseDrawable.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
+      <Filter>Файлы заголовков\Base\AbstractBase</Filter>
     </ClInclude>
     <ClInclude Include="DrawableCircle.h">
-      <Filter>Файлы заголовков\RealBase</Filter>
+      <Filter>Файлы заголовков\Base\RealBase</Filter>
     </ClInclude>
     <ClInclude Include="SnakePart.h">
       <Filter>Файлы заголовков\Game\Snake</Filter>
     </ClInclude>
     <ClInclude Include="MoveOnBoardBaseObj.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
+      <Filter>Файлы заголовков\Base\AbstractBase</Filter>
     </ClInclude>
     <ClInclude Include="DrawableRectangle.h">
-      <Filter>Файлы заголовков\RealBase</Filter>
+      <Filter>Файлы заголовков\Base\RealBase</Filter>
     </ClInclude>
     <ClInclude Include="Layout.h">
       <Filter>Файлы заголовков</Filter>

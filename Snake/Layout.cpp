@@ -2,8 +2,8 @@
 
 LAYOUT::Layout::Layout(const sf::Vector2f& _lSize) 
 {
-	currentSize = _lSize;
-	objctHelpPos = { _lSize.x / 2.f, _lSize.y };
+	/*currentSize = _lSize;
+	objctHelpPos = { _lSize.x / 2.f, _lSize.y };*/
 }
 
 void LAYOUT::Layout::SetPos(Position _pos)
