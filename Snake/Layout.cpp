@@ -1,6 +1,6 @@
 #include "Layout.h"
 
-LAYOUT::Layout::Layout(const sf::Vector2f& _lSize) :
+LAYOUT::Layout::Layout(const sf::Vector2f& _lSize) 
 {
 	currentSize = _lSize;
 	objctHelpPos = { _lSize.x / 2.f, _lSize.y };
