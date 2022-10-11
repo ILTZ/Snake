@@ -29,7 +29,8 @@ public:
 	virtual void SetScale(const sf::Vector2f& _newScale)	override;
 	virtual void Draw(sf::RenderWindow& _wnd)				override;
 
-	const sf::Vector2f GetSize() const override;
+	virtual const sf::Vector2f GetSize() const			override;
+	virtual void SetSize(const sf::Vector2f _newSize)	override;
 
 protected:
 	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const;

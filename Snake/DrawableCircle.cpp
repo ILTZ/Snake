@@ -100,6 +100,14 @@ const sf::Vector2f DrawableCircle::GetSize() const
 	return currentSize;
 }
 
+void DrawableCircle::SetSize(const sf::Vector2f _newSize)
+{
+	currentSize = _newSize;
+
+	baseFigure->setRadius(currentSize.x / 2.f);
+	baseFigure->setOrigin(baseFigure->getRadius(), baseFigure->getRadius());
+}
+
 const sf::Vector2f DrawableCircle::calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const
 {
 	return sf::Vector2f(
