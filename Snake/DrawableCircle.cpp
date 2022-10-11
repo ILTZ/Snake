@@ -1,33 +1,34 @@
 #include "DrawableCircle.h"
 
-DrawableCircle::DrawableCircle(const char* _pathToTexture, float _radius)
+DrawableCircle::DrawableCircle(const char* _pathToTexture)
 {
 	baseTexture = new sf::Texture();
 	baseTexture->loadFromFile(_pathToTexture);
 
-	width = static_cast<float>(baseTexture->getSize().x);
-	height = static_cast<float>(baseTexture->getSize().y);
+	currentSize.x = static_cast<float>(baseTexture->getSize().x);
+	currentSize.y = static_cast<float>(baseTexture->getSize().y);
 
-	baseFigure = new sf::CircleShape(width / 2.f);
+	baseFigure = new sf::CircleShape(currentSize.x / 2.f);
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
-	baseFigure->setOrigin(width / 2.f, height / 2.f);
+	baseFigure->setOrigin(currentSize.x / 2.f, currentSize.y / 2.f);
+
 }
 
 DrawableCircle::DrawableCircle(const DrawableCircle& _other)
 {
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
-	width = static_cast<float>(baseTexture->getSize().x);
-	height = static_cast<float>(baseTexture->getSize().y);
+	currentSize.x = static_cast<float>(baseTexture->getSize().x);
+	currentSize.y = static_cast<float>(baseTexture->getSize().y);
 
-	auto _rad = _other.baseFigure->getRadius();
-	baseFigure = new sf::CircleShape(_rad);
+	baseFigure = new sf::CircleShape(_other.baseFigure->getRadius());
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
-	baseFigure->setOrigin(width / 2.f, height / 2.f);
+	baseFigure->setOrigin(currentSize.x / 2.f, currentSize.y / 2.f);
 
 	currentPosition = _other.currentPosition;
+
 }
 
 DrawableCircle& DrawableCircle::operator=(const DrawableCircle& _other)
@@ -37,14 +38,13 @@ DrawableCircle& DrawableCircle::operator=(const DrawableCircle& _other)
 
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
-	width = static_cast<float>(baseTexture->getSize().x);
-	height = static_cast<float>(baseTexture->getSize().y);
+	currentSize.x = static_cast<float>(baseTexture->getSize().x);
+	currentSize.y = static_cast<float>(baseTexture->getSize().y);
 
-	auto _rad = _other.baseFigure->getRadius();
-	baseFigure = new sf::CircleShape(_rad);
+	baseFigure = new sf::CircleShape(_other.baseFigure->getRadius());
 	baseFigure->setRotation(0);
 	baseFigure->setTexture(&*baseTexture);
-	baseFigure->setOrigin(width / 2.f, height / 2.f);
+	baseFigure->setOrigin(currentSize.x / 2.f, currentSize.y / 2.f);
 
 	currentPosition = _other.currentPosition;
 
@@ -60,8 +60,7 @@ DrawableCircle::DrawableCircle(DrawableCircle&& _other) noexcept
 
 		currentPosition = _other.currentPosition;
 
-		width = _other.width;
-		height = _other.height;
+		currentSize = _other.currentSize;
 	}
 }
 
@@ -82,6 +81,9 @@ void DrawableCircle::SetScale(const sf::Vector2f& _newScale)
 	width *= _newScale.x;
 	height *= _newScale.y;
 
+	currentSize.x *= _newScale.x;
+	currentSize.y *= _newScale.y;
+
 	currentScale = _newScale;
 
 	baseFigure->setRadius(baseFigure->getRadius() * _newScale.x);
@@ -95,14 +97,14 @@ void DrawableCircle::Draw(sf::RenderWindow& _wnd)
 
 const sf::Vector2f DrawableCircle::GetSize() const
 {
-	return sf::Vector2f(width, height);
+	return currentSize;
 }
 
 const sf::Vector2f DrawableCircle::calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const
 {
 	return sf::Vector2f(
-		static_cast<float>(_fieldPos.x) * width + baseFigure->getRadius(),
-		static_cast<float>(_fieldPos.y) * height + height / 2.f);
+		static_cast<float>(_fieldPos.x) * currentSize.x + baseFigure->getRadius(),
+		static_cast<float>(_fieldPos.y) * currentSize.y + currentSize.y / 2.f);
 }
 
 void DrawableCircle::changeRotation(const sf::Vector2f& _newPos)

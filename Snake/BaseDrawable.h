@@ -18,7 +18,9 @@ public:
 
 	virtual const sf::Vector2f GetPosition()	const { return currentPosition; }
 	virtual const sf::Vector2f GetScale()		const { return currentScale; }
+
 	virtual const sf::Vector2f GetSize()		const { return currentSize; }
+	virtual void SetSize(const sf::Vector2f _newSize) { currentSize = _newSize; }
 
 	virtual ~BaseDrawable() {};
 

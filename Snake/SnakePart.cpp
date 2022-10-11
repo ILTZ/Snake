@@ -1,7 +1,7 @@
 #include "SnakePart.h"
 
-SnakePart::SnakePart(const char* _pathToText, float _radius) :
-	DrawableCircle{_pathToText, _radius}
+SnakePart::SnakePart(const char* _pathToText) :
+	DrawableCircle{_pathToText}
 {
 }
 

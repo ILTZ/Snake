@@ -9,7 +9,7 @@ class SnakePart final : public DrawableCircle, public MoveOnBoardBaseObj
 private:
 
 public:
-	SnakePart(const char* _pathToText, float _radius = 20.f);
+	SnakePart(const char* _pathToText);
 	SnakePart(const SnakePart& _other);
 	SnakePart(SnakePart&& _other)				noexcept;
 

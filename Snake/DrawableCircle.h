@@ -17,7 +17,7 @@ protected:
 	float height = 0.f;
 
 public:
-	DrawableCircle(const char* _pathToTexture, float _radius = 20.f);
+	DrawableCircle(const char* _pathToTexture);
 	DrawableCircle(const DrawableCircle& _other);
 	DrawableCircle& operator=(const DrawableCircle& _other);
 	DrawableCircle(DrawableCircle&& _other) noexcept;
@@ -29,7 +29,7 @@ public:
 	virtual void SetScale(const sf::Vector2f& _newScale)	override;
 	virtual void Draw(sf::RenderWindow& _wnd)				override;
 
-	const sf::Vector2f GetSize() const;
+	const sf::Vector2f GetSize() const override;
 
 protected:
 	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const;
