@@ -168,7 +168,7 @@
     <ClCompile Include="SpeedWidget.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimeWidget.cpp" />
-    <ClCompile Include="BaseDrawableRectangle.cpp" />
+    <ClCompile Include="DrawableRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -204,7 +204,7 @@
     <ClInclude Include="SpeedWidget.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimeWidget.h" />
-    <ClInclude Include="BaseDrawableRectangle.h" />
+    <ClInclude Include="DrawableRectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,6 +28,7 @@ namespace SmartPointer
 	public:
 		T* Release();
 		bool IsValid();
+		void Reset();
 
 	private:
 		void clear();
@@ -91,6 +92,12 @@ namespace SmartPointer
 	inline bool SmartPointer<T>::IsValid()
 	{
 		return (obj ? true : false);
+	}
+
+	template<class T>
+	inline void SmartPointer<T>::Reset()
+	{
+		clear();
 	}
 
 	template<class T>

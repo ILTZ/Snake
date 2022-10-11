@@ -141,9 +141,6 @@
     <ClCompile Include="AppState.cpp">
       <Filter>Исходные файлы\App</Filter>
     </ClCompile>
-    <ClCompile Include="BaseDrawableRectangle.cpp">
-      <Filter>Исходные файлы\AbstractBase</Filter>
-    </ClCompile>
     <ClCompile Include="LeaderBord.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -151,6 +148,9 @@
       <Filter>Исходные файлы\Game\Snake</Filter>
     </ClCompile>
     <ClCompile Include="DrawableCircle.cpp">
+      <Filter>Исходные файлы\RealBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableRectangle.cpp">
       <Filter>Исходные файлы\RealBase</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,23 +239,23 @@
     <ClInclude Include="AppState.h">
       <Filter>Файлы заголовков\App</Filter>
     </ClInclude>
-    <ClInclude Include="BaseDrawableRectangle.h">
-      <Filter>Файлы заголовков\AbstractBase</Filter>
-    </ClInclude>
     <ClInclude Include="LeaderBord.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="BaseDrawable.h">
       <Filter>Файлы заголовков\AbstractBase</Filter>
     </ClInclude>
-    <ClInclude Include="MoveOnBoardBaseObj.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="DrawableCircle.h">
       <Filter>Файлы заголовков\RealBase</Filter>
     </ClInclude>
     <ClInclude Include="SnakePart.h">
       <Filter>Файлы заголовков\Game\Snake</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveOnBoardBaseObj.h">
+      <Filter>Файлы заголовков\AbstractBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableRectangle.h">
+      <Filter>Файлы заголовков\RealBase</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

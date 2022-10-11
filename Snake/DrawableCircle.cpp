@@ -32,6 +32,9 @@ DrawableCircle::DrawableCircle(const DrawableCircle& _other)
 
 DrawableCircle& DrawableCircle::operator=(const DrawableCircle& _other)
 {
+	baseFigure.Reset();
+	baseTexture.Reset();
+
 	baseTexture = new sf::Texture(*_other.baseTexture);
 
 	width = static_cast<float>(baseTexture->getSize().x);
