@@ -107,19 +107,19 @@ const sf::Vector2f DrawableCircle::calculateCurrentWindowPos(const sf::Vector2u&
 
 void DrawableCircle::changeRotation(const sf::Vector2f& _newPos)
 {
-	if (_newPos.y > currentPosition.y)
+	if (_newPos.y > currentPosition.y)		//Down
 	{
 		baseFigure->setRotation(180.f);
 	}
-	else if (_newPos.y < currentPosition.y)
+	else if (_newPos.y < currentPosition.y)	//Up
 	{
 		baseFigure->setRotation(0.f);
 	}
-	else if (_newPos.x > currentPosition.x)
+	else if (_newPos.x > currentPosition.x) //Left
 	{
 		baseFigure->setRotation(90.f);
 	}
-	else if (_newPos.x < currentPosition.x)
+	else if (_newPos.x < currentPosition.x)	//Right
 	{
 		baseFigure->setRotation(270.f);
 	}

@@ -153,6 +153,9 @@
     <ClCompile Include="DrawableRectangle.cpp">
       <Filter>Исходные файлы\RealBase</Filter>
     </ClCompile>
+    <ClCompile Include="Layout.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TimeWidget.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="DrawableRectangle.h">
       <Filter>Файлы заголовков\RealBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

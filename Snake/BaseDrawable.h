@@ -9,6 +9,7 @@ class BaseDrawable
 protected:
 	sf::Vector2f currentPosition;
 	sf::Vector2f currentScale;
+	sf::Vector2f currentSize;
 
 public:
 	virtual void SetPosition(const sf::Vector2f& _newPos)	= 0;
@@ -17,6 +18,7 @@ public:
 
 	virtual const sf::Vector2f GetPosition()	const { return currentPosition; }
 	virtual const sf::Vector2f GetScale()		const { return currentScale; }
+	virtual const sf::Vector2f GetSize()		const { return currentSize; }
 
 	virtual ~BaseDrawable() {};
 

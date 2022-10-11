@@ -154,6 +154,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InfoWidget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Layout.cpp" />
     <ClCompile Include="LeaderBord.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
     <ClCompile Include="LogicField.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="InfoWidget.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Layout.h" />
     <ClInclude Include="LeaderBord.h" />
     <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="LogicField.h" />

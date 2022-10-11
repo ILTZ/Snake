@@ -13,6 +13,7 @@
 #include "Button.h"
 #include "InfoWidget.h"
 #include "AppState.h"
+#include "BaseDrawable.h"
 
 namespace Hud
 {
