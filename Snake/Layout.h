@@ -20,11 +20,8 @@ namespace LAYOUT
 	private:
 		std::vector<std::shared_ptr<BaseDrawable>> drawVector;
 
-		sf::Vector2f layoutSize;
-		sf::Vector2f objctHelpPos;
-
 	public:
-		Layout(const sf::Vector2f& _lSize);
+		Layout(const sf::Vector2f& _size, const sf::Vector2f& _pos);
 
 	public:
 		Layout(const Layout&)				= delete;
@@ -33,8 +30,8 @@ namespace LAYOUT
 		Layout& operator=(Layout&&)			= delete;
 
 	public:
-		void AddObject();
-		void SetPos(Position _pos);
+		void AddObject(std::shared_ptr<BaseDrawable> _drawableObj);
+		void SetObjRelativePosition(Position _pos);
 
 
 	public:
@@ -44,6 +41,13 @@ namespace LAYOUT
 
 	private:
 		void relocateObjcts();
+
+		void setObjctsScale(const sf::Vector2f& _newScale);
+
+	private:
+		const float calculateHeightSize(const std::vector<std::shared_ptr<BaseDrawable>>& _vec);
+
+		void transformObjcts();
 	};
 }
 
