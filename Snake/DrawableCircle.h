@@ -25,12 +25,17 @@ public:
 	virtual ~DrawableCircle();
 
 public:
-	virtual void SetPosition(const sf::Vector2f& _newPos)	override;
-	virtual void SetScale(const sf::Vector2f& _newScale)	override;
-	virtual void Draw(sf::RenderWindow& _wnd)				override;
+	virtual void Draw(sf::RenderWindow& _target)				override;
 
-	virtual const sf::Vector2f GetSize() const			override;
-	virtual void SetSize(const sf::Vector2f _newSize)	override;
+public:
+	virtual const sf::Vector2f GetScale()						const override;
+	virtual void SetScale(const sf::Vector2f& _newScale)		override;
+
+	virtual const sf::Vector2f GetPosition()					const override;
+	virtual void SetPosition(const sf::Vector2f& _newPosition)	override;
+
+	virtual const sf::Vector2f GetSize()						const override;
+	virtual void SetSize(const sf::Vector2f _newSize)			override;
 
 protected:
 	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const;

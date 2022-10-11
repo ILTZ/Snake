@@ -13,6 +13,7 @@ DrawableCircle::DrawableCircle(const char* _pathToTexture)
 	baseFigure->setTexture(&*baseTexture);
 	baseFigure->setOrigin(currentSize.x / 2.f, currentSize.y / 2.f);
 
+	currentScale = { 1.f,1.f };
 }
 
 DrawableCircle::DrawableCircle(const DrawableCircle& _other)
@@ -29,6 +30,7 @@ DrawableCircle::DrawableCircle(const DrawableCircle& _other)
 
 	currentPosition = _other.currentPosition;
 
+	currentScale = { 1.f,1.f };
 }
 
 DrawableCircle& DrawableCircle::operator=(const DrawableCircle& _other)
@@ -46,7 +48,8 @@ DrawableCircle& DrawableCircle::operator=(const DrawableCircle& _other)
 	baseFigure->setTexture(&*baseTexture);
 	baseFigure->setOrigin(currentSize.x / 2.f, currentSize.y / 2.f);
 
-	currentPosition = _other.currentPosition;
+	currentPosition		= _other.currentPosition;
+	currentScale		= _other.currentScale;
 
 	return *this;
 }
@@ -58,14 +61,19 @@ DrawableCircle::DrawableCircle(DrawableCircle&& _other) noexcept
 		baseTexture = _other.baseTexture.Release();
 		baseFigure = _other.baseFigure.Release();
 
-		currentPosition = _other.currentPosition;
-
-		currentSize = _other.currentSize;
+		currentPosition		= _other.currentPosition;
+		currentScale		= _other.currentScale;
+		currentSize			= _other.currentSize;
 	}
 }
 
 DrawableCircle::~DrawableCircle()
 {
+}
+
+const sf::Vector2f DrawableCircle::GetPosition() const
+{
+	return baseFigure->getPosition();
 }
 
 void DrawableCircle::SetPosition(const sf::Vector2f& _newPos)
@@ -74,6 +82,11 @@ void DrawableCircle::SetPosition(const sf::Vector2f& _newPos)
 	changeRotation(_newPos);
 
 	currentPosition = _newPos;
+}
+
+const sf::Vector2f DrawableCircle::GetScale() const
+{
+	return currentScale;
 }
 
 void DrawableCircle::SetScale(const sf::Vector2f& _newScale)
@@ -90,9 +103,9 @@ void DrawableCircle::SetScale(const sf::Vector2f& _newScale)
 	baseFigure->setOrigin(baseFigure->getRadius(), baseFigure->getRadius());
 }
 
-void DrawableCircle::Draw(sf::RenderWindow& _wnd)
+void DrawableCircle::Draw(sf::RenderWindow& _target)
 {
-	_wnd.draw(*baseFigure);
+	_target.draw(*baseFigure);
 }
 
 const sf::Vector2f DrawableCircle::GetSize() const
