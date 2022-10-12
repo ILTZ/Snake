@@ -56,6 +56,7 @@ void Buttons::Button::SetScale(const sf::Vector2f& _newScale)
 	btnsSizeDifference.y *= _newScale.y;
 
 	text->SetScale(_newScale);
+	calculateAndSetBtnsShift(currentPosition);
 }
 
 void Buttons::Button::SetPosition(const sf::Vector2f& _newPos)

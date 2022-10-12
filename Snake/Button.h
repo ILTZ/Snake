@@ -34,7 +34,7 @@ namespace Buttons
 	};
 	BtnPurpose operator++(BtnPurpose& _x);
 
-	class Button : public BaseDrawable
+	class Button final : public BaseDrawable
 	{
 	private:
 		struct BtnConf
@@ -75,9 +75,9 @@ namespace Buttons
 		// Switch PRESSED || RELEASED
 		void SetState(BtnState _mode);
 
-		void SetScale(const sf::Vector2f& _newScale)		override;
-		void SetPosition(const sf::Vector2f& _newPos)		override;
-		void Draw(sf::RenderWindow& _wnd)					override;
+		virtual void SetScale(const sf::Vector2f& _newScale)		override;
+		virtual void SetPosition(const sf::Vector2f& _newPos)		override;
+		virtual void Draw(sf::RenderWindow& _wnd)					override;
 
 	public:
 		BtnPurpose GetBtnPurpose()		const;

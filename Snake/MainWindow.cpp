@@ -101,7 +101,7 @@ void MainWin::MainWindow::SetHud(std::shared_ptr<Hud::HUD> _hud)
 {
 	hud = _hud;
 	// Last quarter of the window
-	hud->SetHudPosition(sf::Vector2f(
+	hud->SetHudSpritePosition(sf::Vector2f(
 		static_cast<float>(wnd.getSize().x) * (1.f - hudPart), 0.f));
 	// Midle of the window
 	hud->SetButtonsPosition(sf::Vector2f(

@@ -21,6 +21,7 @@ namespace LAYOUT
 		std::vector<std::shared_ptr<BaseDrawable>> drawVector;
 
 	public:
+		Layout() = default;
 		Layout(const sf::Vector2f& _size, const sf::Vector2f& _pos);
 
 	public:
@@ -31,8 +32,7 @@ namespace LAYOUT
 
 	public:
 		void AddObject(std::shared_ptr<BaseDrawable> _drawableObj);
-		void SetObjRelativePosition(Position _pos);
-
+		void ClearLayout();
 
 	public:
 		virtual void SetPosition(const sf::Vector2f& _newPos)	override;
@@ -40,14 +40,11 @@ namespace LAYOUT
 		virtual void Draw(sf::RenderWindow& _wnd)				override;
 
 	private:
-		void relocateObjcts();
-
 		void setObjctsScale(const sf::Vector2f& _newScale);
+		void setObjctsPosition(const sf::Vector2f& _newPosiion);
 
 	private:
-		const float calculateHeightSize(const std::vector<std::shared_ptr<BaseDrawable>>& _vec);
 
-		void transformObjcts();
 	};
 }
 

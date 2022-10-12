@@ -31,12 +31,8 @@ App::App()
 	// Hud configurate {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
-	auto hud = std::make_shared<Hud::HUD>(
-		configs.pathToHud.c_str(), 
-		configs.pathToReleaseBtn.c_str(), 
-		configs.pathToPressBtn.c_str(), 
-		configs.pathToTextFont.c_str());
-	
+	auto hud = std::make_shared<Hud::HUD>(configs);
+
 	auto hudScale = det->CalculateAbsoluteScale(
 		hud->GetHUDSize(), 
 		wnd->GetHudTargetSize());

@@ -13,23 +13,13 @@
 #include "Button.h"
 #include "InfoWidget.h"
 #include "AppState.h"
-#include "BaseDrawable.h"
+//#include "BaseDrawable.h"
+#include "Layout.h"
+#include "ConfigLoader.h"
 
 namespace Hud
 {
-	enum class MODE
-	{
-		MAIN_MENU		= 0,
-		LVL_SELECT		= 1,
-		LVL_SELECTED	= 2,
-		GAME_PROCESS	= 3,
-		GAME_PAUSE		= 4,
-		GAME_OVER		= 5,
-		LEADERS			= 6,
-		EXIT			= 7,
-
-	};
-
+	
 	class HUD
 	{
 	private:
@@ -56,11 +46,12 @@ namespace Hud
 	private:
 
 	private:
-		std::vector <SmartPointer::SmartPointer<Buttons::Button>> btns;
+		std::vector <std::shared_ptr<Buttons::Button>>				btnsLogicArr;
+		SmartPointer::SmartPointer<LAYOUT::Layout>					btnsLayout;
 
 	private:
 		const unsigned int baseWidgetArraySize = 3;
-		std::vector<std::shared_ptr<InfoWidget>> widgetArr;
+		std::vector<std::shared_ptr<BaseDrawable>> widgetArr;
 
 	public:
 		HUD(
@@ -68,6 +59,8 @@ namespace Hud
 			const char* _pathToBtnReleased, 
 			const char* _pathToBtnPressed, 
 			const char* _pathToFont);
+
+		HUD(CLoader::HudConfigs& _configs);
 
 	public:
 		HUD(const HUD&)				= delete;
@@ -79,9 +72,9 @@ namespace Hud
 		void SetScale		(const sf::Vector2f& _newScale);
 		
 	public:
-		const sf::Vector2u GetHUDSize()			const;
-		const sf::Vector2f GetHudPosition()		const;
-		void SetHudPosition(const sf::Vector2f& _newPos);
+		const sf::Vector2u GetHUDSize()					const;
+		const sf::Vector2f GetHudSpritePosition()		const;
+		void SetHudSpritePosition(const sf::Vector2f& _newPos);
 
 	public:
 		const sf::Vector2f GetButtonsPosition()					const;
@@ -94,7 +87,7 @@ namespace Hud
 			float _y);
 
 	public:
-		void AddWidget(std::shared_ptr<InfoWidget> _widget);
+		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
 		void ClearWidgets();
 
 	private:

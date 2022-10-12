@@ -15,11 +15,31 @@ HUD::HUD(
 	pathToFont				{_pathToFont},
 	hud						{new sf::Texture()},
 	currentScale			{1.f,1.f}
-
 {
 	hud->loadFromFile(pathToHUD.c_str());
 	hudSprite = new sf::Sprite(*hud);
 
+
+	const sf::Vector2f wnd(1200.f, 800.f);
+
+	btnsLayout = new LAYOUT::Layout(wnd / 2.f, wnd / 4.f);
+}
+
+Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
+	pathToBtnReleased{_configs.pathToReleaseBtn},
+	pathToBtnPressed{_configs.pathToPressBtn},
+	pathToFont{_configs.pathToTextFont},
+	hud{new sf::Texture()},
+	currentScale{1.f,1.f}
+{
+	hud->loadFromFile(_configs.pathToHud);
+	hudSprite = new sf::Sprite(*hud);
+
+	const sf::Vector2f wndSize(
+		static_cast<float>(_configs.width),
+		static_cast<float>(_configs.height));
+
+	btnsLayout = new LAYOUT::Layout(wndSize, wndSize / 2.f);
 }
 
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
@@ -32,16 +52,14 @@ void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
 {
 	std::lock_guard<std::mutex> lk(defMutex);
 
-	for (size_t i = 0; i < btns.size(); ++i)
-	{
-		btns[i]->Draw(_wnd);
-	}
+	btnsLayout->Draw(_wnd);
 }
 
 void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 {
 	currentScale = _newScale;
 	hudSprite->setScale(currentScale);
+	btnsLayout->SetScale(currentScale);
 }
 
 const sf::Vector2u Hud::HUD::GetHUDSize() const
@@ -49,12 +67,12 @@ const sf::Vector2u Hud::HUD::GetHUDSize() const
 	return hud->getSize();
 }
 
-const sf::Vector2f Hud::HUD::GetHudPosition() const
+const sf::Vector2f Hud::HUD::GetHudSpritePosition() const
 {
 	return hudPos;
 }
 
-void Hud::HUD::SetHudPosition(const sf::Vector2f& _newPos)
+void Hud::HUD::SetHudSpritePosition(const sf::Vector2f& _newPos)
 {
 	hudPos = _newPos;
 	hudSprite->setPosition(hudPos);
@@ -68,29 +86,23 @@ const sf::Vector2f Hud::HUD::GetButtonsPosition() const
 void Hud::HUD::SetButtonsPosition(const sf::Vector2f& _newPos)
 {
 	buttonsPos = _newPos;
-
-	for (size_t i = 0; i < btns.size(); ++i)
-	{
-		btns[i]->SetPosition(sf::Vector2f(
-			buttonsPos.x,
-			(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1)));
-	}
+	btnsLayout->SetPosition(_newPos);
 }
 
 std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)
 {
-	for (size_t i = 0; i < btns.size(); ++i)
+	for (size_t i = 0; i < btnsLogicArr.size(); ++i)
 	{
-		if (btns[i]->GetTouch(_x, _y))
+		if (btnsLogicArr[i]->GetTouch(_x, _y))
 		{
-			return btns[i]->GetBtnPurpose();
+			return btnsLogicArr[i]->GetBtnPurpose();
 		}
 	}
 
 	return {};
 }
 
-void Hud::HUD::AddWidget(std::shared_ptr<InfoWidget> _widget)
+void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 {
 	assert(widgetArr.size() != baseWidgetArraySize);
 
@@ -113,7 +125,7 @@ void Hud::HUD::ClearWidgets()
 
 void Hud::HUD::RealeseButtons()
 {
-	for (auto& el : btns)
+	for (auto& el : btnsLogicArr)
 	{
 		el->SetState(Buttons::BtnState::RELEASED);
 	}
@@ -123,18 +135,25 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 {
 	std::lock_guard<std::mutex> lock(defMutex);
 
-	btns.clear();
+	btnsLogicArr.clear();
+	btnsLayout->ClearLayout();
 
 	switch (_state)
 	{
 		case APP_STATE::States::MAIN_MENU:
 		{
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Start"));
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLayout->AddObject(btnsLogicArr.back());
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Leaderbord"));
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLayout->AddObject(btnsLogicArr.back());
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));
+			btnsLayout->AddObject(btnsLogicArr.back());
+
 		}
 		break;
 
@@ -145,41 +164,53 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 			Buttons::BtnPurpose tempB = Buttons::BtnPurpose::LVL_1;
 			for (int i = 0; i < _lvlCount; ++i)
 			{
-				btns.emplace_back(new Buttons::Button(tempB, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+				btnsLogicArr.emplace_back(new Buttons::Button(tempB, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 					pathToFont.c_str(),
 					(std::string("LVL ") + std::to_string(i + 1)).c_str()
 				));
 				++tempB;
+
+				btnsLayout->AddObject(btnsLogicArr.back());
 			}
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Back"));
+			btnsLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
 		case APP_STATE::States::LEADERS_VIEW:
 		{
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Back"));
+			btnsLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
 		case APP_STATE::States::GAME_PAUSE:
 		{
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Continue"));
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLayout->AddObject(btnsLogicArr.back());
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Main Menu"));
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLayout->AddObject(btnsLogicArr.back());
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));
+			btnsLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
 		case APP_STATE::States::GAME_OVER:
 		{
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Main Menu"));
-			btns.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+			btnsLayout->AddObject(btnsLogicArr.back());
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));
+			btnsLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
@@ -187,17 +218,6 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 			break;
 	}
 
-	for (auto& el : btns)
-	{
-		el->SetScale(currentScale);
-	}
-
-	for (size_t i = 0; i < btns.size(); ++i)
-	{
-		btns[i]->SetPosition(sf::Vector2f(
-			buttonsPos.x,
-			(buttonsPos.y / static_cast<float>(btns.size() + 2)) * static_cast<float>(i + 1)));
-	}
 }
 
 void Hud::HUD::drawWidgets(sf::RenderWindow& _wnd)
