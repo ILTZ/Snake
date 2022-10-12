@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "BaseDrawable.h"
+#include "ScaleDeterminant.h"
 
 namespace LAYOUT
 {
@@ -19,6 +20,11 @@ namespace LAYOUT
 	{
 	private:
 		std::vector<std::shared_ptr<BaseDrawable>> drawVector;
+		
+		float allObjctsHeight = 0.f;
+
+	private:
+		ScaleDeterminant det;
 
 	public:
 		Layout() = default;
@@ -44,6 +50,9 @@ namespace LAYOUT
 		void setObjctsPosition(const sf::Vector2f& _newPosiion);
 
 	private:
+		void checkObjSizeLimits(const std::shared_ptr<BaseDrawable> &_obj);
+		void transformObjcts();
+
 
 	};
 }

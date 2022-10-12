@@ -12,6 +12,9 @@ void LAYOUT::Layout::AddObject(std::shared_ptr<BaseDrawable> _drawableObj)
 {
 	drawVector.push_back(_drawableObj);
 
+	allObjctsHeight += drawVector.back()->GetSize().y;
+
+
 	drawVector.back()->SetScale(currentScale);
 	setObjctsPosition(currentPosition);
 }
@@ -19,6 +22,7 @@ void LAYOUT::Layout::AddObject(std::shared_ptr<BaseDrawable> _drawableObj)
 void LAYOUT::Layout::ClearLayout()
 {
 	drawVector.clear();
+	allObjctsHeight = 0.f;
 }
 
 void LAYOUT::Layout::SetPosition(const sf::Vector2f& _newPos)
@@ -58,5 +62,26 @@ void LAYOUT::Layout::setObjctsPosition(const sf::Vector2f& _newPosiion)
 			(_newPosiion.y / static_cast<float>(drawVector.size() + 2)) * static_cast<float>(i + 1)));
 	}
 }
+
+void LAYOUT::Layout::checkObjSizeLimits(const std::shared_ptr<BaseDrawable>& _obj)
+{
+	allObjctsHeight += _obj->GetSize().y;
+
+
+
+	if (allObjctsHeight > currentSize.y)
+	{
+		const float newYFactor = det.CalculateAbsoluteScale(currentSize.y, allObjctsHeight);
+	}
+
+}
+
+void LAYOUT::Layout::transformObjcts()
+{
+
+
+}
+
+
 
 
