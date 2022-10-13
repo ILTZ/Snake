@@ -14,8 +14,9 @@ Button::Button(
 	btns[BtnState::RELEASED] = BtnConf(_pathToRelesedBtnTexture);
 	btns[BtnState::PRESSED] = BtnConf(_pathToPressedBtnTexture);
 
-	btnsSizeDifference.x = btns[BtnState::RELEASED].rectShape->getSize().x - btns[BtnState::PRESSED].rectShape->getSize().x;
-	btnsSizeDifference.y = btns[BtnState::RELEASED].rectShape->getSize().y - btns[BtnState::PRESSED].rectShape->getSize().y;
+	btnsSizeDifference = calcRectShapeSizeDifference(
+		*btns[BtnState::RELEASED].rectShape, 
+		*btns[BtnState::PRESSED].rectShape);
 
 	btns[BtnState::PRESSED].rectShape->setOrigin(
 		btns[BtnState::RELEASED].rectShape->getOrigin().x,
@@ -24,7 +25,7 @@ Button::Button(
 	text = new BaseText(
 		_pathToFont,
 		_btnText,
-		25u,
+		static_cast<unsigned int>(btns[BtnState::PRESSED].rectShape->getSize().y / 2.f),
 		sf::Color::Black,
 		sf::Text::Italic
 	);
@@ -48,12 +49,11 @@ void Buttons::Button::SetScale(const sf::Vector2f& _newScale)
 	for (auto& el : btns)
 	{
 		el.second.rectShape->setScale(_newScale);
-		el.second.width		*= _newScale.x;
-		el.second.height	*= _newScale.y;
 	}
 
-	btnsSizeDifference.x *= _newScale.x;
-	btnsSizeDifference.y *= _newScale.y;
+	btnsSizeDifference = calcRectShapeSizeDifference(
+		*btns[BtnState::RELEASED].rectShape,
+		*btns[BtnState::PRESSED].rectShape);
 
 	text->SetScale(_newScale);
 	calculateAndSetBtnsShift(currentPosition);
@@ -84,10 +84,10 @@ BtnState Buttons::Button::GetBtnState() const
 bool Buttons::Button::GetTouch(float _x, float _y)
 {
 	auto& btn = btns[curState];
-	if (_x >= (btns[curState].rectShape->getPosition().x - (btns[curState].width / 2.f)) &&
-		_x <= (btns[curState].rectShape->getPosition().x + (btns[curState].width / 2.f)) &&
-		_y >= (btns[curState].rectShape->getPosition().y - (btns[curState].height / 2.f)) &&
-		_y <= (btns[curState].rectShape->getPosition().y + (btns[curState].height / 2.f))
+	if (_x >= (btns[curState].rectShape->getPosition().x - (btns[curState].rectShape->getGlobalBounds().width / 2.f)) &&
+		_x <= (btns[curState].rectShape->getPosition().x + (btns[curState].rectShape->getGlobalBounds().width / 2.f)) &&
+		_y >= (btns[curState].rectShape->getPosition().y - (btns[curState].rectShape->getGlobalBounds().height / 2.f)) &&
+		_y <= (btns[curState].rectShape->getPosition().y + (btns[curState].rectShape->getGlobalBounds().height / 2.f))
 		)
 	{
 		if (curState == BtnState::PRESSED)
@@ -122,6 +122,14 @@ void Buttons::Button::calculateAndSetBtnsShift(const sf::Vector2f& _btnPos)
 		btns[curState].rectShape->getPosition().y + tDif));
 }
 
+const sf::Vector2f Buttons::Button::calcRectShapeSizeDifference(const sf::RectangleShape& _first, const sf::RectangleShape& _second) const
+{
+	return sf::Vector2f(
+		_first.getGlobalBounds().width - _second.getGlobalBounds().width,
+		_first.getGlobalBounds().height - _second.getGlobalBounds().height
+	);
+}
+
 Buttons::Button::BtnConf::BtnConf(const char* _pathToBtn) : mainText{new sf::Texture()}
 {
 	mainText->loadFromFile(_pathToBtn);
@@ -133,9 +141,6 @@ Buttons::Button::BtnConf::BtnConf(const char* _pathToBtn) : mainText{new sf::Tex
 	rectShape->setTexture(&*mainText);
 	rectShape->setOrigin(static_cast<float>(mainText->getSize().x) / 2.f,
 						 static_cast<float>(mainText->getSize().y) / 2.f);
-
-	width	= rectShape->getSize().x;
-	height	= rectShape->getSize().y;
 }
 
 BtnPurpose Buttons::operator++(BtnPurpose& _x)

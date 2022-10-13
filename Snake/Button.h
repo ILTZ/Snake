@@ -45,8 +45,7 @@ namespace Buttons
 			SmartPointer::SmartPointer<sf::Texture>			mainText;
 			SmartPointer::SmartPointer<sf::RectangleShape>	rectShape;
 
-			float width		= 0.f;
-			float height	= 0.f;
+
 		};
 
 	private:
@@ -86,6 +85,9 @@ namespace Buttons
 	
 	private:
 		void calculateAndSetBtnsShift(const sf::Vector2f& _btnPos);
+		const sf::Vector2f calcRectShapeSizeDifference(
+			const sf::RectangleShape& _first, 
+			const sf::RectangleShape& _second) const;
 	};
 }
 
