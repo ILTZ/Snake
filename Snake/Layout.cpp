@@ -15,7 +15,7 @@ void LAYOUT::Layout::AddObject(std::shared_ptr<BaseDrawable> _drawableObj)
 	allObjctsHeight += drawVector.back()->GetSize().y;
 
 
-	drawVector.back()->SetScale(currentScale);
+	//drawVector.back()->SetScale(currentScale);
 	setObjctsPosition(currentPosition);
 }
 

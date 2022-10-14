@@ -69,13 +69,12 @@ const sf::Vector2u Hud::HUD::GetHUDSize() const
 
 const sf::Vector2f Hud::HUD::GetHudSpritePosition() const
 {
-	return hudPos;
+	return hudSprite->getPosition();
 }
 
 void Hud::HUD::SetHudSpritePosition(const sf::Vector2f& _newPos)
 {
-	hudPos = _newPos;
-	hudSprite->setPosition(hudPos);
+	hudSprite->setPosition(_newPos);
 }
 
 const sf::Vector2f Hud::HUD::GetButtonsPosition() const
@@ -113,7 +112,7 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 	{
 		widgetArr[i]->SetPosition(
 			sf::Vector2f(
-				hudPos.x + hudSprite->getGlobalBounds().width / 2.f,
+				hudSprite->getPosition().x + hudSprite->getGlobalBounds().width / 2.f,
 				(buttonsPos.y / static_cast<float>(widgetArr.size() + 1)) * static_cast<float>(i + 1)));
 	}
 }
@@ -217,6 +216,8 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 		default:
 			break;
 	}
+
+	//btnsLayout->SetScale(currentScale);
 
 }
 

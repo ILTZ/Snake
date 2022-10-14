@@ -36,8 +36,6 @@ namespace Hud
 		SmartPointer::SmartPointer<sf::Sprite>	hudSprite;
 
 	private:
-		// Its position will always be in the last quarter of the screen
-		sf::Vector2f hudPos;
 		// Its position will always be in the midle of the screen
 		sf::Vector2f buttonsPos;
 		// Need for recreated buttons
