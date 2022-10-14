@@ -27,8 +27,11 @@ public:
 
 public:
 	const sf::Vector2f CalculateScaleForGameObject(const sf::Vector2f& _drawableObjSize)						const;
+
 	const sf::Vector2f CalculateAbsoluteScale(const sf::Vector2u& _objectSize, const sf::Vector2u& _targetSize) const;
+	const sf::Vector2f CalculateAbsoluteScale(const sf::Vector2f& _objectSize, const sf::Vector2f& _targetSize) const;
 	const float CalculateAbsoluteScale(const float _firstVal, const float _secondVal)							const;
+	
 
 private:
 

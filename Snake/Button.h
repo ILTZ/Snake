@@ -49,10 +49,10 @@ namespace Buttons
 		};
 
 	private:
-		SmartPointer::SmartPointer<BaseText>	text;
-		std::unordered_map<BtnState, BtnConf>	btns;
-		BtnPurpose								btnPurpose;
-		BtnState								curState;
+		SmartPointer::SmartPointer<BaseText>			text;
+		mutable std::unordered_map<BtnState, BtnConf>	btns;
+		BtnPurpose										btnPurpose;
+		BtnState										curState;
 		
 	private:
 		sf::Vector2f btnsSizeDifference;
@@ -78,6 +78,8 @@ namespace Buttons
 		virtual void SetPosition(const sf::Vector2f& _newPos)		override;
 		virtual void Draw(sf::RenderWindow& _wnd)					override;
 
+		virtual const sf::Vector2f GetSize()						const override;
+
 	public:
 		BtnPurpose GetBtnPurpose()		const;
 		BtnState GetBtnState()			const;
@@ -88,6 +90,8 @@ namespace Buttons
 		const sf::Vector2f calcRectShapeSizeDifference(
 			const sf::RectangleShape& _first, 
 			const sf::RectangleShape& _second) const;
+
+
 	};
 }
 

@@ -71,6 +71,13 @@ void Buttons::Button::Draw(sf::RenderWindow& _wnd)
 	text->Draw(_wnd);
 }
 
+const sf::Vector2f Buttons::Button::GetSize() const
+{
+	return sf::Vector2f(
+		btns[curState].rectShape->getGlobalBounds().width,
+		btns[curState].rectShape->getGlobalBounds().height);
+}
+
 BtnPurpose Buttons::Button::GetBtnPurpose() const
 {
 	return btnPurpose;

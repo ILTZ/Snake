@@ -40,6 +40,7 @@ Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
 		static_cast<float>(_configs.height));
 
 	btnsLayout = new LAYOUT::Layout(wndSize, wndSize / 2.f);
+	btnsLayout->SetDistanceBeetwenObjcts(10.f);
 }
 
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
@@ -85,7 +86,7 @@ const sf::Vector2f Hud::HUD::GetButtonsPosition() const
 void Hud::HUD::SetButtonsPosition(const sf::Vector2f& _newPos)
 {
 	buttonsPos = _newPos;
-	btnsLayout->SetPosition(_newPos);
+	//btnsLayout->SetPosition(_newPos);
 }
 
 std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)
@@ -216,8 +217,6 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 		default:
 			break;
 	}
-
-	//btnsLayout->SetScale(currentScale);
 
 }
 

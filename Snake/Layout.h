@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 
+#include "SFML/Graphics/RectangleShape.hpp"
+
 #include "BaseDrawable.h"
 #include "ScaleDeterminant.h"
 
@@ -12,8 +14,8 @@ namespace LAYOUT
 	enum class Position
 	{
 		MIDLE	= 0,
-		RIGHT	= 1,
-		LEFT	= 2,
+		TOP		= 1,
+		BOT		= 2,
 	};
 
 	class Layout final : BaseDrawable
@@ -21,7 +23,12 @@ namespace LAYOUT
 	private:
 		std::vector<std::shared_ptr<BaseDrawable>> drawVector;
 		
-		float allObjctsHeight = 0.f;
+		std::unique_ptr<sf::RectangleShape> borders;
+
+		float distanceBetweenObjcts = 0.f;
+
+		bool enableScaleWidth	= true;
+		bool enableScaleHeight	= true;
 
 	private:
 		ScaleDeterminant det;
@@ -39,6 +46,8 @@ namespace LAYOUT
 	public:
 		void AddObject(std::shared_ptr<BaseDrawable> _drawableObj);
 		void ClearLayout();
+		void SetDistanceBeetwenObjcts(float _newDistance);
+
 
 	public:
 		virtual void SetPosition(const sf::Vector2f& _newPos)	override;
@@ -46,13 +55,7 @@ namespace LAYOUT
 		virtual void Draw(sf::RenderWindow& _wnd)				override;
 
 	private:
-		void setObjctsScale(const sf::Vector2f& _newScale);
-		void setObjctsPosition(const sf::Vector2f& _newPosiion);
-
-	private:
-		void checkObjSizeLimits(const std::shared_ptr<BaseDrawable> &_obj);
-		void transformObjcts();
-
+		void rerangeObjcts();
 
 	};
 }

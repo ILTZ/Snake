@@ -53,6 +53,14 @@ const sf::Vector2f ScaleDeterminant::CalculateAbsoluteScale(const sf::Vector2u& 
 
 }
 
+const sf::Vector2f ScaleDeterminant::CalculateAbsoluteScale(const sf::Vector2f& _objectSize, const sf::Vector2f& _targetSize) const
+{
+    return sf::Vector2f(
+        _targetSize.x / _objectSize.x,
+        _targetSize.y / _objectSize.y
+    );
+}
+
 const float ScaleDeterminant::CalculateAbsoluteScale(const float _firstVal, const float _secondVal) const
 {
     return (_firstVal / _secondVal);
