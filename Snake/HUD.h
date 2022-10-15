@@ -83,8 +83,6 @@ namespace Hud
 		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
 		void ClearWidgets();
 
-	private:
-		void drawWidgets(sf::RenderWindow& _wnd);
 	};
 }
 

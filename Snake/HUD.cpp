@@ -32,7 +32,6 @@ Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
 {
 	_wnd.draw(*hudSprite);
-	drawWidgets(_wnd);
 	widgetLayout->Draw(_wnd);
 }
 
@@ -98,17 +97,6 @@ std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float 
 void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 {
 	assert(widgetArr.size() != baseWidgetArraySize);
-
-	/*widgetArr.emplace_back(_widget);
-	widgetArr.back()->SetScale(currentScale);
-
-	for (size_t i = 0; i < widgetArr.size(); ++i)
-	{
-		widgetArr[i]->SetPosition(
-			sf::Vector2f(
-				hudSprite->getPosition().x + hudSprite->getGlobalBounds().width / 2.f,
-				(buttonsPos.y / static_cast<float>(widgetArr.size() + 1)) * static_cast<float>(i + 1)));
-	}*/
 
 	widgetLayout->AddObject(_widget);
 }
@@ -213,14 +201,6 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 			break;
 	}
 
-}
-
-void Hud::HUD::drawWidgets(sf::RenderWindow& _wnd)
-{
-	for (size_t i = 0; i < widgetArr.size(); ++i)
-	{
-		widgetArr[i]->Draw(_wnd);
-	}
 }
 
 
