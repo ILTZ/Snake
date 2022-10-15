@@ -23,15 +23,8 @@ namespace LAYOUT
 	private:
 		std::vector<std::shared_ptr<BaseDrawable>> drawVector;
 		
-		std::unique_ptr<sf::RectangleShape> borders;
-
 		float distanceBetweenObjcts = 0.f;
-
-		bool enableScaleWidth	= true;
-		bool enableScaleHeight	= true;
 		Position currentAlign	= Position::MIDLE;
-
-		sf::Vector2f alignPos;
 
 	private:
 		ScaleDeterminant det;
@@ -62,6 +55,7 @@ namespace LAYOUT
 		void rerangeObjcts();
 
 		const float sumObjctsHeight()			const;
+		const float getDistanceBetweenObjcts()	const;
 	};
 }
 

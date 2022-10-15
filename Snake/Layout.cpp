@@ -5,14 +5,6 @@ LAYOUT::Layout::Layout(const sf::Vector2f& _size, const sf::Vector2f& _pos)
 	currentScale		= { 1.f,1.f };
 	currentSize			= _size;
 	currentPosition		= _pos;
-
-
-	borders = std::make_unique<sf::RectangleShape>(_size);
-	borders->setOrigin(_size / 2.f);
-	borders->setFillColor(sf::Color(0u, 0u, 0u, 0u));
-	borders->setPosition(currentPosition);
-	borders->setOutlineColor(sf::Color::Red);
-	borders->setOutlineThickness(1.f);
 }
 
 void LAYOUT::Layout::AddObject(std::shared_ptr<BaseDrawable> _drawableObj)
@@ -37,7 +29,7 @@ void LAYOUT::Layout::SetDistanceBeetwenObjcts(float _newDistance)
 
 void LAYOUT::Layout::alignOn(Position _pos)
 {
-	currentAlign;
+	currentAlign = _pos;
 
 	rerangeObjcts();
 }
@@ -72,25 +64,27 @@ void LAYOUT::Layout::Draw(sf::RenderWindow& _wnd)
 
 void LAYOUT::Layout::rerangeObjcts()
 {
-	sf::Vector2f startPos;
-	startPos.x = currentPosition.x;
-
-	switch (currentAlign)
+	sf::Vector2f startPos = currentPosition;
+	
+	if (drawVector.size() > 1)
 	{
-	case LAYOUT::Position::MIDLE:
-		startPos.y = currentPosition.y - (sumObjctsHeight() / 2.f);
-		break;
+		switch (currentAlign)
+		{
+		case LAYOUT::Position::MIDLE:
+			startPos.y = currentPosition.y - (sumObjctsHeight() / 2.f);
+			break;
 
-	case LAYOUT::Position::TOP:
-		startPos.y = currentPosition.y - (currentSize.y / 2.f);
-		break;
+		case LAYOUT::Position::TOP:
+			startPos.y = currentPosition.y - (currentSize.y / 2.f);
+			break;
 
-	case LAYOUT::Position::BOT:
-		startPos.y = currentPosition.y + (currentSize.y / 2.f) - sumObjctsHeight();
-		break;
+		case LAYOUT::Position::BOT:
+			startPos.y = currentPosition.y + (currentSize.y / 2.f) - sumObjctsHeight();
+			break;
 
-	default:
-		break;
+		default:
+			break;
+		}
 	}
 
 	for (auto& el : drawVector)
@@ -99,7 +93,7 @@ void LAYOUT::Layout::rerangeObjcts()
 
 		el->SetPosition(startPos);
 
-		startPos.y += (el->GetSize().y / 2.f + distanceBetweenObjcts);
+		startPos.y += (el->GetSize().y / 2.f + getDistanceBetweenObjcts());
 	}
 }
 
@@ -110,9 +104,14 @@ const float LAYOUT::Layout::sumObjctsHeight() const
 	for (auto& el : drawVector)
 		sumHeight += el->GetSize().y;
 
-	sumHeight += (static_cast<float>(drawVector.size()) * distanceBetweenObjcts);
+	sumHeight += (static_cast<float>(drawVector.size() - 1) * getDistanceBetweenObjcts());
 
 	return sumHeight;
+}
+
+const float LAYOUT::Layout::getDistanceBetweenObjcts() const
+{
+	return distanceBetweenObjcts * currentScale.y;
 }
 
 
