@@ -53,6 +53,7 @@ void LAYOUT::Layout::SetPosition(const sf::Vector2f& _newPos)
 void LAYOUT::Layout::SetScale(const sf::Vector2f& _newScale)
 {
 	currentScale = _newScale;
+	borders->setScale(_newScale);
 
 	for (auto& el : drawVector)
 		el->SetScale(_newScale);
