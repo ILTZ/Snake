@@ -35,6 +35,13 @@ void LAYOUT::Layout::SetDistanceBeetwenObjcts(float _newDistance)
 	rerangeObjcts();
 }
 
+void LAYOUT::Layout::alignOn(Position _pos)
+{
+	currentAlign;
+
+	rerangeObjcts();
+}
+
 void LAYOUT::Layout::SetPosition(const sf::Vector2f& _newPos)
 {
 	currentPosition = _newPos;
@@ -64,31 +71,47 @@ void LAYOUT::Layout::Draw(sf::RenderWindow& _wnd)
 
 void LAYOUT::Layout::rerangeObjcts()
 {
-	// Top edge of layout
-	sf::Vector2f tempPos(currentPosition.x, currentPosition.y - (currentSize.y / 2.f));
+	sf::Vector2f startPos;
+	startPos.x = currentPosition.x;
 
-	/*float startPos = currentPosition.y - (currentSize.y / 2.f);
-	for (size_t i = 0; i < drawVector.size(); ++i)
+	switch (currentAlign)
 	{
-		float t = startPos + ((currentSize.y / static_cast<float>(drawVector.size() + 1)) * static_cast<float>(i + 1));
-		sf::Vector2f temp
-		(
-			currentPosition.x,
-			t
-		);
+	case LAYOUT::Position::MIDLE:
+		startPos.y = currentPosition.y - (sumObjctsHeight() / 2.f);
+		break;
 
-		drawVector[i]->SetPosition(temp);
-	}*/
+	case LAYOUT::Position::TOP:
+		startPos.y = currentPosition.y - (currentSize.y / 2.f);
+		break;
 
+	case LAYOUT::Position::BOT:
+		startPos.y = currentPosition.y + (currentSize.y / 2.f) - sumObjctsHeight();
+		break;
+
+	default:
+		break;
+	}
 
 	for (auto& el : drawVector)
 	{
-		tempPos.y += el->GetSize().y / 2.f;
+		startPos.y += el->GetSize().y / 2.f;
 
-		el->SetPosition(tempPos);
+		el->SetPosition(startPos);
 
-		tempPos.y += (el->GetSize().y / 2.f + distanceBetweenObjcts);
+		startPos.y += (el->GetSize().y / 2.f + distanceBetweenObjcts);
 	}
+}
+
+const float LAYOUT::Layout::sumObjctsHeight() const
+{
+	float sumHeight = 0.f;
+
+	for (auto& el : drawVector)
+		sumHeight += el->GetSize().y;
+
+	sumHeight += (static_cast<float>(drawVector.size()) * distanceBetweenObjcts);
+
+	return sumHeight;
 }
 
 

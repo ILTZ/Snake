@@ -29,6 +29,9 @@ namespace LAYOUT
 
 		bool enableScaleWidth	= true;
 		bool enableScaleHeight	= true;
+		Position currentAlign	= Position::MIDLE;
+
+		sf::Vector2f alignPos;
 
 	private:
 		ScaleDeterminant det;
@@ -48,6 +51,7 @@ namespace LAYOUT
 		void ClearLayout();
 		void SetDistanceBeetwenObjcts(float _newDistance);
 
+		void alignOn(Position _pos);
 
 	public:
 		virtual void SetPosition(const sf::Vector2f& _newPos)	override;
@@ -57,6 +61,7 @@ namespace LAYOUT
 	private:
 		void rerangeObjcts();
 
+		const float sumObjctsHeight() const;
 	};
 }
 
