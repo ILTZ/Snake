@@ -104,7 +104,7 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 
 void Hud::HUD::ClearWidgets()
 {
-	widgetArr.clear();
+	widgetLayout->ClearLayout();
 }
 
 void Hud::HUD::RealeseButtons()

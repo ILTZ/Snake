@@ -82,7 +82,6 @@ namespace Hud
 	public:
 		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
 		void ClearWidgets();
-
 	};
 }
 
