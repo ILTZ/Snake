@@ -37,7 +37,6 @@ void LAYOUT::Layout::alignOn(Position _pos)
 void LAYOUT::Layout::SetPosition(const sf::Vector2f& _newPos)
 {
 	currentPosition = _newPos;
-	borders->setPosition(_newPos);
 
 	rerangeObjcts();
 }
@@ -45,7 +44,6 @@ void LAYOUT::Layout::SetPosition(const sf::Vector2f& _newPos)
 void LAYOUT::Layout::SetScale(const sf::Vector2f& _newScale)
 {
 	currentScale = _newScale;
-	borders->setScale(_newScale);
 
 	for (auto& el : drawVector)
 		el->SetScale(_newScale);
@@ -59,7 +57,6 @@ void LAYOUT::Layout::Draw(sf::RenderWindow& _wnd)
 	{
 		el->Draw(_wnd);
 	}
-	_wnd.draw(*borders.get());
 }
 
 void LAYOUT::Layout::rerangeObjcts()

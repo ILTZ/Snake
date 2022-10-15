@@ -20,7 +20,7 @@ Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
 		static_cast<float>(_configs.height));
 
 	btnsLayout = new LAYOUT::Layout(wndSize, wndSize / 2.f);
-	btnsLayout->SetDistanceBeetwenObjcts(wndSize.y / 100.f);
+	btnsLayout->SetDistanceBeetwenObjcts(wndSize.y / 10.f);
 
 	widgetLayout = new LAYOUT::Layout(
 		sf::Vector2f(
