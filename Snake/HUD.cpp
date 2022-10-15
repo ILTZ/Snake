@@ -21,12 +21,19 @@ Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
 
 	btnsLayout = new LAYOUT::Layout(wndSize, wndSize / 2.f);
 	btnsLayout->SetDistanceBeetwenObjcts(10.f);
+
+	widgetLayout = new LAYOUT::Layout(
+		sf::Vector2f(
+			hudSprite->getGlobalBounds().width,
+			hudSprite->getGlobalBounds().height / 2.f),
+		sf::Vector2f());
 }
 
 void HUD::DrawHUD(sf::RenderWindow& _wnd)
 {
 	_wnd.draw(*hudSprite);
 	drawWidgets(_wnd);
+	widgetLayout->Draw(_wnd);
 }
 
 void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
@@ -40,7 +47,9 @@ void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 {
 	currentScale = _newScale;
 	hudSprite->setScale(currentScale);
+
 	btnsLayout->SetScale(currentScale);
+	widgetLayout->SetScale(currentScale);
 }
 
 const sf::Vector2u Hud::HUD::GetHUDSize() const
@@ -56,6 +65,10 @@ const sf::Vector2f Hud::HUD::GetHudSpritePosition() const
 void Hud::HUD::SetHudSpritePosition(const sf::Vector2f& _newPos)
 {
 	hudSprite->setPosition(_newPos);
+
+	widgetLayout->SetPosition({
+		_newPos.x + hudSprite->getGlobalBounds().width / 2.f,
+		_newPos.y + hudSprite->getGlobalBounds().height / 2.f });
 }
 
 const sf::Vector2f Hud::HUD::GetButtonsPosition() const
@@ -86,7 +99,7 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 {
 	assert(widgetArr.size() != baseWidgetArraySize);
 
-	widgetArr.emplace_back(_widget);
+	/*widgetArr.emplace_back(_widget);
 	widgetArr.back()->SetScale(currentScale);
 
 	for (size_t i = 0; i < widgetArr.size(); ++i)
@@ -95,7 +108,9 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 			sf::Vector2f(
 				hudSprite->getPosition().x + hudSprite->getGlobalBounds().width / 2.f,
 				(buttonsPos.y / static_cast<float>(widgetArr.size() + 1)) * static_cast<float>(i + 1)));
-	}
+	}*/
+
+	widgetLayout->AddObject(_widget);
 }
 
 void Hud::HUD::ClearWidgets()

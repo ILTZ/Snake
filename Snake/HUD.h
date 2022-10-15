@@ -44,8 +44,9 @@ namespace Hud
 	private:
 
 	private:
-		std::vector <std::shared_ptr<Buttons::Button>>				btnsLogicArr;
-		SmartPointer::SmartPointer<LAYOUT::Layout>					btnsLayout;
+		std::vector <std::shared_ptr<Buttons::Button>>	btnsLogicArr;
+		SmartPointer::SmartPointer<LAYOUT::Layout>		btnsLayout;
+		SmartPointer::SmartPointer<LAYOUT::Layout>		widgetLayout;
 
 	private:
 		const unsigned int baseWidgetArraySize = 3;
