@@ -4,26 +4,6 @@
 
 using namespace Hud;
 
-HUD::HUD(
-	const char* _pathToHud, 
-	const char* _pathToBtnReleased, 
-	const char* _pathToBtnPressed, 
-	const char* _pathToFont) :
-	pathToHUD				{_pathToHud}, 
-	pathToBtnReleased		{_pathToBtnReleased}, 
-	pathToBtnPressed		{_pathToBtnPressed}, 
-	pathToFont				{_pathToFont},
-	hud						{new sf::Texture()},
-	currentScale			{1.f,1.f}
-{
-	hud->loadFromFile(pathToHUD.c_str());
-	hudSprite = new sf::Sprite(*hud);
-
-
-	const sf::Vector2f wnd(1200.f, 800.f);
-
-	btnsLayout = new LAYOUT::Layout(wnd / 2.f, wnd / 4.f);
-}
 
 Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
 	pathToBtnReleased{_configs.pathToReleaseBtn},

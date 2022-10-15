@@ -52,12 +52,6 @@ namespace Hud
 		std::vector<std::shared_ptr<BaseDrawable>> widgetArr;
 
 	public:
-		HUD(
-			const char* _pathToHud, 
-			const char* _pathToBtnReleased, 
-			const char* _pathToBtnPressed, 
-			const char* _pathToFont);
-
 		HUD(CLoader::HudConfigs& _configs);
 
 	public:
