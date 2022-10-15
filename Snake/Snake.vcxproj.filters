@@ -160,7 +160,7 @@
       <Filter>Исходные файлы\Base\RealBase</Filter>
     </ClCompile>
     <ClCompile Include="Layout.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +267,7 @@
       <Filter>Файлы заголовков\Base\RealBase</Filter>
     </ClInclude>
     <ClInclude Include="Layout.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
