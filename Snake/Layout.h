@@ -61,7 +61,7 @@ namespace LAYOUT
 	private:
 		void rerangeObjcts();
 
-		const float sumObjctsHeight() const;
+		const float sumObjctsHeight()			const;
 	};
 }
 
