@@ -10,6 +10,28 @@
 
 namespace CLoader
 {
+	namespace ConstData
+	{
+		const std::string pathToConfigs = ".\\ResourcesConfigs\\Configs.json";
+		const std::string pathToLeaders = ".\\ResourcesConfigs\\LeaderBord.json";
+	}
+
+	namespace JsonKeys
+	{
+		const std::string apple				= "APPLE";
+		const std::string snakeTorso		= "SNAKE_TORSO";
+		const std::string snakeHead			= "SNAKE_HEAD";
+		const std::string lvlPath			= "LVL_PATH";
+		const std::string windowResolution	= "RESOLUTION";
+		const std::string btnPressTexture	= "BTN_PRESS";
+		const std::string btnReleaseTexture = "BTN_RELEASE";
+		const std::string textFont			= "TEXT_FONT";
+		const std::string hudTexture		= "HUD";
+		const std::string baseWidgetTexture = "BASE_WIDGET";
+		const std::string nameWidgetTexture = "NAME_WIDGET";
+		const std::string leader			= "LEADERS";
+	}
+
 	enum class ConfigKey
 	{
 		SNAKE_T		= 0,
@@ -22,6 +44,8 @@ namespace CLoader
 		TEXT_FONT	= 8,
 		HUD			= 9,
 		BASE_WIDGET = 10,
+		NAME_WIDGET	= 11,
+		LEADERS		= 12,
 	};
 
 	enum class LVLs
@@ -44,46 +68,67 @@ namespace CLoader
 		std::string pathToAple;
 	};
 
+	struct WndConfigs
+	{
+		unsigned int width = 0u;
+		unsigned int height = 0u;
+	};
+
 	struct HudConfigs
 	{
-		unsigned int width;
-		unsigned int height;
+		unsigned int width	= 0u;
+		unsigned int height = 0u;
 
 		std::string pathToPressBtn;
 		std::string pathToReleaseBtn;
 		std::string pathToTextFont;
 		std::string pathToHud;
 		std::string pathToBaseWidget;
+		std::string pathToNameWidget;
+	};
+
+	struct LeadersInfo
+	{
+		std::string		name;
+		unsigned int	points;
 	};
 
 	class ConfigLoader
 	{
 	private:
 		const std::string pathToConf;
-		std::unordered_map<ConfigKey, std::string> jsonKeys;
+		mutable std::unordered_map<ConfigKey, std::string> jsonKeys;
 
 	public:
-		ConfigLoader(const std::string& _path = ".\\ResourcesConfigs\\Configs.json");
+		ConfigLoader(const std::string& _path = ConstData::pathToConfigs);
 
 	public:
-		ConfigLoader(const ConfigLoader&) = delete;
-		ConfigLoader& operator=(const ConfigLoader&) = delete;
+		ConfigLoader(const ConfigLoader&)				= delete;
+		ConfigLoader& operator=(const ConfigLoader&)	= delete;
 
 	public:
-		std::string GetPathTo(ConfigKey _key, const char* _pathToConfig = nullptr);
+		const std::string GetPathTo(
+			ConfigKey _key, 
+			const char* _pathToConfig = nullptr) const;
+	
+		const unsigned int GetLvlCount() const;
+
+	public:
 		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLs _level);
-		unsigned int GetLvlCount();
 
 	public:
-		SnakePaths GetSnakeProp(const char* _pathToConfig = nullptr);
-		HudConfigs GetHudConfigs(const char* _pathToConfig = nullptr);
+		const SnakePaths GetSnakePaths(const char* _pathToConfig = nullptr)		const;
+		const HudConfigs GetHudPaths(const char* _pathToConfig = nullptr)		const;
+		const WndConfigs GetWndConfigs(const char* _pathToConfigs = nullptr)	const;
+		const std::vector<LeadersInfo> GetLeaders(const char* _pathToFile = nullptr)		const;
 
 	private:
-		nlohmann::json getParseFile(const char* _pathToConfig = nullptr);
-		void openFile(std::ifstream& _stream, const char* _newPath) const;
+		const nlohmann::json getParseFile(const char* _pathToConfig = nullptr)	const;
+		void openFile(std::ifstream& _stream, const char* _newPath)				const;
 
 	private:
-		std::string getLvlString(LVLs _lvl);
+		const std::string getLvlString(LVLs _lvl) const;
+
 	};
 }
 #endif

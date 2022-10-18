@@ -12,13 +12,12 @@
 
 #include "Button.h"
 #include "AppState.h"
-//#include "BaseDrawable.h"
 #include "Layout.h"
 #include "ConfigLoader.h"
 
 namespace Hud
 {
-	
+		
 	class HUD
 	{
 	private:
@@ -45,11 +44,13 @@ namespace Hud
 
 	private:
 		std::vector <std::shared_ptr<Buttons::Button>>	btnsLogicArr;
+
+	private:
 		SmartPointer::SmartPointer<LAYOUT::Layout>		btnsLayout;
 		SmartPointer::SmartPointer<LAYOUT::Layout>		widgetLayout;
 
-	private:
-		const unsigned int baseWidgetArraySize = 3;
+		const size_t									baseWidgetLayoutSize = 3;	
+		const size_t									maxLeaders = 5;
 
 	public:
 		HUD(CLoader::HudConfigs& _configs);
@@ -63,6 +64,9 @@ namespace Hud
 		void DrawButtons	(sf::RenderWindow& _wnd);
 		void SetScale		(const sf::Vector2f& _newScale);
 		
+	private:
+		void fillLeaderbord();
+
 	public:
 		const sf::Vector2u GetHUDSize()					const;
 		const sf::Vector2f GetHudSpritePosition()		const;

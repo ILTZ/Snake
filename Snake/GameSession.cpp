@@ -19,7 +19,7 @@ GameSession::GameSession(
 	apple{_apple}
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
-	auto configs = loader->GetHudConfigs();
+	auto configs = loader->GetHudPaths();
 
 
 	scoreWidget = std::make_shared<ScoreWidget>(

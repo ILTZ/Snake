@@ -1,6 +1,5 @@
 #include "ConfigLoader.h"
 
-
 using namespace CLoader;
 using json = nlohmann::json;
 
@@ -16,13 +15,17 @@ ConfigLoader::ConfigLoader(const std::string& _path) :
 	jsonKeys[ConfigKey::BTN_RELEASE]	= "BTN_RELEASE";
 	jsonKeys[ConfigKey::TEXT_FONT]		= "TEXT_FONT";
 	jsonKeys[ConfigKey::HUD]			= "HUD";
-	jsonKeys[ConfigKey::BASE_WIDGET] = "BASE_WIDGET";
+	jsonKeys[ConfigKey::BASE_WIDGET]	= "BASE_WIDGET";
+	jsonKeys[ConfigKey::NAME_WIDGET]	= "NAME_WIDGET";
 }
 
-nlohmann::json CLoader::ConfigLoader::getParseFile(const char* _pathToConfig)
+const nlohmann::json CLoader::ConfigLoader::getParseFile(const char* _pathToConfig) const
 {
 	std::ifstream f;
 	openFile(f, _pathToConfig);
+
+	if (f.bad())
+		throw std::exception("No such file or directory");
 
 	json file = json::parse(f);
 	f.close();
@@ -40,7 +43,7 @@ void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPat
 	_stream.open(pathToConf);
 }
 
-std::string CLoader::ConfigLoader::getLvlString(LVLs _lvl)
+const std::string CLoader::ConfigLoader::getLvlString(LVLs _lvl) const
 {
 	std::string ls = "";
 
@@ -73,7 +76,7 @@ std::string CLoader::ConfigLoader::getLvlString(LVLs _lvl)
 	return ls;
 }
 
-std::string ConfigLoader::GetPathTo(ConfigKey _key, const char* _pathToConfig)
+const std::string ConfigLoader::GetPathTo(ConfigKey _key, const char* _pathToConfig) const
 {
 	assert(_key != ConfigKey::RESOLUTION);
 
@@ -139,18 +142,16 @@ std::shared_ptr<LVLConstructor::Level> CLoader::ConfigLoader::GetLVL(LVLs _level
 	return std::make_shared<LVLConstructor::Level>(conf);
 }
 
-unsigned int CLoader::ConfigLoader::GetLvlCount()
+const unsigned int CLoader::ConfigLoader::GetLvlCount() const
 {
 	unsigned int count = 0;
 	std::ifstream f;
 
+	auto path = GetPathTo(ConfigKey::LVL_P);
+
 	for (LVLs lvl = LVLs::LVL_1; lvl < LVLs::LVL_MAX; ++lvl)
 	{
-		auto path = GetPathTo(ConfigKey::LVL_P);
-		path += getLvlString(lvl);
-
-		openFile(f, path.c_str());
-
+		openFile(f, (path + getLvlString(lvl)).c_str());
 		if (f.good())
 			++count;
 
@@ -161,10 +162,9 @@ unsigned int CLoader::ConfigLoader::GetLvlCount()
 	return count;
 }
 
-SnakePaths CLoader::ConfigLoader::GetSnakeProp(const char* _pathToConfig)
+const SnakePaths CLoader::ConfigLoader::GetSnakePaths(const char* _pathToConfig) const 
 {
 	auto file = getParseFile(_pathToConfig);
-
 	SnakePaths temp;
 
 	temp.pathToAple = file[jsonKeys[ConfigKey::APLE]];
@@ -174,22 +174,47 @@ SnakePaths CLoader::ConfigLoader::GetSnakeProp(const char* _pathToConfig)
 	return temp;
 }
 
-HudConfigs CLoader::ConfigLoader::GetHudConfigs(const char* _pathToConfig)
+const HudConfigs CLoader::ConfigLoader::GetHudPaths(const char* _pathToConfig) const
 {
 	auto file = getParseFile(_pathToConfig);
-
 	HudConfigs temp;
+
+	temp.width					= file[jsonKeys[ConfigKey::RESOLUTION]][0];
+	temp.height					= file[jsonKeys[ConfigKey::RESOLUTION]][1];
+
+	temp.pathToPressBtn			= file[jsonKeys[ConfigKey::BTN_PRESS]];
+	temp.pathToReleaseBtn		= file[jsonKeys[ConfigKey::BTN_RELEASE]];
+	temp.pathToTextFont			= file[jsonKeys[ConfigKey::TEXT_FONT]];
+	temp.pathToHud				= file[jsonKeys[ConfigKey::HUD]];
+	temp.pathToBaseWidget		= file[jsonKeys[ConfigKey::BASE_WIDGET]];
+	temp.pathToNameWidget		= file[jsonKeys[ConfigKey::NAME_WIDGET]];
+
+	return temp;
+}
+
+const WndConfigs CLoader::ConfigLoader::GetWndConfigs(const char* _pathToConfigs) const
+{
+	auto file = getParseFile(_pathToConfigs);
+	WndConfigs temp;
 
 	temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
 	temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
-
-	temp.pathToPressBtn = file[jsonKeys[ConfigKey::BTN_PRESS]];
-	temp.pathToReleaseBtn = file[jsonKeys[ConfigKey::BTN_RELEASE]];
-	temp.pathToTextFont = file[jsonKeys[ConfigKey::TEXT_FONT]];
-	temp.pathToHud = file[jsonKeys[ConfigKey::HUD]];
-	temp.pathToBaseWidget = file[jsonKeys[ConfigKey::BASE_WIDGET]];
-
+	
 	return temp;
+}
+
+const std::vector<LeadersInfo> CLoader::ConfigLoader::GetLeaders(const char* _pathToFile) const
+{
+	std::vector<LeadersInfo> leaders;
+
+	auto arr = getParseFile(ConstData::pathToLeaders.c_str())[JsonKeys::leader];
+
+	for (json::iterator it = arr.begin(); it != arr.end(); ++it)
+	{
+		leaders.emplace_back(it.key(), static_cast<unsigned int>(it.value()));
+	}
+	
+	return leaders;
 }
 
 LVLs CLoader::operator++(LVLs& _x)

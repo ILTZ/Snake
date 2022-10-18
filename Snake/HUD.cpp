@@ -1,6 +1,7 @@
 #include "HUD.h"
 
 #include <cassert>
+#include "NameWidget.h"
 
 using namespace Hud;
 
@@ -9,6 +10,7 @@ Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
 	pathToBtnReleased{_configs.pathToReleaseBtn},
 	pathToBtnPressed{_configs.pathToPressBtn},
 	pathToFont{_configs.pathToTextFont},
+	pathToNameWidget{_configs.pathToNameWidget},
 	hud{new sf::Texture()},
 	currentScale{1.f,1.f}
 {
@@ -50,6 +52,34 @@ void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 
 	btnsLayout->SetScale(currentScale);
 	widgetLayout->SetScale(currentScale);
+}
+
+void Hud::HUD::fillLeaderbord()
+{
+	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+
+	auto vec = loader->GetLeaders();
+	std::sort(vec.begin(), vec.end(),
+		[&](const CLoader::LeadersInfo& _first, const CLoader::LeadersInfo& _second)
+		{
+			return _first.points > _second.points;
+		});
+
+	for (size_t i = 0; i < maxLeaders; ++i)
+	{
+		if (i < vec.size())
+		{
+			auto lead = std::make_shared<NameWidget>(
+				pathToNameWidget.c_str(), 
+				pathToFont.c_str(), 
+				vec[i].name.c_str(),
+				vec[i].points);
+			btnsLayout->AddObject(lead);
+			continue;
+		}
+		btnsLayout->AddObject(std::make_shared<NameWidget>(pathToNameWidget.c_str(), pathToFont.c_str()));
+	}
+
 }
 
 const sf::Vector2u Hud::HUD::GetHUDSize() const
@@ -97,7 +127,7 @@ std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float 
 
 void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 {
-	assert(widgetLayout->GetLayoutSize() != baseWidgetArraySize);
+	assert(widgetLayout->GetLayoutSize() != baseWidgetLayoutSize);
 
 	widgetLayout->AddObject(_widget);
 }
@@ -164,6 +194,7 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 
 		case APP_STATE::States::LEADERS_VIEW:
 		{
+			fillLeaderbord();
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Back"));
 			btnsLayout->AddObject(btnsLogicArr.back());

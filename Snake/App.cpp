@@ -18,12 +18,12 @@ App::App()
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
 	// Window configurate {
-	auto configs = loader->GetHudConfigs();
 	auto style = sf::Style::Titlebar | sf::Style::Close;
+	auto wndConfigs = loader->GetWndConfigs();
 
 	wnd = std::make_unique<MainWin::MainWindow>(
-		configs.width, 
-		configs.height, 
+		wndConfigs.width, 
+		wndConfigs.height,
 		"Snake2D", 
 		style);// Window configurate }
 	
@@ -31,6 +31,7 @@ App::App()
 	// Hud configurate {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
+	auto configs = loader->GetHudPaths();
 	auto hud = std::make_shared<Hud::HUD>(configs);
 
 	auto hudScale = det->CalculateAbsoluteScale(
@@ -80,7 +81,7 @@ std::unique_ptr<GameSession> App::createGameSession()
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 	
 	auto level = loader->GetLVL(lvlSelected);
-	auto sp = loader->GetSnakeProp();
+	auto sp = loader->GetSnakePaths();
 
 	// Snake {
 	auto snake = std::make_shared<Snake::SnakeBody>(

@@ -155,12 +155,12 @@
     <ClCompile Include="InfoWidget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Layout.cpp" />
-    <ClCompile Include="LeaderBord.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
     <ClCompile Include="LogicField.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="NameWidget.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="ScaleDeterminant.cpp" />
     <ClCompile Include="ScoreWidget.cpp" />
@@ -191,13 +191,14 @@
     <ClInclude Include="InfoWidget.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Layout.h" />
-    <ClInclude Include="LeaderBord.h" />
     <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="LogicField.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MoveOnBoardBaseObj.h" />
+    <ClInclude Include="NameWidget.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ScaleDeterminant.h" />
     <ClInclude Include="ScoreWidget.h" />
     <ClInclude Include="SmartPointer.h" />
@@ -207,6 +208,12 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimeWidget.h" />
     <ClInclude Include="DrawableRectangle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Snake.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ResourcesConfigs\Snake\head2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
