@@ -97,7 +97,7 @@ std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float 
 
 void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 {
-	assert(widgetArr.size() != baseWidgetArraySize);
+	assert(widgetLayout->GetLayoutSize() != baseWidgetArraySize);
 
 	widgetLayout->AddObject(_widget);
 }

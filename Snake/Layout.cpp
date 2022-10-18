@@ -34,6 +34,11 @@ void LAYOUT::Layout::alignOn(Position _pos)
 	rerangeObjcts();
 }
 
+const size_t LAYOUT::Layout::GetLayoutSize() const
+{
+	return drawVector.size();
+}
+
 void LAYOUT::Layout::SetPosition(const sf::Vector2f& _newPos)
 {
 	currentPosition = _newPos;

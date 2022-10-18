@@ -5,6 +5,7 @@
     "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
     "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
     "BASE_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
+    "NAME_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\nameWidget.png",
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\head2.png",
     "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\body2.png",

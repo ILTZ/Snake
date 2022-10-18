@@ -11,7 +11,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Button.h"
-#include "InfoWidget.h"
 #include "AppState.h"
 //#include "BaseDrawable.h"
 #include "Layout.h"
@@ -27,6 +26,7 @@ namespace Hud
 		const std::string pathToBtnReleased;
 		const std::string pathToBtnPressed;
 		const std::string pathToFont;
+		const std::string pathToNameWidget;
 
 	private:
 		std::mutex defMutex;
@@ -50,7 +50,6 @@ namespace Hud
 
 	private:
 		const unsigned int baseWidgetArraySize = 3;
-		std::vector<std::shared_ptr<BaseDrawable>> widgetArr;
 
 	public:
 		HUD(CLoader::HudConfigs& _configs);

@@ -47,6 +47,9 @@ namespace LAYOUT
 		void alignOn(Position _pos);
 
 	public:
+		const size_t GetLayoutSize() const;
+
+	public:
 		virtual void SetPosition(const sf::Vector2f& _newPos)	override;
 		virtual void SetScale(const sf::Vector2f& _newScale)	override;
 		virtual void Draw(sf::RenderWindow& _wnd)				override;
