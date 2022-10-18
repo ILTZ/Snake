@@ -121,6 +121,7 @@ namespace CLoader
 		const HudConfigs GetHudPaths(const char* _pathToConfig = nullptr)		const;
 		const WndConfigs GetWndConfigs(const char* _pathToConfigs = nullptr)	const;
 		const std::vector<LeadersInfo> GetLeaders(const char* _pathToFile = nullptr)		const;
+		void AddLeaderInLeaderBord(const char* _name, unsigned int _points, const float _time = 0.1);
 
 	private:
 		const nlohmann::json getParseFile(const char* _pathToConfig = nullptr)	const;

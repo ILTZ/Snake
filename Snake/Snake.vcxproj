@@ -198,7 +198,6 @@
     <ClInclude Include="MoveOnBoardBaseObj.h" />
     <ClInclude Include="NameWidget.h" />
     <ClInclude Include="Random.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="ScaleDeterminant.h" />
     <ClInclude Include="ScoreWidget.h" />
     <ClInclude Include="SmartPointer.h" />
@@ -208,12 +207,6 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimeWidget.h" />
     <ClInclude Include="DrawableRectangle.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Snake.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="ResourcesConfigs\Snake\head2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -217,6 +217,15 @@ const std::vector<LeadersInfo> CLoader::ConfigLoader::GetLeaders(const char* _pa
 	return leaders;
 }
 
+void CLoader::ConfigLoader::AddLeaderInLeaderBord(const char* _name, unsigned int _points, const float _time)
+{
+	auto leadersFile = getParseFile(ConstData::pathToLeaders.c_str());
+	leadersFile[JsonKeys::leader][_name] = _points;
+
+	std::ofstream file(ConstData::pathToLeaders.c_str());
+	file << leadersFile;
+}
+
 LVLs CLoader::operator++(LVLs& _x)
 {
 	return _x = static_cast<LVLs>(std::underlying_type<LVLs>::type(_x) + 1);
