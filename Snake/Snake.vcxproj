@@ -153,6 +153,7 @@
     <ClCompile Include="GraphicField.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InfoWidget.cpp" />
+    <ClCompile Include="InputNameWidget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Layout.cpp" />
     <ClCompile Include="LevelConstructor.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="GraphicField.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="InfoWidget.h" />
+    <ClInclude Include="InputNameWidget.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Layout.h" />
     <ClInclude Include="LevelConstructor.h" />
