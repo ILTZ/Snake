@@ -49,13 +49,13 @@ Keyboard::TextEvent::TextEvent(const sf::Event& _ev) :
 	{
 		symbol = static_cast<char>(_ev.text.unicode);
 		shiftPressed = _ev.key.shift;
+
+		if (shiftPressed)
+			symbol = toupper(symbol);
 	}
 }
 
-char Keyboard::TextEvent::GetChar()
+const char Keyboard::TextEvent::GetChar() const
 {
-	if (shiftPressed)
-		return std::toupper(symbol);
-
 	return symbol;
 }

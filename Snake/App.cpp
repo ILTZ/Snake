@@ -117,7 +117,7 @@ void App::handleEvents()
 	while (!appState.ToExit())
 	{
 		handler.HandleKeyEvent(wnd->GetKeyboardEvent(), appState);
-
+		handler.HandleCharEvent(wnd->GetTextEvent(), appState);
 
 		std::lock_guard<std::mutex> lk(defMt);
 

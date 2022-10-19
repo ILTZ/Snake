@@ -37,6 +37,13 @@ void InputNameWidget::SetPosition(const sf::Vector2f& _newPosition)
 
 void InputNameWidget::AddSymbol(char _symbol)
 {
+	if (_symbol == '\b') //BackSpace
+	{
+		RemoveSymbol();
+		return;
+	}
+		
+
 	if (letterIt != name.end())
 	{
 		*letterIt = _symbol;
@@ -52,9 +59,6 @@ void InputNameWidget::RemoveSymbol()
 		--letterIt;
 
 	*letterIt = separateSymbol;
-
-	if (letterIt != name.begin())
-		--letterIt;
 		
 	widgetText->SetString(name);
 }

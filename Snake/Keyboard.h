@@ -22,7 +22,7 @@ namespace Keyboard
 		char symbol;
 		bool shiftPressed;
 
-		char GetChar();
+		const char GetChar() const;
 	};
 
 	class Keyboard : public ControlBase::ControlBase<KeyEvent>

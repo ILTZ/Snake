@@ -44,9 +44,15 @@ public:
 		const std::optional<Keyboard::KeyEvent>&_keyEvent, 
 		APP_STATE::AppState& _state);
 
+	void						HandleCharEvent(
+		const std::optional<Keyboard::TextEvent>& _keyEvent,
+		APP_STATE::AppState& _state);
+
 	std::optional<CLoader::LVLs> HandleMouseEvent(
 		const std::optional<MS::MouseEvent>& _mouseEvent, 
 		APP_STATE::AppState& _state);
+
+	
 
 private:
 

@@ -55,12 +55,31 @@ void EventHandler::HandleKeyEvent(
 			_state.SetState(APP_STATE::States::GAME_PAUSE);
 			hud->PrepButtons(_state.GetState());
 			break;
-
+		
 		default:
 			break;
 		}
+
+		
 	}
 }
+
+void EventHandler::HandleCharEvent(
+	const std::optional<Keyboard::TextEvent>& _keyEvent,
+	APP_STATE::AppState& _state)
+{
+	if (!_keyEvent.has_value())
+		return;
+
+	if (_state.GetState() == APP_STATE::States::INPUT_NAME)
+	{
+		if (hud->GetInputNameWidget().has_value())
+		{
+			hud->GetInputNameWidget().value()->AddSymbol(_keyEvent.value().GetChar());
+		}
+	}
+}
+
 
 std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 	const std::optional<MS::MouseEvent>& _mouseEvent, 
