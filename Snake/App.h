@@ -6,7 +6,6 @@
 #include "EventHandler.h"
 #include "AppState.h"
 
-
 using namespace MainWin;
 
 class App final

@@ -1,6 +1,6 @@
 #include "AppState.h"
 
-APP_STATE::States APP_STATE::AppState::GetState() const 
+const APP_STATE::States APP_STATE::AppState::GetState() const 
 {
 	std::lock_guard<std::mutex> lg(defMutex);
 
@@ -41,6 +41,7 @@ const bool APP_STATE::AppState::CheckGameProcessStates() const
 	{
 	case APP_STATE::States::GAME_PROCESS:
 	case APP_STATE::States::GAME_PAUSE:
+	case APP_STATE::States::INPUT_NAME:
 	case APP_STATE::States::GAME_OVER:
 		return true;
 	}

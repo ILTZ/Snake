@@ -11,9 +11,12 @@ InputNameWidget::InputNameWidget(
 }
 
 InputNameWidget::InputNameWidget(InputNameWidget&& _other) noexcept :
-	InfoWidget{std::move(_other)}
+	InfoWidget{std::move(_other)},
+	name{_other.name},
+	separateSymbol{_other.separateSymbol},
+	maxLetters{_other.maxLetters}
 {
-
+	letterIt = name.begin();
 }
 
 void InputNameWidget::Draw(sf::RenderWindow& _wnd)
@@ -34,18 +37,26 @@ void InputNameWidget::SetPosition(const sf::Vector2f& _newPosition)
 
 void InputNameWidget::AddSymbol(char _symbol)
 {
-	*letterIt = _symbol;
-
 	if (letterIt != name.end())
+	{
+		*letterIt = _symbol;
 		++letterIt;
+	}
+
+	widgetText->SetString(name);
 }
 
 void InputNameWidget::RemoveSymbol()
 {
+	if (letterIt == name.end())
+		--letterIt;
+
 	*letterIt = separateSymbol;
 
-	if (letterIt != name.end())
+	if (letterIt != name.begin())
 		--letterIt;
+		
+	widgetText->SetString(name);
 }
 
 const std::string InputNameWidget::GetString() const

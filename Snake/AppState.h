@@ -13,9 +13,10 @@ namespace APP_STATE
 		LVL_SELECTED	= 3,
 		GAME_PROCESS	= 4,
 		GAME_PAUSE		= 5,
-		GAME_OVER		= 6,
-		LEADERS_VIEW	= 7,
-		EXIT			= 8,
+		INPUT_NAME		= 6,
+		GAME_OVER		= 7,
+		LEADERS_VIEW	= 8,
+		EXIT			= 9,
 	};
 
 
@@ -39,7 +40,7 @@ namespace APP_STATE
 		AppState& operator=(AppState&&)			= delete;
 
 	public:
-		States	GetState()					const;
+		const States GetState()				const;
 		void	SetState(States _state);
 
 		const bool CheckMainMenuState()		const;

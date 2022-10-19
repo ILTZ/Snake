@@ -2,7 +2,6 @@
 #define HUD_H
 
 #include <vector>
-#include <vector>
 #include <string>
 #include <optional>
 #include <mutex>
@@ -14,6 +13,7 @@
 #include "AppState.h"
 #include "Layout.h"
 #include "ConfigLoader.h"
+#include "InputNameWidget.h"
 
 namespace Hud
 {
@@ -85,6 +85,8 @@ namespace Hud
 	public:
 		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
 		void ClearWidgets();
+
+		std::shared_ptr<InputNameWidget> InputNameSetUp();
 	};
 }
 

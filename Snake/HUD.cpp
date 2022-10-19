@@ -3,6 +3,7 @@
 #include <cassert>
 #include "NameWidget.h"
 
+
 using namespace Hud;
 
 
@@ -135,6 +136,22 @@ void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 void Hud::HUD::ClearWidgets()
 {
 	widgetLayout->ClearLayout();
+}
+
+std::shared_ptr<InputNameWidget> Hud::HUD::InputNameSetUp()
+{
+	btnsLayout->ClearLayout();
+
+	std::shared_ptr<InputNameWidget> input = std::make_shared<InputNameWidget>
+		(pathToNameWidget.c_str(), pathToFont.c_str());
+
+	btnsLayout->AddObject(input);
+
+
+
+
+
+	return input;
 }
 
 void Hud::HUD::RealeseButtons()

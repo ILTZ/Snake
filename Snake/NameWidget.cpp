@@ -21,8 +21,13 @@ NameWidget::NameWidget(
 }
 
 NameWidget::NameWidget(NameWidget&& _other) noexcept :
-	InfoWidget{std::move(_other)}
+	InfoWidget{std::move(_other)},
+	letterSize{_other.letterSize},
+	name{_other.name},
+	points{_other.points},
+	separateSymbol{_other.separateSymbol}
 {
+	
 }
 
 void NameWidget::Draw(sf::RenderWindow& _wnd)

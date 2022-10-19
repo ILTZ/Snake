@@ -2,7 +2,6 @@
 #include "ConfigLoader.h"
 
 #include <SFML/Window/Event.hpp>
-#include <cassert>
 
 using namespace MainWin;
 
@@ -22,16 +21,12 @@ MainWindow::MainWindow(
 
 void MainWin::MainWindow::DrawHUD()
 {
-	assert(hud.get());
-
 	if (wnd.isOpen())
 		hud->DrawHUD(wnd);	
 }
 
 void MainWin::MainWindow::DrawButtons()
 {
-	assert(hud.get());
-
 	if (wnd.isOpen())
 		hud->DrawButtons(wnd);	
 }
