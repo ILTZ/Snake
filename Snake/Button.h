@@ -24,13 +24,14 @@ namespace Buttons
 		EXIT		= 1,
 		BACK		= 2,
 		CONTINUE	= 3,
-		LEADER_BORD	= 4,
+		LEADER_BORD = 4,
 		MAIN_MENU	= 5,
-		LVL_1		= 6,
-		LVL_2		= 7,
-		LVL_3		= 8,
-		LVL_4		= 9,
-		LVL_5		= 10,
+		NAME_ACEPT	= 6,
+		LVL_1		= 7,
+		LVL_2		= 8,
+		LVL_3		= 9,
+		LVL_4		= 10,
+		LVL_5		= 11,
 	};
 	BtnPurpose operator++(BtnPurpose& _x);
 

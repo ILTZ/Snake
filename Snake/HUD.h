@@ -48,6 +48,8 @@ namespace Hud
 	private:
 		SmartPointer::SmartPointer<LAYOUT::Layout>		btnsLayout;
 		SmartPointer::SmartPointer<LAYOUT::Layout>		widgetLayout;
+		std::shared_ptr<InputNameWidget>				nameWidget;
+
 
 		const size_t									baseWidgetLayoutSize = 3;	
 		const size_t									maxLeaders = 5;
@@ -65,7 +67,7 @@ namespace Hud
 		void SetScale		(const sf::Vector2f& _newScale);
 		
 	private:
-		void fillLeaderbord();
+		void fillLeaderbord(LAYOUT::Layout& _layout);
 
 	public:
 		const sf::Vector2u GetHUDSize()					const;
@@ -86,7 +88,7 @@ namespace Hud
 		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
 		void ClearWidgets();
 
-		std::shared_ptr<InputNameWidget> InputNameSetUp();
+		std::optional<InputNameWidget*> GetInputNameWidget();
 	};
 }
 

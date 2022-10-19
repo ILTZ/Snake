@@ -55,7 +55,7 @@ void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 	widgetLayout->SetScale(currentScale);
 }
 
-void Hud::HUD::fillLeaderbord()
+void Hud::HUD::fillLeaderbord(LAYOUT::Layout& _layout)
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
@@ -75,7 +75,7 @@ void Hud::HUD::fillLeaderbord()
 				pathToFont.c_str(), 
 				vec[i].name.c_str(),
 				vec[i].points);
-			btnsLayout->AddObject(lead);
+			_layout.AddObject(lead);
 			continue;
 		}
 		btnsLayout->AddObject(std::make_shared<NameWidget>(pathToNameWidget.c_str(), pathToFont.c_str()));
@@ -138,22 +138,6 @@ void Hud::HUD::ClearWidgets()
 	widgetLayout->ClearLayout();
 }
 
-std::shared_ptr<InputNameWidget> Hud::HUD::InputNameSetUp()
-{
-	btnsLayout->ClearLayout();
-
-	std::shared_ptr<InputNameWidget> input = std::make_shared<InputNameWidget>
-		(pathToNameWidget.c_str(), pathToFont.c_str());
-
-	btnsLayout->AddObject(input);
-
-
-
-
-
-	return input;
-}
-
 void Hud::HUD::RealeseButtons()
 {
 	for (auto& el : btnsLogicArr)
@@ -211,7 +195,7 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 
 		case APP_STATE::States::LEADERS_VIEW:
 		{
-			fillLeaderbord();
+			fillLeaderbord(*btnsLayout);
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Back"));
 			btnsLayout->AddObject(btnsLogicArr.back());
@@ -234,6 +218,18 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 		}
 		break;
 
+		case APP_STATE::States::INPUT_NAME:
+		{
+			nameWidget = std::make_shared<InputNameWidget>
+				(pathToNameWidget.c_str(), pathToFont.c_str());
+			btnsLayout->AddObject(nameWidget);
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::NAME_ACEPT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+				pathToFont.c_str(), "Accept"));
+			btnsLayout->AddObject(btnsLogicArr.back());
+		}
+		break;
+
 		case APP_STATE::States::GAME_OVER:
 		{
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
@@ -252,4 +248,10 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 
 }
 
+std::optional<InputNameWidget*> Hud::HUD::GetInputNameWidget()
+{
+	if (nameWidget == nullptr)
+		return {};
 
+	return nameWidget.get();
+}

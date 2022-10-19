@@ -72,12 +72,16 @@ bool MainWindow::PollEvents()
 			mouse.AddReleaseEvent(ev);
 			break;
 	
+		case sf::Event::KeyReleased:
+			kb.AddReleaseEvent(ev);
+			break;
+
 		case sf::Event::KeyPressed:
 			kb.AddPressEvent(ev);
 			break;
 
-		case sf::Event::KeyReleased:
-			kb.AddReleaseEvent(ev);
+		case sf::Event::TextEntered:
+			kb.AddCharEvent(ev);
 			break;
 		}
 
@@ -112,6 +116,11 @@ Hud::HUD& MainWin::MainWindow::GetHUD()
 std::optional<Keyboard::KeyEvent> MainWin::MainWindow::GetKeyboardEvent()
 {
 	return kb.GetEvent();
+}
+
+std::optional<Keyboard::TextEvent> MainWin::MainWindow::GetTextEvent()
+{
+	return kb.GetCharEvent();
 }
 
 std::optional<MS::MouseEvent> MainWin::MainWindow::GetMouseEvent()

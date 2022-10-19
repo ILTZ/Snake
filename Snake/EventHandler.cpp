@@ -117,7 +117,11 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 				_state.SetState(States::LEADERS_VIEW);
 				hud->PrepButtons(_state.GetState());
 				break;
-
+			
+			case bMod::NAME_ACEPT:
+				_state.SetState(States::GAME_OVER);
+				hud->PrepButtons(_state.GetState());
+				break;
 
 			// Lvl selected {
 			case bMod::LVL_1:

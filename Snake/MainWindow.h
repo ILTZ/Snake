@@ -54,7 +54,9 @@ namespace MainWin
 
 	public:
 		std::optional<Keyboard::KeyEvent>		GetKeyboardEvent();
+		std::optional<Keyboard::TextEvent>		GetTextEvent();
 		std::optional<MS::MouseEvent>			GetMouseEvent();
+
 
 	private:
 		MS::Mouse mouse;

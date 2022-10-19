@@ -63,10 +63,8 @@ int App::Run()
 			auto session = createGameSession();
 			appState.SetState(APP_STATE::States::GAME_PROCESS);
 
-			while (appState.CheckGameProcessStates())
-			{
-				session->GameFrame(appState);
-			}
+			session->GameFrame(appState);
+
 		}
 	}
 
@@ -74,7 +72,7 @@ int App::Run()
 }
 
 
-std::unique_ptr<GameSession> App::createGameSession()
+std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 {
 	std::lock_guard<std::mutex> lk(defMt);
 
@@ -111,7 +109,7 @@ std::unique_ptr<GameSession> App::createGameSession()
 
 	
 
-	return std::make_unique<GameSession>(wnd.get(), snake, gf, lf, apple);
+	return std::make_unique<GAME_SESSION::GameSession>(wnd.get(), snake, gf, lf, apple);
 }
 
 void App::handleEvents()

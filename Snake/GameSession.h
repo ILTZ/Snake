@@ -14,63 +14,84 @@
 #include "BaseDrawable.h"
 #include "Apple.h"
 
-class GameSession
+namespace GAME_SESSION
 {
-private:
-	MainWin::MainWindow*							wnd			= nullptr;
-	std::shared_ptr<Base::BasePlayerControlObj>		snake;
-	std::shared_ptr<BaseDrawable>					gp;
-	std::shared_ptr<Logic::LogicField>				logicField;
-	std::shared_ptr<Apple>					apple;
+	struct GameSessionResults
+	{
+		GameSessionResults(
+			const char* _name, 
+			unsigned int _points, 
+			unsigned int _minuts, 
+			unsigned int _seconds);
 
-	std::shared_ptr<ScoreWidget>	scoreWidget;
-	std::shared_ptr<TimeWidget>		timeWidget;
-	std::shared_ptr<SpeedWidget>	speedWidget;
+		const std::string		playerName;
+		const unsigned int		points;
 
-private:
-	Timer	timer;
-	float			stepTime				= 0.75f;
-	float			speedMyltiply			= 1.f;
-	const float		botBorderSpeedMultiply	= 0.25f;
-	float			deltaSpeed				= 0.25f;
-	unsigned int	appleBorder				= 20u;
+		const unsigned int		minuts;
+		const unsigned int		seconds;
+	};
 
-private:
-	unsigned int	curPoints		= 0u;
-	bool			appleOnBoard	= false;
+	class GameSession
+	{
+	private:
+		MainWin::MainWindow*							wnd			= nullptr;
+		std::shared_ptr<Base::BasePlayerControlObj>		snake;
+		std::shared_ptr<BaseDrawable>					gp;
+		std::shared_ptr<Logic::LogicField>				logicField;
+		std::shared_ptr<Apple>					apple;
 
-private:
-	bool pause = false;
+		std::shared_ptr<ScoreWidget>	scoreWidget;
+		std::shared_ptr<TimeWidget>		timeWidget;
+		std::shared_ptr<SpeedWidget>	speedWidget;
 
-public:
-	GameSession(
-		MainWin::MainWindow*						_wnd, 
-		std::shared_ptr<Base::BasePlayerControlObj> _pawn,
-		std::shared_ptr<BaseDrawable>				_gp,
-		std::shared_ptr<Logic::LogicField>			_lField,
-		std::shared_ptr<Apple>						_apple);
+	private:
+		Timer	timer;
+		float			stepTime				= 0.75f;
+		float			speedMyltiply			= 1.f;
+		const float		botBorderSpeedMultiply	= 0.25f;
+		float			deltaSpeed				= 0.25f;
+		unsigned int	appleBorder				= 20u;
 
-	~GameSession();
+	private:
+		unsigned int	curPoints		= 0u;
+		bool			appleOnBoard	= false;
 
-public:
-	GameSession(const GameSession&)				= delete;
-	GameSession operator=(const GameSession&)	= delete;
+	private:
+		bool pause = false;
 
-public:
-	void  GameFrame(APP_STATE::AppState& _state);
+	public:
+		GameSession(
+			MainWin::MainWindow*						_wnd, 
+			std::shared_ptr<Base::BasePlayerControlObj> _pawn,
+			std::shared_ptr<BaseDrawable>				_gp,
+			std::shared_ptr<Logic::LogicField>			_lField,
+			std::shared_ptr<Apple>						_apple);
 
-private:
-	void MovePawn(const APP_STATE::AppState& _state);
-	void DoLogic(APP_STATE::AppState& _state);
+		~GameSession();
 
-private:
-	// Chouse the position of <Apple> and set it coords on the <LogicField>
-	void spawnApple(bool _appleOnBoard);
+	public:
+		GameSession(const GameSession&)				= delete;
+		GameSession operator=(const GameSession&)	= delete;
 
-private:
-	void wndDraw(const APP_STATE::AppState& _state);
-};
+	public:
+		void GameFrame(APP_STATE::AppState& _state);
+		const std::optional<std::string> GetSessionResult() const;
 
 
+	private:
+		void MovePawn(const APP_STATE::AppState& _state);
+		void DoLogic(APP_STATE::AppState& _state);
+
+	private:
+		// Chouse the position of <Apple> and set it coords on the <LogicField>
+		void spawnApple(bool _appleOnBoard);
+
+		void enterNameProcess(const APP_STATE::AppState& _state);
+
+	private:
+		void wndDraw(const APP_STATE::AppState& _state);
+	};
+
+}
 #endif
 

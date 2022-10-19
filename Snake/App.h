@@ -34,7 +34,7 @@ public:
 	int Run();
 
 private:
-	std::unique_ptr<GameSession> createGameSession();
+	std::unique_ptr<GAME_SESSION::GameSession> createGameSession();
 
 private:
 	void handleEvents();

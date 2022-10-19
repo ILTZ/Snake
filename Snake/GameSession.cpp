@@ -3,7 +3,7 @@
 #include "Random.h"
 #include "ConfigLoader.h"
 
-#include <iostream>
+using namespace GAME_SESSION;
 
 GameSession::GameSession(
 	MainWin::MainWindow*						_wnd, 
@@ -50,21 +50,30 @@ GameSession::~GameSession()
 
 void GameSession::GameFrame(APP_STATE::AppState& _state)
 {
-	// if player press <exit> key on window
-	if (!wnd->PollEvents())
+	while (_state.CheckGameProcessStates())
 	{
-		_state.ExitApp();
-		return;
+		// if player press <exit> key on window
+		if (!wnd->PollEvents())
+		{
+			_state.ExitApp();
+			return;
+		}
+
+		spawnApple(appleOnBoard);
+
+		wndDraw(_state);
+
+		DoLogic(_state);
+
+		MovePawn(_state);
 	}
-
-	spawnApple(appleOnBoard);
-
-	wndDraw(_state);
-
-	DoLogic(_state);
-
-	MovePawn(_state);	
 }
+
+const std::optional<std::string> GAME_SESSION::GameSession::GetSessionResult() const
+{
+	return std::optional<std::string>();
+}
+
 
 void GameSession::MovePawn(const APP_STATE::AppState& _state)
 {
@@ -78,11 +87,13 @@ void GameSession::MovePawn(const APP_STATE::AppState& _state)
 
 void GameSession::DoLogic(APP_STATE::AppState& _state)
 {
-	if (_state.GetState() != APP_STATE::States::GAME_OVER)
+	if (_state.GetState() != APP_STATE::States::GAME_OVER && 
+		_state.GetState() != APP_STATE::States::INPUT_NAME && 
+		_state.GetState() != APP_STATE::States::MAIN_MENU)
 	{
 		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions())
 		{
-			_state.SetState(APP_STATE::States::GAME_OVER);
+			_state.SetState(APP_STATE::States::INPUT_NAME);
 			wnd->GetHUD().PrepButtons(_state.GetState());
 		}
 		else if (logicField->CheckSnakeGowUp(snake->GetPos()))
@@ -125,6 +136,14 @@ void GameSession::spawnApple(bool _appleOnBoard)
 	appleOnBoard = true;
 }
 
+void GAME_SESSION::GameSession::enterNameProcess(const APP_STATE::AppState& _state)
+{
+	if (_state.GetState() == APP_STATE::States::INPUT_NAME)
+	{
+
+	}
+}
+
 void GameSession::wndDraw(const APP_STATE::AppState& _state)
 {
 	wnd->get().clear();
@@ -147,6 +166,7 @@ void GameSession::wndDraw(const APP_STATE::AppState& _state)
 		break;
 
 	case APP_STATE::States::GAME_OVER:
+	case APP_STATE::States::INPUT_NAME:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);
@@ -160,4 +180,17 @@ void GameSession::wndDraw(const APP_STATE::AppState& _state)
 	}
 
 	wnd->get().display();
+}
+
+GAME_SESSION::GameSessionResults::GameSessionResults(
+	const char* _name, 
+	unsigned int _points, 
+	unsigned int _minuts, 
+	unsigned int _seconds) :
+	playerName{_name},
+	points{_points},
+	minuts{_minuts},
+	seconds{_seconds}
+{
+
 }
