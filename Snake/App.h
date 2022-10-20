@@ -5,14 +5,16 @@
 #include "GameSession.h"
 #include "EventHandler.h"
 #include "AppState.h"
+#include "ConfigLoader.h"
 
 using namespace MainWin;
 
 class App final
 {
 private:
-	std::unique_ptr<MainWindow> wnd;
-	EventHandler				handler;
+	std::unique_ptr<MainWindow>							wnd;
+	SmartPointer::SmartPointer<CLoader::ConfigLoader>	loader;
+	EventHandler										handler;
 
 private:
 	APP_STATE::AppState appState;

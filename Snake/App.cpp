@@ -16,7 +16,7 @@
 
 App::App() 
 {
-	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	loader = new CLoader::ConfigLoader();
 
 	// Window configurate {
 	auto style = sf::Style::Titlebar | sf::Style::Close;
