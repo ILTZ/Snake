@@ -39,3 +39,7 @@ void ScoreWidget::IncreaseScores()
 	widgetText->SetString(std::string("Scores:") + std::to_string(scores));
 }
 
+const unsigned int ScoreWidget::GetScores() const
+{
+	return scores;
+}

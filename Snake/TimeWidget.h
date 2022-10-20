@@ -29,8 +29,12 @@ public:
 
 	void WorkCycle(bool _isWork);
 
+	const unsigned int GetMinuts()		const;
+	const unsigned int GetSeconds()		const;
+	const std::string GetTimeAsString() const;
+
 private:
-	std::string timeToString();
+	const std::string timeToString()	const;
 	void increaseTime();
 };
 

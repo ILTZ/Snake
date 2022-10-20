@@ -18,10 +18,10 @@ TimeWidget::TimeWidget(
 TimeWidget::TimeWidget(TimeWidget&& _other) noexcept : 
     InfoWidget{std::move(_other)},
     timerInterval{_other.timerInterval},
-    minuts{ 0u },
-    seconds{0u}
+    minuts{ _other.minuts },
+    seconds{_other.seconds}
 {
-
+    
 }
 
 void TimeWidget::Draw(sf::RenderWindow& _wnd)
@@ -54,7 +54,7 @@ void TimeWidget::WorkCycle(bool _isWork)
     }
 }
 
-std::string TimeWidget::timeToString()
+const std::string TimeWidget::timeToString() const
 {
     std::ostringstream ss;
     
@@ -83,3 +83,15 @@ void TimeWidget::increaseTime()
     }
 }
 
+const unsigned int TimeWidget::GetMinuts()      const
+{
+    return minuts;
+}
+const unsigned int TimeWidget::GetSeconds()     const
+{
+    return seconds;
+}
+const std::string TimeWidget::GetTimeAsString() const
+{
+    return timeToString();
+}

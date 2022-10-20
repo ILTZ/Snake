@@ -22,6 +22,7 @@ public:
 
 	void IncreaseScores();
 
+	const unsigned int GetScores() const;
 };
 
 
