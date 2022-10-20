@@ -2,6 +2,7 @@
 #define INPUT_NAME_WIDGET_H
 
 #include "InfoWidget.h"
+#include <optional>
 
 class InputNameWidget : public InfoWidget
 {
@@ -32,7 +33,7 @@ public:
 	void AddSymbol(char _symbol);
 	void RemoveSymbol();
 
-	const std::string GetString() const;
+	const std::optional<std::string> GetString() const;
 
 private:
 

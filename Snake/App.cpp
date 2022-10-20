@@ -11,6 +11,7 @@
 
 #include "HUD.h"
 
+#include <SFML/System/Thread.hpp>
 #include <thread>
 
 App::App() 
@@ -50,11 +51,10 @@ App::App()
 
 int App::Run()
 {
-	std::jthread t([&]() {
+	std::thread handlingThread([&]() {
 		handleEvents();
 		});
 
-	
 	while (!appState.ToExit())
 	{
 		wndProcesses();
@@ -63,10 +63,12 @@ int App::Run()
 			auto session = createGameSession();
 			appState.SetState(APP_STATE::States::GAME_PROCESS);
 
-			session->GameFrame(appState);
+			auto result = session->GameProcess(appState);
 
 		}
 	}
+
+	handlingThread.join();
 
 	return 0;
 }

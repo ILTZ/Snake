@@ -48,7 +48,7 @@ GameSession::~GameSession()
 	wnd->GetHUD().ClearWidgets();
 }
 
-void GameSession::GameFrame(APP_STATE::AppState& _state)
+std::optional<GameSessionResults> GameSession::GameProcess(APP_STATE::AppState& _state)
 {
 	while (_state.CheckGameProcessStates())
 	{
@@ -56,7 +56,7 @@ void GameSession::GameFrame(APP_STATE::AppState& _state)
 		if (!wnd->PollEvents())
 		{
 			_state.ExitApp();
-			return;
+			return {};
 		}
 
 		spawnApple(appleOnBoard);
@@ -67,13 +67,29 @@ void GameSession::GameFrame(APP_STATE::AppState& _state)
 
 		MovePawn(_state);
 	}
+
+	return FormGameSessionResults();
 }
 
-const std::optional<std::string> GAME_SESSION::GameSession::GetSessionResult() const
+const std::optional<GameSessionResults> GameSession::FormGameSessionResults() const
 {
-	return std::optional<std::string>();
-}
+	auto nameWidget = wnd->GetHUD().GetInputNameWidget();
 
+	if (nameWidget.has_value())
+	{
+		auto name = nameWidget.value()->GetString();
+		if (name.has_value())
+		{
+			return GameSessionResults(
+				name.value().c_str(),
+				scoreWidget->GetScores(),
+				timeWidget->GetMinuts(),
+				timeWidget->GetSeconds());
+		}
+	}
+	
+	return {};
+}
 
 void GameSession::MovePawn(const APP_STATE::AppState& _state)
 {
@@ -134,14 +150,6 @@ void GameSession::spawnApple(bool _appleOnBoard)
 	
 	apple->SetPos(sf::Vector2u(x, y));
 	appleOnBoard = true;
-}
-
-void GAME_SESSION::GameSession::enterNameProcess(const APP_STATE::AppState& _state)
-{
-	if (_state.GetState() == APP_STATE::States::INPUT_NAME)
-	{
-
-	}
 }
 
 void GameSession::wndDraw(const APP_STATE::AppState& _state)

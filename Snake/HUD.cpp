@@ -248,10 +248,18 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 
 }
 
+const std::optional<std::string> Hud::HUD::GetNameFromNameWidget() const
+{
+	if (nameWidget.get())
+		return nameWidget->GetString();
+
+	return {};
+}
+
 std::optional<InputNameWidget*> Hud::HUD::GetInputNameWidget()
 {
-	if (nameWidget == nullptr)
-		return {};
+	if (nameWidget.get())
+		return nameWidget.get();
 
-	return nameWidget.get();
+	return {};
 }

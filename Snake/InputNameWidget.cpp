@@ -66,8 +66,11 @@ void InputNameWidget::RemoveSymbol()
 	}
 }
 
-const std::string InputNameWidget::GetString() const
+const std::optional<std::string> InputNameWidget::GetString() const
 {
+	if (letterIt == name.begin())
+		return {};
+
 	return name;
 }
 

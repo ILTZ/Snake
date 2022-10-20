@@ -88,6 +88,7 @@ namespace Hud
 		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
 		void ClearWidgets();
 
+		const std::optional<std::string> GetNameFromNameWidget() const;
 		std::optional<InputNameWidget*> GetInputNameWidget();
 	};
 }

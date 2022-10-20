@@ -74,19 +74,19 @@ namespace GAME_SESSION
 		GameSession operator=(const GameSession&)	= delete;
 
 	public:
-		void GameFrame(APP_STATE::AppState& _state);
-		const std::optional<std::string> GetSessionResult() const;
-
+		std::optional<GameSessionResults> GameProcess(APP_STATE::AppState& _state);
+		
 
 	private:
 		void MovePawn(const APP_STATE::AppState& _state);
 		void DoLogic(APP_STATE::AppState& _state);
 
 	private:
+		const std::optional<GameSessionResults> FormGameSessionResults() const;
+
+	private:
 		// Chouse the position of <Apple> and set it coords on the <LogicField>
 		void spawnApple(bool _appleOnBoard);
-
-		void enterNameProcess(const APP_STATE::AppState& _state);
 
 	private:
 		void wndDraw(const APP_STATE::AppState& _state);
