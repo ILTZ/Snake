@@ -8,7 +8,8 @@ class InputNameWidget : public InfoWidget
 private:
 	std::string name;
 	std::string::iterator letterIt;
-	const char separateSymbol = '-';
+	const char separateSymbol	= '-';
+	const char backspaceSymbol	= '\b';
 	const unsigned int maxLetters = 10;
 	
 

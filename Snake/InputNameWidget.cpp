@@ -7,6 +7,8 @@ InputNameWidget::InputNameWidget(
 {
 	name		= std::string(maxLetters, separateSymbol);
 	letterIt	= name.begin();
+
+	widgetText->GetText().setFillColor(sf::Color::White);
 	widgetText->SetString(name);
 }
 
@@ -37,7 +39,7 @@ void InputNameWidget::SetPosition(const sf::Vector2f& _newPosition)
 
 void InputNameWidget::AddSymbol(char _symbol)
 {
-	if (_symbol == '\b') //BackSpace
+	if (_symbol == backspaceSymbol)
 	{
 		RemoveSymbol();
 		return;
@@ -55,11 +57,11 @@ void InputNameWidget::AddSymbol(char _symbol)
 
 void InputNameWidget::RemoveSymbol()
 {
-	if (letterIt == name.end())
+	if (letterIt > name.begin() || letterIt == name.end())
 		--letterIt;
 
 	*letterIt = separateSymbol;
-		
+	
 	widgetText->SetString(name);
 }
 
