@@ -46,23 +46,24 @@ void InputNameWidget::AddSymbol(char _symbol)
 	}
 		
 
-	if (letterIt != name.end())
+	if (letterIt < name.end())
 	{
 		*letterIt = _symbol;
 		++letterIt;
-	}
 
-	widgetText->SetString(name);
+		widgetText->SetString(name);
+	}	
 }
 
 void InputNameWidget::RemoveSymbol()
 {
 	if (letterIt > name.begin() || letterIt == name.end())
+	{
 		--letterIt;
 
-	*letterIt = separateSymbol;
-	
-	widgetText->SetString(name);
+		*letterIt = separateSymbol;
+		widgetText->SetString(name);
+	}
 }
 
 const std::string InputNameWidget::GetString() const
