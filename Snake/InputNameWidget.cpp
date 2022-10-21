@@ -71,6 +71,10 @@ const std::optional<std::string> InputNameWidget::GetString() const
 	if (letterIt == name.begin())
 		return {};
 
-	return name;
+	std::string temp;
+	for (std::string::const_iterator it = name.begin(); it < letterIt; ++it)
+		temp.push_back(*it);
+	
+	return temp;
 }
 

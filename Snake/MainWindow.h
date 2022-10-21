@@ -23,7 +23,7 @@ namespace MainWin
 
 	private:
 		sf::RenderWindow			wnd;
-		std::shared_ptr<Hud::HUD>	hud;
+		std::shared_ptr<UI::HUD>	hud;
 
 	public:
 		MainWindow(
@@ -43,8 +43,8 @@ namespace MainWin
 		sf::RenderWindow&	get();
 
 	public: //hud funcs
-		void		SetHud(std::shared_ptr<Hud::HUD> _hud);
-		Hud::HUD&	GetHUD();
+		void		SetHud(std::shared_ptr<UI::HUD> _hud);
+		UI::HUD&	GetHUD();
 		void		DrawHUD();
 		void		DrawButtons();
 

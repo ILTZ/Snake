@@ -1,4 +1,21 @@
+#ifndef NDEBUG
+
+#include <iostream>
+
+#define JSON_TRY_USER if (true)
+#define JSON_CATCH_USER(exception) if(false)
+#define JSON_THROW_USER(exception)                           \
+    {std::clog << "Error in " << __FILE__ << ":" << __LINE__ \
+               << " (function " << __FUNCTION__ << ") - "    \
+               << (exception).what() << std::endl;     throw exception;      \
+				}
+
+#endif // !NDEBUG
+
 #include "ConfigLoader.h"
+
+#include <sstream>
+#include <exception>
 
 using namespace CLoader;
 using json = nlohmann::json;
@@ -211,20 +228,76 @@ const std::vector<LeadersInfo> CLoader::ConfigLoader::GetLeaders(const char* _pa
 
 	for (json::iterator it = arr.begin(); it != arr.end(); ++it)
 	{
-		leaders.emplace_back(it.key(), static_cast<unsigned int>(it.value()));
+		try
+		{
+			leaders.emplace_back(
+				it.key(), 
+				static_cast<unsigned int>(it.value()[0]),
+				static_cast<unsigned int>(it.value()[1]),
+				static_cast<unsigned int>(it.value()[2]));
+		}
+		catch (std::exception&)
+		{
+			leaders.emplace_back("Record is broken");
+		}
 	}
 	
 	return leaders;
 }
 
-void CLoader::ConfigLoader::AddLeaderInLeaderBord(const char* _name, unsigned int _points, const float _time)
+void CLoader::ConfigLoader::AddLeaderInLeaderBord(
+	const char* _name,
+	unsigned int _points,
+	unsigned int _minuts,
+	unsigned int _seconds)
 {
 	auto leadersFile = getParseFile(ConstData::pathToLeaders.c_str());
-	leadersFile[JsonKeys::leader][_name] = _points;
+	leadersFile[JsonKeys::leader][_name] = { _points, _minuts, _seconds };
 
 	std::ofstream file(ConstData::pathToLeaders.c_str());
 	file << leadersFile;
+	file.close();
 }
+
+CLoader::LeadersInfo::LeadersInfo(
+	const std::string& _name,
+	unsigned int _points,
+	unsigned int _minuts,
+	unsigned int _seconds) :
+	name{_name}, 
+	points{_points}, 
+	minuts{_minuts}, 
+	seconds{_seconds}
+{
+
+}
+
+CLoader::LeadersInfo::LeadersInfo(const char* _error) :
+	name{ _error },
+	points{ 0u },
+	minuts{ 0u },
+	seconds{ 0u }
+{
+
+}
+
+const std::string CLoader::LeadersInfo::TimeToString() const
+{
+	std::ostringstream ss;
+
+	if (minuts < 10u)
+		ss << 0u;
+	ss << minuts;
+
+	ss << ':';
+
+	if (seconds < 10u)
+		ss << 0u;
+	ss << seconds;
+
+	return ss.str();
+}
+
 
 LVLs CLoader::operator++(LVLs& _x)
 {

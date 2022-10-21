@@ -1,13 +1,14 @@
 #include "HUD.h"
+#include "LeaderRecordWidget.h"
 
 #include <cassert>
-#include "NameWidget.h"
 
 
-using namespace Hud;
+
+using namespace UI;
 
 
-Hud::HUD::HUD(CLoader::HudConfigs& _configs) :
+UI::HUD::HUD(CLoader::HudConfigs& _configs) :
 	pathToBtnReleased{_configs.pathToReleaseBtn},
 	pathToBtnPressed{_configs.pathToPressBtn},
 	pathToFont{_configs.pathToTextFont},
@@ -39,14 +40,14 @@ void HUD::DrawHUD(sf::RenderWindow& _wnd)
 	widgetLayout->Draw(_wnd);
 }
 
-void Hud::HUD::DrawButtons(sf::RenderWindow& _wnd)
+void UI::HUD::DrawButtons(sf::RenderWindow& _wnd)
 {
 	std::lock_guard<std::mutex> lk(defMutex);
 
 	btnsLayout->Draw(_wnd);
 }
 
-void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
+void UI::HUD::SetScale(const sf::Vector2f& _newScale)
 {
 	currentScale = _newScale;
 	hudSprite->setScale(currentScale);
@@ -55,7 +56,7 @@ void Hud::HUD::SetScale(const sf::Vector2f& _newScale)
 	widgetLayout->SetScale(currentScale);
 }
 
-void Hud::HUD::fillLeaderbord(LAYOUT::Layout& _layout)
+void UI::HUD::fillLeaderbord(LAYOUT::Layout& _layout)
 {
 	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
 
@@ -70,30 +71,31 @@ void Hud::HUD::fillLeaderbord(LAYOUT::Layout& _layout)
 	{
 		if (i < vec.size())
 		{
-			auto lead = std::make_shared<NameWidget>(
+			auto lead = std::make_shared<LeaderRecordWidget>(
 				pathToNameWidget.c_str(), 
 				pathToFont.c_str(), 
 				vec[i].name.c_str(),
-				vec[i].points);
+				std::to_string(vec[i].points),
+				vec[i].TimeToString());
 			_layout.AddObject(lead);
 			continue;
 		}
-		btnsLayout->AddObject(std::make_shared<NameWidget>(pathToNameWidget.c_str(), pathToFont.c_str()));
+		btnsLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str()));
 	}
 
 }
 
-const sf::Vector2u Hud::HUD::GetHUDSize() const
+const sf::Vector2u UI::HUD::GetHUDSize() const
 {
 	return hud->getSize();
 }
 
-const sf::Vector2f Hud::HUD::GetHudSpritePosition() const
+const sf::Vector2f UI::HUD::GetHudSpritePosition() const
 {
 	return hudSprite->getPosition();
 }
 
-void Hud::HUD::SetHudSpritePosition(const sf::Vector2f& _newPos)
+void UI::HUD::SetHudSpritePosition(const sf::Vector2f& _newPos)
 {
 	hudSprite->setPosition(_newPos);
 
@@ -102,18 +104,18 @@ void Hud::HUD::SetHudSpritePosition(const sf::Vector2f& _newPos)
 		_newPos.y + hudSprite->getGlobalBounds().height / 2.f });
 }
 
-const sf::Vector2f Hud::HUD::GetButtonsPosition() const
+const sf::Vector2f UI::HUD::GetButtonsPosition() const
 {
 	return buttonsPos;
 }
 
-void Hud::HUD::SetButtonsPosition(const sf::Vector2f& _newPos)
+void UI::HUD::SetButtonsPosition(const sf::Vector2f& _newPos)
 {
 	buttonsPos = _newPos;
 	//btnsLayout->SetPosition(_newPos);
 }
 
-std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float _y)
+std::optional <Buttons::BtnPurpose> UI::HUD::CheckButtonsTouch(float _x, float _y)
 {
 	for (size_t i = 0; i < btnsLogicArr.size(); ++i)
 	{
@@ -126,19 +128,19 @@ std::optional <Buttons::BtnPurpose> Hud::HUD::CheckButtonsTouch(float _x, float 
 	return {};
 }
 
-void Hud::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
+void UI::HUD::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 {
 	assert(widgetLayout->GetLayoutSize() != baseWidgetLayoutSize);
 
 	widgetLayout->AddObject(_widget);
 }
 
-void Hud::HUD::ClearWidgets()
+void UI::HUD::ClearWidgets()
 {
 	widgetLayout->ClearLayout();
 }
 
-void Hud::HUD::RealeseButtons()
+void UI::HUD::RealeseButtons()
 {
 	for (auto& el : btnsLogicArr)
 	{
@@ -146,7 +148,7 @@ void Hud::HUD::RealeseButtons()
 	}
 }
 
-void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
+void UI::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 {
 	std::lock_guard<std::mutex> lock(defMutex);
 
@@ -249,7 +251,7 @@ void Hud::HUD::PrepButtons(APP_STATE::States _state, int _lvlCount)
 }
 
 
-std::optional<InputNameWidget*> Hud::HUD::GetInputNameWidget()
+std::optional<InputNameWidget*> UI::HUD::GetInputNameWidget()
 {
 	if (nameWidget.get())
 		return nameWidget.get();

@@ -15,7 +15,7 @@
 #include "ConfigLoader.h"
 #include "InputNameWidget.h"
 
-namespace Hud
+namespace UI
 {
 		
 	class HUD

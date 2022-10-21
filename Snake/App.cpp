@@ -33,7 +33,7 @@ App::App()
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
 	auto configs = loader->GetHudPaths();
-	auto hud = std::make_shared<Hud::HUD>(configs);
+	auto hud = std::make_shared<UI::HUD>(configs);
 
 	auto hudScale = det->CalculateAbsoluteScale(
 		hud->GetHUDSize(), 
@@ -65,6 +65,13 @@ int App::Run()
 
 			auto result = session->GameProcess(appState);
 
+			if (result.has_value())
+				loader->AddLeaderInLeaderBord(
+					result.value().playerName.c_str(),
+					result.value().points,
+					result.value().minuts,
+					result.value().seconds);
+			//endif
 		}
 	}
 

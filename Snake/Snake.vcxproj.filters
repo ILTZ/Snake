@@ -162,7 +162,7 @@
     <ClCompile Include="InputNameWidget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="NameWidget.cpp">
+    <ClCompile Include="LeaderRecordWidget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -272,7 +272,7 @@
     <ClInclude Include="InputNameWidget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
-    <ClInclude Include="NameWidget.h">
+    <ClInclude Include="LeaderRecordWidget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

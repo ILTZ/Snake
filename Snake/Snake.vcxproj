@@ -161,7 +161,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="NameWidget.cpp" />
+    <ClCompile Include="LeaderRecordWidget.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="ScaleDeterminant.cpp" />
     <ClCompile Include="ScoreWidget.cpp" />
@@ -198,7 +198,7 @@
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MoveOnBoardBaseObj.h" />
-    <ClInclude Include="NameWidget.h" />
+    <ClInclude Include="LeaderRecordWidget.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="ScaleDeterminant.h" />
     <ClInclude Include="ScoreWidget.h" />

@@ -89,8 +89,21 @@ namespace CLoader
 
 	struct LeadersInfo
 	{
+		LeadersInfo(
+			const std::string& _name, 
+			unsigned int _points, 
+			unsigned int _minuts, 
+			unsigned int _seconds);
+
+		LeadersInfo(const char* _error);
+
 		std::string		name;
 		unsigned int	points;
+
+		unsigned int	minuts;
+		unsigned int	seconds;
+
+		const std::string TimeToString() const;
 	};
 
 	class ConfigLoader
@@ -121,7 +134,11 @@ namespace CLoader
 		const HudConfigs GetHudPaths(const char* _pathToConfig = nullptr)		const;
 		const WndConfigs GetWndConfigs(const char* _pathToConfigs = nullptr)	const;
 		const std::vector<LeadersInfo> GetLeaders(const char* _pathToFile = nullptr)		const;
-		void AddLeaderInLeaderBord(const char* _name, unsigned int _points, const float _time = 0.1);
+		void AddLeaderInLeaderBord(
+			const char* _name, 
+			unsigned int _points, 
+			unsigned int _minuts, 
+			unsigned int _seconds);
 
 	private:
 		const nlohmann::json getParseFile(const char* _pathToConfig = nullptr)	const;

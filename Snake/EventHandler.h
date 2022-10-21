@@ -21,14 +21,14 @@ public:
 	};
 
 private:
-	std::shared_ptr<Hud::HUD>			hud;
+	std::shared_ptr<UI::HUD>			hud;
 	std::shared_ptr<BaseP::BasePawn>	pawn;
 
 
 public:
 	EventHandler() = default;
 	EventHandler(
-		std::shared_ptr<Hud::HUD> _hud, 
+		std::shared_ptr<UI::HUD> _hud, 
 		std::shared_ptr<BaseP::BasePawn> _snakePawn);
 
 public:
@@ -37,7 +37,7 @@ public:
 
 public:
 	void SetPawn(std::shared_ptr<BaseP::BasePawn> _pawn);
-	void SetHud(std::shared_ptr<Hud::HUD> _hud);
+	void SetHud(std::shared_ptr<UI::HUD> _hud);
 
 public:
 	void						HandleKeyEvent(
