@@ -89,6 +89,7 @@ namespace UI
 		void ClearWidgets();
 
 		std::optional<InputNameWidget*> GetInputNameWidget();
+		void ClearInputNameWidget();
 	};
 }
 

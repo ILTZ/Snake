@@ -249,3 +249,9 @@ std::optional<InputNameWidget*> UI::Ui::GetInputNameWidget()
 
 	return {};
 }
+
+void UI::Ui::ClearInputNameWidget()
+{
+	if (nameWidget.get())
+		nameWidget.reset();
+}

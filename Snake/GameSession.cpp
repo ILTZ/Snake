@@ -88,6 +88,8 @@ const std::optional<GameSessionResults> GameSession::FormGameSessionResults() co
 		}
 	}
 	
+	wnd->GetHUD().ClearInputNameWidget();
+
 	return {};
 }
 
