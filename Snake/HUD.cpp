@@ -228,14 +228,6 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::NAME_ACEPT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Accept"));
 			btnsLayout->AddObject(btnsLogicArr.back());
-		}
-		break;
-
-		case APP_STATE::States::GAME_OVER:
-		{
-			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
-				pathToFont.c_str(), "Main Menu"));
-			btnsLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));

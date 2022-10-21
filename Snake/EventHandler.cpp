@@ -138,7 +138,7 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 				break;
 			
 			case bMod::NAME_ACEPT:
-				_state.SetState(States::GAME_OVER);
+				_state.SetState(States::MAIN_MENU);
 				hud->PrepButtons(_state.GetState());
 				break;
 
