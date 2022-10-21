@@ -7,8 +7,8 @@
 #define JSON_THROW_USER(exception)                           \
     {std::clog << "Error in " << __FILE__ << ":" << __LINE__ \
                << " (function " << __FUNCTION__ << ") - "    \
-               << (exception).what() << std::endl;     throw exception;      \
-				}
+               << (exception).what() << std::endl;			 \
+				throw exception;}
 
 #endif // !NDEBUG
 
