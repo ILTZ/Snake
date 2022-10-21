@@ -96,7 +96,7 @@ sf::RenderWindow& MainWindow::get()
 	return wnd;
 }
 
-void MainWin::MainWindow::SetHud(std::shared_ptr<UI::HUD> _hud)
+void MainWin::MainWindow::SetHud(std::shared_ptr<UI::Ui> _hud)
 {
 	hud = _hud;
 	// Last quarter of the window
@@ -108,7 +108,7 @@ void MainWin::MainWindow::SetHud(std::shared_ptr<UI::HUD> _hud)
 		static_cast<float>(wnd.getSize().y)));
 }
 
-UI::HUD& MainWin::MainWindow::GetHUD()
+UI::Ui& MainWin::MainWindow::GetHUD()
 {
 	return *hud;
 }

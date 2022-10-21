@@ -18,7 +18,7 @@
 namespace UI
 {
 		
-	class HUD
+	class Ui
 	{
 	private:
 		const std::string pathToHUD;
@@ -55,11 +55,11 @@ namespace UI
 		const size_t									maxLeaders = 5;
 
 	public:
-		HUD(CLoader::HudConfigs& _configs);
+		Ui(CLoader::HudConfigs& _configs);
 
 	public:
-		HUD(const HUD&)				= delete;
-		HUD& operator=(const HUD&)	= delete;
+		Ui(const Ui&)				= delete;
+		Ui& operator=(const Ui&)	= delete;
 
 	public:
 		void DrawHUD		(sf::RenderWindow& _wnd);

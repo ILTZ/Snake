@@ -2,7 +2,7 @@
 
 
 EventHandler::EventHandler(
-	std::shared_ptr<UI::HUD> _hud, 
+	std::shared_ptr<UI::Ui> _hud, 
 	std::shared_ptr<BaseP::BasePawn> _snakePawn)
 	: hud{_hud}, pawn{_snakePawn}
 {
@@ -14,7 +14,7 @@ void EventHandler::SetPawn(std::shared_ptr<BaseP::BasePawn> _pawn)
 	pawn = _pawn;
 }
 
-void EventHandler::SetHud(std::shared_ptr<UI::HUD> _hud)
+void EventHandler::SetHud(std::shared_ptr<UI::Ui> _hud)
 {
 	hud = _hud;
 }

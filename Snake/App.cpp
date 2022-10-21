@@ -33,7 +33,7 @@ App::App()
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
 	auto configs = loader->GetHudPaths();
-	auto hud = std::make_shared<UI::HUD>(configs);
+	auto hud = std::make_shared<UI::Ui>(configs);
 
 	auto hudScale = det->CalculateAbsoluteScale(
 		hud->GetHUDSize(), 
