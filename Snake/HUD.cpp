@@ -222,7 +222,7 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 
 		case APP_STATE::States::INPUT_NAME:
 		{
-			btnsLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str(), "Enter your name"));
+			btnsLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str(), "!-Enter your name-!"));
 
 			nameWidget = std::make_shared<InputNameWidget>
 				(pathToNameWidget.c_str(), pathToFont.c_str());
