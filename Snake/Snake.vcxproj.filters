@@ -165,6 +165,9 @@
     <ClCompile Include="LeaderRecordWidget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TimeWidget.h">
@@ -275,5 +278,21 @@
     <ClInclude Include="LeaderRecordWidget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="MessageBox.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Snake.rc">
+      <Filter>Файлы ресурсов</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ResourcesConfigs\System\msgBox.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

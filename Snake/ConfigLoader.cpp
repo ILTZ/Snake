@@ -224,7 +224,7 @@ const std::vector<LeadersInfo> CLoader::ConfigLoader::GetLeaders(const char* _pa
 {
 	std::vector<LeadersInfo> leaders;
 
-	auto arr = getParseFile(ConstData::pathToLeaders.c_str())[JsonKeys::leader];
+	auto arr = getParseFile(ConstPaths::pathToLeaders.c_str());
 
 	for (json::iterator it = arr.begin(); it != arr.end(); ++it)
 	{
@@ -251,11 +251,27 @@ void CLoader::ConfigLoader::AddLeaderInLeaderBord(
 	unsigned int _minuts,
 	unsigned int _seconds)
 {
-	auto leadersFile = getParseFile(ConstData::pathToLeaders.c_str());
-	leadersFile[JsonKeys::leader][_name] = { _points, _minuts, _seconds };
+	auto leadersFile = getParseFile(ConstPaths::pathToLeaders.c_str());
+	
 
-	std::ofstream file(ConstData::pathToLeaders.c_str());
-	file << leadersFile;
+	auto found = leadersFile.find(_name);
+	if (found != leadersFile.end())
+	{
+		if(static_cast<unsigned int>(found.value()[0]) < _points)
+		{
+			leadersFile[_name] = { _points, _minuts, _seconds };	
+		}
+	}
+	else
+	{
+		leadersFile[_name] = { _points, _minuts, _seconds };
+	}
+
+
+	std::ofstream file(ConstPaths::pathToLeaders.c_str());
+
+	if (file.is_open())
+		file << leadersFile;
 	file.close();
 }
 

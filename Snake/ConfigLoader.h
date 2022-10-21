@@ -10,7 +10,7 @@
 
 namespace CLoader
 {
-	namespace ConstData
+	namespace ConstPaths
 	{
 		const std::string pathToConfigs = ".\\ResourcesConfigs\\Configs.json";
 		const std::string pathToLeaders = ".\\ResourcesConfigs\\LeaderBord.json";
@@ -113,7 +113,7 @@ namespace CLoader
 		mutable std::unordered_map<ConfigKey, std::string> jsonKeys;
 
 	public:
-		ConfigLoader(const std::string& _path = ConstData::pathToConfigs);
+		ConfigLoader(const std::string& _path = ConstPaths::pathToConfigs);
 
 	public:
 		ConfigLoader(const ConfigLoader&)				= delete;
