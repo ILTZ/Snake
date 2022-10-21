@@ -1,4 +1,5 @@
 #include "HUD.h"
+
 #include "LeaderRecordWidget.h"
 
 #include <cassert>
@@ -221,12 +222,18 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 
 		case APP_STATE::States::INPUT_NAME:
 		{
+			btnsLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str(), "Enter your name"));
+
 			nameWidget = std::make_shared<InputNameWidget>
 				(pathToNameWidget.c_str(), pathToFont.c_str());
 			btnsLayout->AddObject(nameWidget);
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::NAME_ACEPT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Accept"));
+			btnsLayout->AddObject(btnsLogicArr.back());
+
+			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
+				pathToFont.c_str(), "Main Menu"));
 			btnsLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
