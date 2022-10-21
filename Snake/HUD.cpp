@@ -112,7 +112,6 @@ const sf::Vector2f UI::Ui::GetButtonsPosition() const
 void UI::Ui::SetButtonsPosition(const sf::Vector2f& _newPos)
 {
 	buttonsPos = _newPos;
-	//btnsLayout->SetPosition(_newPos);
 }
 
 std::optional <Buttons::BtnPurpose> UI::Ui::CheckButtonsTouch(float _x, float _y)

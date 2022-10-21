@@ -3,11 +3,6 @@
 
 #include "App.h"
 
-namespace ConstData
-{
-	const std::string pathToConfig = ".\\ResourcesConfigs\\Configs.json";
-}
-
 //Цели блять:
 //1. Лидерборд - готово
 //2. Фикс бага с резким перемещением змейки
