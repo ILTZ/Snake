@@ -17,8 +17,6 @@ int main()
 {
 	try
 	{
-
-
 		App app;
 		return app.Run();
 	}
