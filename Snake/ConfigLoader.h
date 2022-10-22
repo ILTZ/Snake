@@ -176,8 +176,7 @@ namespace CLoader
 
 	private:
 		const nlohmann::json getParseFile(const char* _pathToConfig = nullptr)	const;
-		void openFile(std::ifstream& _stream, const char* _newPath)				const;
-
+		
 	private:
 		const std::string getLvlString(LVLs _lvl) const;
 

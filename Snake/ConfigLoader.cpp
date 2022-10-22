@@ -62,7 +62,9 @@ CLoader::Loader::Loader(const std::string& _path) :
 const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) const
 {
 	std::ifstream f;
-	openFile(f, _pathToConfig);
+	f.open(_pathToConfig);
+
+	TRY_OPEN_FILE_EXCEPTION(f, _pathToConfig);
 
 	json file = json::parse(f);
 	f.close();
@@ -72,19 +74,7 @@ const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) co
 
 
 
-void CLoader::Loader::openFile(std::ifstream& _stream, const char* _newPath) const
-{
-	const char* tempP = nullptr;
 
-	if (_newPath)
-		tempP = _newPath;
-	else
-		tempP = pathToConf.c_str();
-	
-	_stream.open(tempP);
-	
-	TRY_OPEN_FILE_EXCEPTION(_stream, tempP);
-}
 
 const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 {
@@ -182,7 +172,7 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 	{
 		try
 		{
-			openFile(f, (path + getLvlString(lvl)).c_str());
+			f.open(path + getLvlString(lvl));
 			if (f.good())
 				++count;
 			f.close();
@@ -197,7 +187,7 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 
 const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConfig) const
 {
-	auto file = getParseFile(_pathToConfig);
+	auto file = getParseFile(pathToConf.c_str());
 	SnakePaths temp;
 
 	temp.pathToAple = file[jsonKeys[ConfigKey::APLE]];
@@ -209,7 +199,7 @@ const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConf
 
 const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig) const
 {
-	auto file = getParseFile(_pathToConfig);
+	auto file = getParseFile(pathToConf.c_str());
 	HudConfigs temp;
 
 	temp.width					= file[jsonKeys[ConfigKey::RESOLUTION]][0];
@@ -227,7 +217,7 @@ const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig
 
 const CLoader::WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConfigs) const
 {
-	auto file = getParseFile(_pathToConfigs);
+	auto file = getParseFile(pathToConf.c_str());
 	WndConfigs temp;
 
 	temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
