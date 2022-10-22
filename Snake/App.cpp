@@ -13,14 +13,28 @@
 
 #include <SFML/System/Thread.hpp>
 #include <thread>
+#include <Windows.h>
 
 App::App() 
 {
 	loader = new CLoader::Loader();
 
+	CLoader::WndConfigs wndConfigs;
+	CLoader::HudConfigs cfg;
+
+	try
+	{
+		wndConfigs	= loader->GetWndConfigs();
+		cfg			= loader->GetHudPaths();
+	}
+	catch (CLoader::Loader::LoaderException& _ex)
+	{
+		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
+		throw std::exception(_ex.what());
+	}
+
 	// Window configurate {
 	auto style = sf::Style::Titlebar | sf::Style::Close;
-	auto wndConfigs = loader->GetWndConfigs();
 
 	wnd = std::make_unique<MainWin::MainWindow>(
 		wndConfigs.width, 
@@ -32,8 +46,7 @@ App::App()
 	// Hud configurate {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
-	auto configs = loader->GetHudPaths();
-	auto hud = std::make_shared<UI::Ui>(configs);
+	auto hud = std::make_shared<UI::Ui>(cfg);
 
 	auto hudScale = det->CalculateAbsoluteScale(
 		hud->GetHUDSize(), 
@@ -61,17 +74,24 @@ int App::Run()
 		if (appState.GetState() == APP_STATE::States::LVL_SELECTED)
 		{
 			auto session = createGameSession();
-			appState.SetState(APP_STATE::States::GAME_PROCESS);
+			if (session.get())
+			{
+				appState.SetState(APP_STATE::States::GAME_PROCESS);
 
-			auto result = session->GameProcess(appState);
+				auto result = session->GameProcess(appState);
 
-			if (result.has_value())
-				loader->AddLeaderInLeaderBord(
-					result.value().playerName.c_str(),
-					result.value().points,
-					result.value().minuts,
-					result.value().seconds);
-			//endif
+				if (result.has_value())
+					loader->AddLeaderInLeaderBord(
+						result.value().playerName.c_str(),
+						result.value().points,
+						result.value().minuts,
+						result.value().seconds);
+			}
+			else
+			{
+				appState.SetState(APP_STATE::States::MAIN_MENU);
+				wnd->GetHUD().PrepButtons(appState.GetState());
+			}
 		}
 	}
 
@@ -84,11 +104,19 @@ int App::Run()
 std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 {
 	std::lock_guard<std::mutex> lk(defMt);
-
-	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 	
-	auto level = loader->GetLVL(lvlSelected);
-	auto sp = loader->GetSnakePaths();
+	std::shared_ptr<LVLConstructor::Level>	level;
+	CLoader::SnakePaths						sp;
+	try
+	{
+		level	= loader->GetLVL(lvlSelected);
+		sp		= loader->GetSnakePaths();
+	}
+	catch (CLoader::Loader::LoaderException& _ex)
+	{
+		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
+		return nullptr;
+	}
 
 	// Snake {
 	auto snake = std::make_shared<Snake::SnakeBody>(
@@ -98,8 +126,6 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	snake->SetPos(sf::Vector2u(
 		level->GetConfigs().startPosX,
 		level->GetConfigs().startPosY)); // Snake }
-
-	
 
 	handler.SetPawn(snake);
 
@@ -116,7 +142,6 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	snake->CalculateAndSetScale(*det);
 	apple->CalculateAndSetScale(*det); // Rescale all game objects }
 
-	
 
 	return std::make_unique<GAME_SESSION::GameSession>(wnd.get(), snake, gf, lf, apple);
 }

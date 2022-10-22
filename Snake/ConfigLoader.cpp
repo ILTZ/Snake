@@ -169,16 +169,10 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 
 	for (LVLs lvl = LVLs::LVL_1; lvl < LVLs::LVL_MAX; ++lvl)
 	{
-		try
-		{
-			f.open(CLoader::ConstPaths::pathToLvlvs + getLvlString(lvl));
-			if (f.good())
-				++count;
-			f.close();
-		}
-		catch (CLoader::Loader::LoaderException&) {}
-			
-		f.close();		
+		f.open(CLoader::ConstPaths::pathToLvlvs + getLvlString(lvl));
+		if (f.good())
+			++count;
+		f.close();	
 	}
 	
 	return count;
@@ -218,7 +212,7 @@ const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig
 		temp.pathToTextFont = file[jsonKeys[ConfigKey::TEXT_FONT]];
 		temp.pathToHud = file[jsonKeys[ConfigKey::HUD]];
 		temp.pathToBaseWidget = file[jsonKeys[ConfigKey::BASE_WIDGET]];
-		temp.pathToNameWidget = file[jsonKeys[ConfigKey::NAME_WIDGET]];
+		temp.pathToNameWidget = file[jsonKeys[ConfigKey::NAME_WIDGET]];	
 	}
 	catch (json::exception&)
 	{
@@ -350,11 +344,9 @@ CLoader::LVLs CLoader::operator++(LVLs& _x)
 CLoader::Loader::LoaderException::LoaderException(
 	int _line,
 	const char* _file,
-	const std::string& _errorText,
-	bool _toAbort) :
+	const std::string& _errorText) :
 	BaseException(_line, _file),
-	message{_errorText},
-	aborted{_toAbort}
+	message{_errorText}
 {
 
 }
@@ -372,10 +364,6 @@ const char* CLoader::Loader::LoaderException::what() const noexcept
 const char* CLoader::Loader::LoaderException::GetType() const noexcept
 {
 	return "Loader exception";
-}
-const bool CLoader::Loader::LoaderException::IsAbort() const noexcept
-{
-	return aborted;
 }
 const std::string CLoader::Loader::LoaderException::GetErrorString() const noexcept
 {

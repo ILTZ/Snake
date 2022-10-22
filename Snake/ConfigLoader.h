@@ -126,24 +126,40 @@ namespace CLoader
 	public:
 		class LoaderException : public BaseException
 		{
-		private:
+		protected:
 			const std::string	message;
-			const bool			aborted;
 
 		public:
 			LoaderException(
 				int _line, 
 				const char* _file, 
-				const std::string& _errorText, 
-				bool _toAbort = false);
+				const std::string& _errorText);
 
 		public:
 			const char* what()				const noexcept override;
 			const char* GetType()			const noexcept override;
-			const bool	IsAbort()			const noexcept;
 
 			const std::string GetErrorString()	const noexcept;
 
+		};
+
+		class JsonParseException : public BaseException
+		{
+		private:
+			const std::string guilty;
+			const std::string message;
+
+		public:
+			JsonParseException(int _line,
+				const char* _file,
+				const std::string& _errorText,
+				const char* _guilty);
+
+		public:
+			const char* what()				const noexcept override;
+			const char* GetType()			const noexcept override;
+
+			const std::string GetErrorString()	const noexcept;
 		};
 
 
