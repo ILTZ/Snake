@@ -12,13 +12,17 @@
 
 #endif // !NDEBUG
 
-#define TRY_OPEN_FILE_EXCEPTION(openResult, path)							\
+#define TRY_OPEN_FILE_EXCEPTION(streamFlow, path)							\
 {																			\
-	if (!openResult)														\
+	if (streamFlow.bad())													\
+	{																		\
+		streamFlow.close();													\
 		throw Loader::LoaderException(										\
 			__LINE__,														\
 			__FILE__,														\
-			std::string("No such file or directory:") + std::string(path));	\
+			std::string("No such file or directory:") + std::string(path)); \
+	}																		\
+																			\
 }																			\
 
 #define THROW_JSON_PARSE_EXCEPTION(path)									\
@@ -60,20 +64,26 @@ const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) co
 	std::ifstream f;
 	openFile(f, _pathToConfig);
 
-	TRY_OPEN_FILE_EXCEPTION(f.good(), _pathToConfig);
-
 	json file = json::parse(f);
 	f.close();
 
 	return file;
 }
 
+
+
 void CLoader::Loader::openFile(std::ifstream& _stream, const char* _newPath) const
 {
+	const char* tempP = nullptr;
+
 	if (_newPath)
-		_stream.open(_newPath);
+		tempP = _newPath;
 	else
-		_stream.open(pathToConf);
+		tempP = pathToConf.c_str();
+	
+	_stream.open(tempP);
+	
+	TRY_OPEN_FILE_EXCEPTION(_stream, tempP);
 }
 
 const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
@@ -109,33 +119,16 @@ const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 	return ls;
 }
 
-const std::string CLoader::Loader::GetPathTo(ConfigKey _key, const char* _pathToConfig) const
-{
-	assert(_key != ConfigKey::RESOLUTION);
 
-	std::ifstream f;
-	openFile(f, _pathToConfig);
-
-	json file = json::parse(f);
-	f.close();
-
-	return file[jsonKeys[_key]];
-}
 
 std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 {
-	auto path = GetPathTo(ConfigKey::LVL_P);
+	std::string path = getParseFile(
+		pathToConf.c_str())[jsonKeys[ConfigKey::LVL_P]];
 	path += getLvlString(_level);
 
-	std::ifstream f;
-	openFile(f, path.c_str());
+	json file = getParseFile(path.c_str());
 
-	TRY_OPEN_FILE_EXCEPTION(f.good(), path.c_str());
-
-	json file = json::parse(f);
-
-
-	// Read configs from .json file {
 
 	LVLConstructor::LVLConfigs conf;
 
@@ -173,28 +166,32 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 	conf.wallPos = getAuto(file["wallPos"]);
 	conf.waterPos = getAuto(file["waterPos"]);
 
-	// Read configs from .json file }
 
 	return std::make_shared<LVLConstructor::Level>(conf);
 }
 
 const unsigned int CLoader::Loader::GetLvlCount() const
 {
-	unsigned int count = 0;
-	std::ifstream f;
+	std::string path = getParseFile(
+		pathToConf.c_str())[jsonKeys[ConfigKey::LVL_P]];
 
-	auto path = GetPathTo(ConfigKey::LVL_P);
+	std::ifstream f;
+	unsigned int count = 0;
 
 	for (LVLs lvl = LVLs::LVL_1; lvl < LVLs::LVL_MAX; ++lvl)
 	{
-		openFile(f, (path + getLvlString(lvl)).c_str());
-		if (f.good())
-			++count;
-
-		f.close();
+		try
+		{
+			openFile(f, (path + getLvlString(lvl)).c_str());
+			if (f.good())
+				++count;
+			f.close();
+		}
+		catch (CLoader::Loader::LoaderException&) {}
+			
+		f.close();		
 	}
 	
-
 	return count;
 }
 

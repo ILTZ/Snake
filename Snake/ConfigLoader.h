@@ -158,10 +158,6 @@ namespace CLoader
 		Loader& operator=(const Loader&)	= delete;
 
 	public:
-		const std::string GetPathTo(
-			ConfigKey _key, 
-			const char* _pathToConfig = nullptr) const;
-	
 		const unsigned int GetLvlCount() const;
 
 	public:
