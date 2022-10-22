@@ -160,7 +160,6 @@
     <ClCompile Include="LogicField.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="LeaderRecordWidget.cpp" />
     <ClCompile Include="Random.cpp" />
@@ -197,12 +196,10 @@
     <ClInclude Include="LevelConstructor.h" />
     <ClInclude Include="LogicField.h" />
     <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="MessageBox.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MoveOnBoardBaseObj.h" />
     <ClInclude Include="LeaderRecordWidget.h" />
     <ClInclude Include="Random.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="ScaleDeterminant.h" />
     <ClInclude Include="ScoreWidget.h" />
     <ClInclude Include="SmartPointer.h" />
@@ -212,12 +209,6 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimeWidget.h" />
     <ClInclude Include="DrawableRectangle.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Snake.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="ResourcesConfigs\System\msgBox.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

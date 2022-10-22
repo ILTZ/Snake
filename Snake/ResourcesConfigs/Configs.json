@@ -7,8 +7,8 @@
     "BASE_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
     "NAME_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\nameWidget.png",
     "APLE": ".\\ResourcesConfigs\\Apls\\apple.png",
-    "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\head2.png",
-    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\body2.png",
+    "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\head3.png",
+    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\body3.png",
     "LVL_PATH": ".\\ResourcesConfigs\\LVLs"
     
 }

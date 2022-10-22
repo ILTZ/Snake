@@ -1,7 +1,10 @@
 #include <iostream>
 #include <exception>
 
+
+
 #include "App.h"
+
 
 //Цели блять:
 //1. Лидерборд - готово
@@ -14,6 +17,8 @@ int main()
 {
 	try
 	{
+
+
 		App app;
 		return app.Run();
 	}
