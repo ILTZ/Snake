@@ -16,7 +16,7 @@
 
 App::App() 
 {
-	loader = new CLoader::ConfigLoader();
+	loader = new CLoader::Loader();
 
 	// Window configurate {
 	auto style = sf::Style::Titlebar | sf::Style::Close;
@@ -85,7 +85,7 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 {
 	std::lock_guard<std::mutex> lk(defMt);
 
-	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 	
 	auto level = loader->GetLVL(lvlSelected);
 	auto sp = loader->GetSnakePaths();

@@ -165,6 +165,9 @@
     <ClCompile Include="LeaderRecordWidget.cpp">
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="BaseException.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TimeWidget.h">
@@ -274,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="LeaderRecordWidget.h">
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseException.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

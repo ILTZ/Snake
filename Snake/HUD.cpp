@@ -59,7 +59,7 @@ void UI::Ui::SetScale(const sf::Vector2f& _newScale)
 
 void UI::Ui::fillLeaderbord(LAYOUT::Layout& _layout)
 {
-	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 
 	auto vec = loader->GetLeaders();
 	std::sort(vec.begin(), vec.end(),

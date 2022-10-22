@@ -13,7 +13,7 @@ class App final
 {
 private:
 	std::unique_ptr<MainWindow>							wnd;
-	SmartPointer::SmartPointer<CLoader::ConfigLoader>	loader;
+	SmartPointer::SmartPointer<CLoader::Loader>	loader;
 	EventHandler										handler;
 
 private:

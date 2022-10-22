@@ -144,6 +144,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Apple.cpp" />
     <ClCompile Include="AppState.cpp" />
+    <ClCompile Include="BaseException.cpp" />
     <ClCompile Include="BaseText.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Apple.h" />
     <ClInclude Include="AppState.h" />
     <ClInclude Include="BaseDrawable.h" />
+    <ClInclude Include="BaseException.h" />
     <ClInclude Include="BasePawn.h" />
     <ClInclude Include="BasePlayerControlObj.h" />
     <ClInclude Include="BaseScalable.h" />

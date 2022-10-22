@@ -18,7 +18,7 @@ GameSession::GameSession(
 	logicField{_lField}, 
 	apple{_apple}
 {
-	SmartPointer::SmartPointer<CLoader::ConfigLoader> loader = new CLoader::ConfigLoader();
+	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 	auto configs = loader->GetHudPaths();
 
 

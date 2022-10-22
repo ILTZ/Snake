@@ -112,8 +112,8 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 			case bMod::START:
 				{
 					_state.SetState(States::LVL_SELECT);
-					SmartPointer::SmartPointer<CLoader::ConfigLoader> loader 
-						= new CLoader::ConfigLoader();
+					SmartPointer::SmartPointer<CLoader::Loader> loader 
+						= new CLoader::Loader();
 
 					hud->PrepButtons(States::LVL_SELECT, loader->GetLvlCount());
 				}

@@ -20,7 +20,7 @@
 using namespace CLoader;
 using json = nlohmann::json;
 
-ConfigLoader::ConfigLoader(const std::string& _path) :
+Loader::Loader(const std::string& _path) :
 	pathToConf{_path}
 {
 	jsonKeys[ConfigKey::APLE]			= "APLE";
@@ -36,7 +36,7 @@ ConfigLoader::ConfigLoader(const std::string& _path) :
 	jsonKeys[ConfigKey::NAME_WIDGET]	= "NAME_WIDGET";
 }
 
-const nlohmann::json CLoader::ConfigLoader::getParseFile(const char* _pathToConfig) const
+const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) const
 {
 	std::ifstream f;
 	openFile(f, _pathToConfig);
@@ -50,7 +50,7 @@ const nlohmann::json CLoader::ConfigLoader::getParseFile(const char* _pathToConf
 	return file;
 }
 
-void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPath) const
+void CLoader::Loader::openFile(std::ifstream& _stream, const char* _newPath) const
 {
 	if (_newPath)
 	{
@@ -60,7 +60,7 @@ void CLoader::ConfigLoader::openFile(std::ifstream& _stream, const char* _newPat
 	_stream.open(pathToConf);
 }
 
-const std::string CLoader::ConfigLoader::getLvlString(LVLs _lvl) const
+const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 {
 	std::string ls = "";
 
@@ -93,7 +93,7 @@ const std::string CLoader::ConfigLoader::getLvlString(LVLs _lvl) const
 	return ls;
 }
 
-const std::string ConfigLoader::GetPathTo(ConfigKey _key, const char* _pathToConfig) const
+const std::string Loader::GetPathTo(ConfigKey _key, const char* _pathToConfig) const
 {
 	assert(_key != ConfigKey::RESOLUTION);
 
@@ -106,7 +106,7 @@ const std::string ConfigLoader::GetPathTo(ConfigKey _key, const char* _pathToCon
 	return file[jsonKeys[_key]];
 }
 
-std::shared_ptr<LVLConstructor::Level> CLoader::ConfigLoader::GetLVL(LVLs _level)
+std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 {
 	auto path = GetPathTo(ConfigKey::LVL_P);
 	path += getLvlString(_level);
@@ -159,7 +159,7 @@ std::shared_ptr<LVLConstructor::Level> CLoader::ConfigLoader::GetLVL(LVLs _level
 	return std::make_shared<LVLConstructor::Level>(conf);
 }
 
-const unsigned int CLoader::ConfigLoader::GetLvlCount() const
+const unsigned int CLoader::Loader::GetLvlCount() const
 {
 	unsigned int count = 0;
 	std::ifstream f;
@@ -179,7 +179,7 @@ const unsigned int CLoader::ConfigLoader::GetLvlCount() const
 	return count;
 }
 
-const SnakePaths CLoader::ConfigLoader::GetSnakePaths(const char* _pathToConfig) const 
+const SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConfig) const 
 {
 	auto file = getParseFile(_pathToConfig);
 	SnakePaths temp;
@@ -191,7 +191,7 @@ const SnakePaths CLoader::ConfigLoader::GetSnakePaths(const char* _pathToConfig)
 	return temp;
 }
 
-const HudConfigs CLoader::ConfigLoader::GetHudPaths(const char* _pathToConfig) const
+const HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig) const
 {
 	auto file = getParseFile(_pathToConfig);
 	HudConfigs temp;
@@ -209,7 +209,7 @@ const HudConfigs CLoader::ConfigLoader::GetHudPaths(const char* _pathToConfig) c
 	return temp;
 }
 
-const WndConfigs CLoader::ConfigLoader::GetWndConfigs(const char* _pathToConfigs) const
+const WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConfigs) const
 {
 	auto file = getParseFile(_pathToConfigs);
 	WndConfigs temp;
@@ -220,7 +220,7 @@ const WndConfigs CLoader::ConfigLoader::GetWndConfigs(const char* _pathToConfigs
 	return temp;
 }
 
-const std::vector<LeadersInfo> CLoader::ConfigLoader::GetLeaders(const char* _pathToFile) const
+const std::vector<LeadersInfo> CLoader::Loader::GetLeaders(const char* _pathToFile) const
 {
 	std::vector<LeadersInfo> leaders;
 
@@ -245,7 +245,7 @@ const std::vector<LeadersInfo> CLoader::ConfigLoader::GetLeaders(const char* _pa
 	return leaders;
 }
 
-void CLoader::ConfigLoader::AddLeaderInLeaderBord(
+void CLoader::Loader::AddLeaderInLeaderBord(
 	const char* _name,
 	unsigned int _points,
 	unsigned int _minuts,

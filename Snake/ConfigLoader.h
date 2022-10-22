@@ -106,18 +106,23 @@ namespace CLoader
 		const std::string TimeToString() const;
 	};
 
-	class ConfigLoader
+	class Loader
 	{
+	public:
+
+
+
+
 	private:
 		const std::string pathToConf;
 		mutable std::unordered_map<ConfigKey, std::string> jsonKeys;
 
 	public:
-		ConfigLoader(const std::string& _path = ConstPaths::pathToConfigs);
+		Loader(const std::string& _path = ConstPaths::pathToConfigs);
 
 	public:
-		ConfigLoader(const ConfigLoader&)				= delete;
-		ConfigLoader& operator=(const ConfigLoader&)	= delete;
+		Loader(const Loader&)				= delete;
+		Loader& operator=(const Loader&)	= delete;
 
 	public:
 		const std::string GetPathTo(
