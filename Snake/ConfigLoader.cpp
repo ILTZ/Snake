@@ -11,31 +11,32 @@
 				throw exception;}
 
 #endif // !NDEBUG
+																
+#include "ConfigLoader.h"
 
 #define TRY_OPEN_FILE_EXCEPTION(streamFlow, path)							\
 {																			\
 	if (streamFlow.bad())													\
 	{																		\
 		streamFlow.close();													\
-		throw Loader::LoaderException(										\
+		throw CLoader::Loader::LoaderException(								\
 			__LINE__,														\
 			__FILE__,														\
-			std::string("No such file or directory:") + std::string(path)); \
+			std::string("No such file or directory: ") + std::string(path));\
 	}																		\
 																			\
 }																			\
 
-#define THROW_JSON_PARSE_EXCEPTION(path)									\
-{																			\
-	throw Loader::LoaderException(											\
-		__LINE__,															\
-		__FILE__,															\
-			std::string("File currupted:") + std::string(path));			\																\
-}																			\
+#define THROW_PARSE_EXCEPTION(path)								\
+{																\
+	throw CLoader::Loader::LoaderException(						\
+		__LINE__,												\
+		__FILE__,												\
+		std::string("File currapted: ") + std::string(path));	\
+}																\
 
 
 
-#include "ConfigLoader.h"
 
 #include <sstream>
 #include <exception>
@@ -71,10 +72,6 @@ const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) co
 
 	return file;
 }
-
-
-
-
 
 const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 {
@@ -118,53 +115,55 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 	path += getLvlString(_level);
 
 	json file = getParseFile(path.c_str());
-
-
 	LVLConstructor::LVLConfigs conf;
 
-	if (file[mode] == "hand")
-		conf.autoContr = false;
-	else
-		conf.autoContr = true;
 
-	conf.width			= file[width];
-	conf.height			= file[height];
-	conf.startPosX		= file[startPos][0];
-	conf.startPosY		= file[startPos][1];
-
-	conf.pathToFlor		= file[flor];
-	conf.pathToWall		= file[wall];
-	conf.pathToWater	= file[water];
-
-	auto getAuto = [&](const std::string& _mode)
+	try
 	{
-		if (_mode == "none")
+		if (file[mode] == "hand")
+			conf.autoContr = false;
+		else
+			conf.autoContr = true;
+
+		conf.width			= file[width];
+		conf.height			= file[height];
+		conf.startPosX		= file[startPos][0];
+		conf.startPosY		= file[startPos][1];
+
+		conf.pathToFlor		= file[flor];
+		conf.pathToWall		= file[wall];
+		conf.pathToWater	= file[water];
+
+		auto getAuto = [&](const std::string& _mode)
+		{
+			if (_mode == "none")
+				return LVLConstructor::AutoConstr::NONE;
+
+			if (_mode == "edges")
+				return LVLConstructor::AutoConstr::EDGES;
+
+			if (_mode == "corner")
+				return LVLConstructor::AutoConstr::CORNER;
+
+			if (_mode == "discret")
+				return LVLConstructor::AutoConstr::DISCRET;
+
 			return LVLConstructor::AutoConstr::NONE;
+		};
 
-		if (_mode == "edges")
-			return LVLConstructor::AutoConstr::EDGES;
-
-		if (_mode == "corner")
-			return LVLConstructor::AutoConstr::CORNER;
-
-		if (_mode == "discret")
-			return LVLConstructor::AutoConstr::DISCRET;
-
-		return LVLConstructor::AutoConstr::NONE;
-	};
-
-	conf.wallPos = getAuto(file["wallPos"]);
-	conf.waterPos = getAuto(file["waterPos"]);
-
+		conf.wallPos = getAuto(file["wallPos"]);
+		conf.waterPos = getAuto(file["waterPos"]);
+	}
+	catch (std::exception&)
+	{
+		THROW_PARSE_EXCEPTION(path);
+	}
 
 	return std::make_shared<LVLConstructor::Level>(conf);
 }
 
 const unsigned int CLoader::Loader::GetLvlCount() const
 {
-	std::string path = getParseFile(
-		pathToConf.c_str())[jsonKeys[ConfigKey::LVL_P]];
-
 	std::ifstream f;
 	unsigned int count = 0;
 
@@ -172,7 +171,7 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 	{
 		try
 		{
-			f.open(path + getLvlString(lvl));
+			f.open(CLoader::ConstPaths::pathToLvlvs + getLvlString(lvl));
 			if (f.good())
 				++count;
 			f.close();
@@ -190,9 +189,16 @@ const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConf
 	auto file = getParseFile(pathToConf.c_str());
 	SnakePaths temp;
 
-	temp.pathToAple = file[jsonKeys[ConfigKey::APLE]];
-	temp.pathToHead = file[jsonKeys[ConfigKey::SNAKE_H]];
-	temp.pathToTorso = file[jsonKeys[ConfigKey::SNAKE_T]];
+	try
+	{
+		temp.pathToAple = file[jsonKeys[ConfigKey::APLE]];
+		temp.pathToHead = file[jsonKeys[ConfigKey::SNAKE_H]];
+		temp.pathToTorso = file[jsonKeys[ConfigKey::SNAKE_T]];
+	}
+	catch (json::exception&)
+	{
+		THROW_PARSE_EXCEPTION(pathToConf.c_str());
+	}
 
 	return temp;
 }
@@ -202,15 +208,22 @@ const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig
 	auto file = getParseFile(pathToConf.c_str());
 	HudConfigs temp;
 
-	temp.width					= file[jsonKeys[ConfigKey::RESOLUTION]][0];
-	temp.height					= file[jsonKeys[ConfigKey::RESOLUTION]][1];
+	try
+	{
+		temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
+		temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
 
-	temp.pathToPressBtn			= file[jsonKeys[ConfigKey::BTN_PRESS]];
-	temp.pathToReleaseBtn		= file[jsonKeys[ConfigKey::BTN_RELEASE]];
-	temp.pathToTextFont			= file[jsonKeys[ConfigKey::TEXT_FONT]];
-	temp.pathToHud				= file[jsonKeys[ConfigKey::HUD]];
-	temp.pathToBaseWidget		= file[jsonKeys[ConfigKey::BASE_WIDGET]];
-	temp.pathToNameWidget		= file[jsonKeys[ConfigKey::NAME_WIDGET]];
+		temp.pathToPressBtn = file[jsonKeys[ConfigKey::BTN_PRESS]];
+		temp.pathToReleaseBtn = file[jsonKeys[ConfigKey::BTN_RELEASE]];
+		temp.pathToTextFont = file[jsonKeys[ConfigKey::TEXT_FONT]];
+		temp.pathToHud = file[jsonKeys[ConfigKey::HUD]];
+		temp.pathToBaseWidget = file[jsonKeys[ConfigKey::BASE_WIDGET]];
+		temp.pathToNameWidget = file[jsonKeys[ConfigKey::NAME_WIDGET]];
+	}
+	catch (json::exception&)
+	{
+		THROW_PARSE_EXCEPTION(pathToConf.c_str());
+	}
 
 	return temp;
 }
@@ -220,9 +233,16 @@ const CLoader::WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConf
 	auto file = getParseFile(pathToConf.c_str());
 	WndConfigs temp;
 
-	temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
-	temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
-	
+	try
+	{
+		temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
+		temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
+	}
+	catch (json::exception&)
+	{
+		THROW_PARSE_EXCEPTION(pathToConf.c_str());
+	}
+
 	return temp;
 }
 
@@ -273,7 +293,6 @@ void CLoader::Loader::AddLeaderInLeaderBord(
 		leadersFile[_name] = { _points, _minuts, _seconds };
 	}
 
-
 	std::ofstream file(ConstPaths::pathToLeaders.c_str());
 
 	if (file.is_open())
@@ -319,7 +338,6 @@ const std::string CLoader::LeadersInfo::TimeToString() const
 
 	return ss.str();
 }
-
 
 CLoader::LVLs CLoader::operator++(LVLs& _x)
 {

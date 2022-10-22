@@ -15,6 +15,7 @@ namespace CLoader
 	{
 		const std::string pathToConfigs = ".\\ResourcesConfigs\\Configs.json";
 		const std::string pathToLeaders = ".\\ResourcesConfigs\\LeaderBord.json";
+		const std::string pathToLvlvs	= ".\\ResourcesConfigs\\LVLs";
 	}
 
 	namespace JsonKeys
