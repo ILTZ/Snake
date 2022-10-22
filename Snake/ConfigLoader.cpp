@@ -12,15 +12,34 @@
 
 #endif // !NDEBUG
 
+#define TRY_OPEN_FILE_EXCEPTION(openResult, path)							\
+{																			\
+	if (!openResult)														\
+		throw Loader::LoaderException(										\
+			__LINE__,														\
+			__FILE__,														\
+			std::string("No such file or directory:") + std::string(path));	\
+}																			\
+
+#define THROW_JSON_PARSE_EXCEPTION(path)									\
+{																			\
+	throw Loader::LoaderException(											\
+		__LINE__,															\
+		__FILE__,															\
+			std::string("File currupted:") + std::string(path));			\																\
+}																			\
+
+
+
 #include "ConfigLoader.h"
 
 #include <sstream>
 #include <exception>
 
-using namespace CLoader;
+//using namespace CLoader;
 using json = nlohmann::json;
 
-Loader::Loader(const std::string& _path) :
+CLoader::Loader::Loader(const std::string& _path) :
 	pathToConf{_path}
 {
 	jsonKeys[ConfigKey::APLE]			= "APLE";
@@ -41,8 +60,7 @@ const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) co
 	std::ifstream f;
 	openFile(f, _pathToConfig);
 
-	if (f.bad())
-		throw std::exception("No such file or directory");
+	TRY_OPEN_FILE_EXCEPTION(f.good(), _pathToConfig);
 
 	json file = json::parse(f);
 	f.close();
@@ -53,11 +71,9 @@ const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) co
 void CLoader::Loader::openFile(std::ifstream& _stream, const char* _newPath) const
 {
 	if (_newPath)
-	{
 		_stream.open(_newPath);
-		return;
-	}
-	_stream.open(pathToConf);
+	else
+		_stream.open(pathToConf);
 }
 
 const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
@@ -93,7 +109,7 @@ const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 	return ls;
 }
 
-const std::string Loader::GetPathTo(ConfigKey _key, const char* _pathToConfig) const
+const std::string CLoader::Loader::GetPathTo(ConfigKey _key, const char* _pathToConfig) const
 {
 	assert(_key != ConfigKey::RESOLUTION);
 
@@ -113,6 +129,9 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 
 	std::ifstream f;
 	openFile(f, path.c_str());
+
+	TRY_OPEN_FILE_EXCEPTION(f.good(), path.c_str());
+
 	json file = json::parse(f);
 
 
@@ -120,19 +139,19 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 
 	LVLConstructor::LVLConfigs conf;
 
-	if (file["mode"] == "hand")
+	if (file[mode] == "hand")
 		conf.autoContr = false;
 	else
 		conf.autoContr = true;
 
-	conf.width			= file["width"];
-	conf.height			= file["height"];
-	conf.startPosX		= file["startPos"][0];
-	conf.startPosY		= file["startPos"][1];
+	conf.width			= file[width];
+	conf.height			= file[height];
+	conf.startPosX		= file[startPos][0];
+	conf.startPosY		= file[startPos][1];
 
-	conf.pathToFlor		= file["florPath"];
-	conf.pathToWall		= file["wallPath"];
-	conf.pathToWater	= file["waterPath"];
+	conf.pathToFlor		= file[flor];
+	conf.pathToWall		= file[wall];
+	conf.pathToWater	= file[water];
 
 	auto getAuto = [&](const std::string& _mode)
 	{
@@ -179,7 +198,7 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 	return count;
 }
 
-const SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConfig) const 
+const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConfig) const
 {
 	auto file = getParseFile(_pathToConfig);
 	SnakePaths temp;
@@ -191,7 +210,7 @@ const SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConfig) const
 	return temp;
 }
 
-const HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig) const
+const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig) const
 {
 	auto file = getParseFile(_pathToConfig);
 	HudConfigs temp;
@@ -209,7 +228,7 @@ const HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig) const
 	return temp;
 }
 
-const WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConfigs) const
+const CLoader::WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConfigs) const
 {
 	auto file = getParseFile(_pathToConfigs);
 	WndConfigs temp;
@@ -220,7 +239,7 @@ const WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConfigs) cons
 	return temp;
 }
 
-const std::vector<LeadersInfo> CLoader::Loader::GetLeaders(const char* _pathToFile) const
+const std::vector<CLoader::LeadersInfo> CLoader::Loader::GetLeaders(const char* _pathToFile) const
 {
 	std::vector<LeadersInfo> leaders;
 
@@ -315,7 +334,46 @@ const std::string CLoader::LeadersInfo::TimeToString() const
 }
 
 
-LVLs CLoader::operator++(LVLs& _x)
+CLoader::LVLs CLoader::operator++(LVLs& _x)
 {
 	return _x = static_cast<LVLs>(std::underlying_type<LVLs>::type(_x) + 1);
 }
+
+
+
+// Exception {
+CLoader::Loader::LoaderException::LoaderException(
+	int _line,
+	const char* _file,
+	const std::string& _errorText,
+	bool _toAbort) :
+	BaseException(_line, _file),
+	message{_errorText},
+	aborted{_toAbort}
+{
+
+}
+const char* CLoader::Loader::LoaderException::what() const noexcept
+{
+	std::ostringstream os;
+	os << GetType() << std::endl
+		<< "[Error String] " << GetErrorString() << std::endl;
+
+	os << GetOriginString();
+	whatBuffer = os.str();
+
+	return whatBuffer.c_str();
+}
+const char* CLoader::Loader::LoaderException::GetType() const noexcept
+{
+	return "Loader exception";
+}
+const bool CLoader::Loader::LoaderException::IsAbort() const noexcept
+{
+	return aborted;
+}
+const std::string CLoader::Loader::LoaderException::GetErrorString() const noexcept
+{
+	return message;
+}
+// Exception }

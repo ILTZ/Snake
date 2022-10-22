@@ -7,6 +7,7 @@
 #include <nlohmann/json.hpp>
 
 #include "LevelConstructor.h"
+#include "BaseException.h"
 
 namespace CLoader
 {
@@ -30,6 +31,19 @@ namespace CLoader
 		const std::string baseWidgetTexture = "BASE_WIDGET";
 		const std::string nameWidgetTexture = "NAME_WIDGET";
 		const std::string leader			= "LEADERS";
+	}
+
+	namespace
+	{
+		const char* mode = "mode";
+
+		const char* width = "width";
+		const char* height = "height";
+		const char* startPos = "startPos";
+
+		const char* flor	= "florPath";
+		const char* water	= "waterPath";
+		const char* wall	= "wallPath";
 	}
 
 	enum class ConfigKey
@@ -109,8 +123,27 @@ namespace CLoader
 	class Loader
 	{
 	public:
+		class LoaderException : public BaseException
+		{
+		private:
+			const std::string	message;
+			const bool			aborted;
 
+		public:
+			LoaderException(
+				int _line, 
+				const char* _file, 
+				const std::string& _errorText, 
+				bool _toAbort = false);
 
+		public:
+			const char* what()				const noexcept override;
+			const char* GetType()			const noexcept override;
+			const bool	IsAbort()			const noexcept;
+
+			const std::string GetErrorString()	const noexcept;
+
+		};
 
 
 	private:
