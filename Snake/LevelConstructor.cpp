@@ -37,8 +37,6 @@ const lvlmap& LVLConstructor::Level::GetLvlMap() const
 }
 
 
-
-
 void LVLConstructor::Level::fillFlor(lvlmap& _vec)
 {
 	for (unsigned int i = 0; i < configs.width; ++i)
