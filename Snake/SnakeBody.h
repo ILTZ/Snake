@@ -53,8 +53,8 @@ namespace Snake
 		void Move()											override;
 		void SetDir(BaseP::Direction _dir)					override;
 		void DoSomeSpecifyActions()							override;
-		void SetPos(const sf::Vector2u& _pos)				override;
-		sf::Vector2u const GetPos() const					override;
+		void SetPos(const sf::Vector2i& _pos)				override;
+		sf::Vector2i const GetPos() const					override;
 		//<BasePawn> funcs }
 		virtual void SetStartPos(const sf::Vector2u& _startPos)	override;
 		// 
@@ -65,8 +65,8 @@ namespace Snake
 
 	public:
 		void				GrowUp();
-		const sf::Vector2u	GetHeadPos()						const;
-		const sf::Vector2u	GetPosOnIndex(unsigned int _pos)	const;
+		const sf::Vector2i	GetHeadPos()						const;
+		const sf::Vector2i	GetPosOnIndex(unsigned int _pos)	const;
 		const size_t		GetCurLen()							const;
 
 	private:

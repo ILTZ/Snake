@@ -17,7 +17,7 @@ SnakePart::SnakePart(SnakePart&& _other) noexcept :
 	currentBoardPosition = _other.currentBoardPosition;
 }
 
-void SnakePart::SetPos(const sf::Vector2u& _newPos)
+void SnakePart::SetPos(const sf::Vector2i& _newPos)
 {
 	currentBoardPosition = _newPos;
 	DrawableCircle::SetPosition(calculateCurrentWindowPos(currentBoardPosition));

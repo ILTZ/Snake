@@ -37,13 +37,13 @@ void Snake::SnakeBody::Move()
 	// From end to start of a body..
 	for (size_t i = body.size() - 1; i > 0; --i)
 	{
-		body[i].SetPos(sf::Vector2u(
+		body[i].SetPos(sf::Vector2i(
 			body[i - 1].GetPos().x,
 			body[i - 1].GetPos().y
 		));
 	}
 
-	body[0].SetPos(sf::Vector2u(
+	body[0].SetPos(sf::Vector2i(
 		body[0].GetPos().x + static_cast<unsigned int>(xDir),
 		body[0].GetPos().y + static_cast<unsigned int>(yDir)
 	));
@@ -126,20 +126,12 @@ void Snake::SnakeBody::GrowUp()
 	addTorsoSection(torsoTPath.c_str());
 }
 
-void Snake::SnakeBody::SetPos(const sf::Vector2u& _pos)
+void Snake::SnakeBody::SetPos(const sf::Vector2i& _pos)
 {
-	/*for (unsigned int i = 0; i < body.size(); ++i)
-	{
-		body[i].SetPos(sf::Vector2u(
-			_pos.x,
-			_pos.y + i
-		));
-	}*/
-
 	body[0].SetPos(_pos);
 }
 
-sf::Vector2u const Snake::SnakeBody::GetPos() const
+sf::Vector2i const Snake::SnakeBody::GetPos() const
 {
 	return this->GetHeadPos();
 }
@@ -148,19 +140,19 @@ void Snake::SnakeBody::SetStartPos(const sf::Vector2u& _startPos)
 {
 	for (unsigned int i = 0; i < body.size(); ++i)
 	{
-		body[i].SetPos(sf::Vector2u(
+		body[i].SetPos(sf::Vector2i(
 			_startPos.x,
 			_startPos.y + i
 		));
 	}
 }
 
-const sf::Vector2u Snake::SnakeBody::GetHeadPos() const
+const sf::Vector2i Snake::SnakeBody::GetHeadPos() const
 {
-	return sf::Vector2u(body[0].GetPos());
+	return sf::Vector2i(body[0].GetPos());
 }
 
-const sf::Vector2u Snake::SnakeBody::GetPosOnIndex(unsigned int _pos) const
+const sf::Vector2i Snake::SnakeBody::GetPosOnIndex(unsigned int _pos) const
 {
 	return body[_pos].GetPos();
 }
@@ -188,12 +180,12 @@ void Snake::SnakeBody::fillBody(
 		if (i < 1)
 		{
 			body.emplace_back(SnakePart(_pathToHead));
-			body.back().SetPos(sf::Vector2u());
+			body.back().SetPos(sf::Vector2i());
 			continue;
 		}
 
 		body.emplace_back(SnakePart(_pathToTorso));
-		body.back().SetPos(sf::Vector2u());
+		body.back().SetPos(sf::Vector2i());
 	}
 
 }
@@ -204,7 +196,7 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 	{
 		std::lock_guard<std::mutex> lg(defMt);
 
-		sf::Vector2u pos{ 
+		sf::Vector2i pos{ 
 			body[body.size() - 1].GetPos().x, 
 			body[body.size() - 1].GetPos().y };
 		sf::Vector2f scale = body[body.size() - 1].GetScale();

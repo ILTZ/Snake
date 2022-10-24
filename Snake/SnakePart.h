@@ -14,7 +14,7 @@ public:
 	SnakePart(SnakePart&& _other)				noexcept;
 
 public:
-	void SetPos(const sf::Vector2u& _newPos)		override;
+	void SetPos(const sf::Vector2i& _newPos)		override;
 	void SetScale(const sf::Vector2f& _newScale)	override;
 
 };

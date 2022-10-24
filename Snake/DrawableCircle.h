@@ -38,7 +38,7 @@ public:
 	virtual void SetSize(const sf::Vector2f _newSize)			override;
 
 protected:
-	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2u& _fieldPos) const;
+	const sf::Vector2f calculateCurrentWindowPos(const sf::Vector2i& _fieldPos) const;
 
 private:
 	void changeRotation(const sf::Vector2f& _newPos);

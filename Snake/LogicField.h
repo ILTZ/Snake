@@ -17,7 +17,7 @@ namespace Logic
 		std::shared_ptr<Snake::SnakeBody>		snake;
 
 	private:
-		sf::Vector2u applePos;
+		sf::Vector2i applePos;
 
 	private:
 		const unsigned int lvlW;
@@ -32,9 +32,9 @@ namespace Logic
 		LogicField& operator=		(const LogicField&) = delete;
 
 	public:
-		bool checkOnEmpty			(const sf::Vector2u& _pos);
-		bool CheckSnakeGowUp		(const sf::Vector2u& _pos);
-		bool SetApple				(const sf::Vector2u& _applePos);
+		bool checkOnEmpty			(const sf::Vector2i& _pos);
+		bool CheckSnakeGowUp		(const sf::Vector2i& _pos);
+		bool SetApple				(const sf::Vector2i& _applePos);
 		bool CheckSnakeCollisions	();
 
 	public:
@@ -42,8 +42,11 @@ namespace Logic
 		const unsigned int GetLVLH() const;
 
 	private:
-		bool checkFieldLimits(const sf::Vector2u& _pos);
-		bool checkIntersectionWithPawn(const sf::Vector2u& _obj);
+		bool checkFieldLimits(const sf::Vector2i& _pos);
+		bool checkIntersectionWithPawn(const sf::Vector2i& _obj);
+
+	private:
+		void relocSnake(const sf::Vector2i& _curCoords);
 	};
 
 }

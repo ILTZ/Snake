@@ -6,13 +6,13 @@
 class MoveOnBoardBaseObj
 {
 protected:
-	sf::Vector2u currentBoardPosition;
+	sf::Vector2i currentBoardPosition;
 
 public:
 	virtual ~MoveOnBoardBaseObj() {};
 
-	virtual const sf::Vector2u GetPos()	const			{ return currentBoardPosition; }
-	virtual void SetPos(const sf::Vector2u& _newPos)	{ currentBoardPosition = _newPos; }
+	virtual const sf::Vector2i GetPos()	const			{ return currentBoardPosition; }
+	virtual void SetPos(const sf::Vector2i& _newPos)	{ currentBoardPosition = _newPos; }
 
 };
 

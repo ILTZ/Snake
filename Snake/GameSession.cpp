@@ -97,6 +97,9 @@ void GameSession::MovePawn(const APP_STATE::AppState& _state)
 {
 	if (_state.GetState() == APP_STATE::States::GAME_PROCESS)
 	{
+		timeWidget->WorkCycle(!pause);
+		if (timer.CheckInterval(stepTime * speedMyltiply))
+		{	
 			snake->Move();
 		}		
 	}
@@ -143,13 +146,13 @@ void GameSession::spawnApple(bool _appleOnBoard)
 	unsigned int x = rnd.GetValue(nul, logicField->GetLVLW() - 1);
 	unsigned int y = rnd.GetValue(nul, logicField->GetLVLH() - 1);
 
-	while (!logicField->SetApple(sf::Vector2u(x, y)))
+	while (!logicField->SetApple(sf::Vector2i(x, y)))
 	{
 		x = rnd.GetValue(nul, logicField->GetLVLW() - 1);
 		y = rnd.GetValue(nul, logicField->GetLVLH() - 1);
 	}
 	
-	apple->SetPos(sf::Vector2u(x, y));
+	apple->SetPos(sf::Vector2i(x, y));
 	appleOnBoard = true;
 }
 

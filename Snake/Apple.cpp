@@ -14,7 +14,7 @@ void Apple::CalculateAndSetScale(const ScaleDeterminant& _det)
 		);
 }
 
-void Apple::SetPos(const sf::Vector2u& _newPos)
+void Apple::SetPos(const sf::Vector2i& _newPos)
 {
 	currentBoardPosition = _newPos;
 	DrawableCircle::SetPosition(calculateCurrentWindowPos(currentBoardPosition));

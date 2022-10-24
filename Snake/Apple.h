@@ -20,7 +20,7 @@ public:
 
 	void CalculateAndSetScale(const ScaleDeterminant& _det) override;
 
-	void SetPos(const sf::Vector2u& _newPos) override;
+	void SetPos(const sf::Vector2i& _newPos) override;
 
 private:
 
