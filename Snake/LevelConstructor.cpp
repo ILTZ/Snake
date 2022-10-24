@@ -15,12 +15,11 @@ LVLConstructor::Level::Level(const LVLConfigs& _configs) :
 	{
 		fillFlor(lvlMAP);
 		fillWall(lvlMAP, configs.wallPos);
-		fillWater(lvlMAP, configs.waterPos);
-		setStartPos(lvlMAP, configs.startPosX, configs.startPosY);
+		//fillWater(lvlMAP, configs.waterPos);
 	}
 }
 
-// Get() {
+
 
 const LVLConfigs& LVLConstructor::Level::GetConfigs() const
 {
@@ -37,7 +36,7 @@ const lvlmap& LVLConstructor::Level::GetLvlMap() const
 	return lvlMAP;
 }
 
-// Get() }
+
 
 
 void LVLConstructor::Level::fillFlor(lvlmap& _vec)
@@ -90,7 +89,9 @@ void LVLConstructor::Level::fillWall(lvlmap& _vec, AutoConstr _wallPos)
 	case LVLConstructor::AutoConstr::DISCRET:
 		fillF = [&](LVLblock& _b, unsigned int _i, unsigned int _j)
 		{
-			
+		
+
+
 		};
 		break;
 
@@ -120,48 +121,14 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 	case LVLConstructor::AutoConstr::EDGES:
 		fillW = [&](lvlmap& _b, unsigned int _i, unsigned int _j)
 		{
-			if (_b[_i][_j] != LVLblock::WALL)
-			{
-				if ((_i == 0 || _i == configs.width - 1)
-					||
-					(_j == 0 || _j == configs.height - 1))
-				{
-					_b[_i][_j] = LVLblock::WATER;
-				}
-			}
-			else 
-			{
-				if ((_i == 1 || _i == configs.width - 2)
-					||
-					(_j == 1 || _j == configs.height - 2))
-				{
-					_b[_i][_j] = LVLblock::WATER;
-				}
-			}
+			
 		};
 		break;
 
 	case LVLConstructor::AutoConstr::CORNER:
 		fillW = [&](lvlmap& _b, unsigned int _i, unsigned int _j)
 		{
-			if (_b[_i][_j] != LVLblock::WALL)
-			{
-				if ((_i < configs.width / 3 || _i >(configs.width / 3 * 2))
-					&&
-					(_j < configs.height / 3 || _j >(configs.height / 3 * 2)))
-				{
-					_b[_i][_j] = LVLblock::WATER;
-				}
-			}
-			else
-			{
-				if ((_i < configs.width / 3 || _i >(configs.width / 3 * 2))
-					&&
-					(_j < configs.height / 3 || _j >(configs.height / 3 * 2)))
-				{
-					//_b[_i + 1][_j + 1] = LVLblock::WATER;
-				}
-			}
+			
 		};
 		break;
 
@@ -183,10 +150,6 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 			fillW(_vec, i, j);
 		}
 	}
-}
-
-void LVLConstructor::Level::setStartPos(lvlmap& _vec, int _xPos, int _yPos)
-{
 }
 
 LVLs LVLConstructor::operator++(LVLs& _x)

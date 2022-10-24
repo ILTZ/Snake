@@ -166,7 +166,7 @@
       <Filter>Исходные файлы\Window\HUD\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="BaseException.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Base\RealBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,7 +279,7 @@
       <Filter>Файлы заголовков\Window\HUD\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="BaseException.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Base\RealBase</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

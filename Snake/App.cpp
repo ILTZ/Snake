@@ -22,6 +22,7 @@ App::App()
 	CLoader::WndConfigs wndConfigs;
 	CLoader::HudConfigs cfg;
 
+	// Its required data. 
 	try
 	{
 		wndConfigs	= loader->GetWndConfigs();
@@ -31,18 +32,21 @@ App::App()
 	{
 		throw _ex;
 	}
+	catch (CLoader::Loader::LoaderException& _ex)
+	{
+		throw _ex;
+	} // Without them there is no point in running the application
 
-	// Window configurate {
+	
 	auto style = sf::Style::Titlebar | sf::Style::Close;
 
 	wnd = std::make_unique<MainWin::MainWindow>(
 		wndConfigs.width, 
 		wndConfigs.height,
 		"Snake2D", 
-		style);// Window configurate }
+		style);
 	
 
-	// Hud configurate {
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
 	auto hud = std::make_shared<UI::Ui>(cfg);
@@ -52,7 +56,7 @@ App::App()
 		wnd->GetHudTargetSize());
 
 	hud->SetScale(hudScale);
-	hud->PrepButtons(APP_STATE::States::MAIN_MENU);// Hud configurate }
+	hud->PrepButtons(APP_STATE::States::MAIN_MENU);
 	
 
 	wnd->SetHud(hud);
@@ -116,16 +120,19 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	{
 		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
 		return nullptr;
-	}
-
-	// Snake {
+	} // Why play if you don't have all the assets?
+	
+	#pragma region Snake_creating
+	//
 	auto snake = std::make_shared<Snake::SnakeBody>(
 		sp.pathToHead.c_str(),
 		sp.pathToTorso.c_str());
 
 	snake->SetPos(sf::Vector2u(
 		level->GetConfigs().startPosX,
-		level->GetConfigs().startPosY)); // Snake }
+		level->GetConfigs().startPosY));
+	//
+	#pragma endregion
 
 	handler.SetPawn(snake);
 
@@ -133,15 +140,17 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	auto lf		= std::make_shared<Logic::LogicField>(level, snake);
 	auto apple	= std::make_shared<Apple>(sp.pathToAple.c_str());
 
-	// Rescale all game objects {
+	#pragma region Rescale_game_objects
+	//
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant(
 		wnd->GetGameFieldTargetSize(),
 		sf::Vector2u(level->GetConfigs().width, level->GetConfigs().height));
 
 	gf->CalculateAndSetScale(*det);
 	snake->CalculateAndSetScale(*det);
-	apple->CalculateAndSetScale(*det); // Rescale all game objects }
-
+	apple->CalculateAndSetScale(*det);
+	//
+	#pragma endregion
 
 	return std::make_unique<GAME_SESSION::GameSession>(wnd.get(), snake, gf, lf, apple);
 }

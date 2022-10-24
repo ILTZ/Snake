@@ -115,7 +115,6 @@ namespace LVLConstructor
 		void fillFlor(lvlmap& _vec);
 		void fillWall(lvlmap& _vec,		AutoConstr _wallPos = AutoConstr::NONE);
 		void fillWater(lvlmap& _vec,	AutoConstr _waterPos = AutoConstr::NONE);
-		void setStartPos(lvlmap& _vec, int _xPos, int _yPos);
 	};
 
 }

@@ -29,4 +29,8 @@ int main()
 	{
 		MessageBoxA(nullptr, _ex.what(), "Other exception", MB_OK | MB_ICONERROR);
 	}
+	catch (...)
+	{
+		MessageBoxA(nullptr, "Unknown exception", "Uncknown exception", MB_OK | MB_ICONERROR);
+	}
 }

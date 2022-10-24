@@ -7,5 +7,5 @@
     "wallPath": ".\\ResourcesConfigs\\Shape\\wall.png",
     "waterPath":".\\ResourcesConfigs\\Water\\water.png",
     "wallPos": "edges",
-    "waterPos":"none"
+    "waterPos":"edges"
 }
