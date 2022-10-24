@@ -27,7 +27,7 @@ App::App()
 		wndConfigs	= loader->GetWndConfigs();
 		cfg			= loader->GetHudPaths();
 	}
-	catch (CLoader::Loader::LoaderException& _ex)
+	catch (BaseException& _ex)
 	{
 		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
 		throw std::exception(_ex.what());

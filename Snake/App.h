@@ -17,10 +17,10 @@ private:
 	EventHandler										handler;
 
 private:
-	APP_STATE::AppState appState;
+	APP_STATE::AppState		appState;
 
 private:
-	CLoader::LVLs	lvlSelected;
+	LVLConstructor::LVLs	lvlSelected;
 
 private:
 	std::mutex		defMt;

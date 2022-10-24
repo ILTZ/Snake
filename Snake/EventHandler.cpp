@@ -81,7 +81,7 @@ void EventHandler::HandleCharEvent(
 }
 
 
-std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
+std::optional<LVLConstructor::LVLs> EventHandler::HandleMouseEvent(
 	const std::optional<MS::MouseEvent>& _mouseEvent, 
 	APP_STATE::AppState& _state)
 {
@@ -145,23 +145,23 @@ std::optional<CLoader::LVLs> EventHandler::HandleMouseEvent(
 			// Lvl selected {
 			case bMod::LVL_1:
 				_state.SetState(States::LVL_SELECTED);
-				return CLoader::LVLs::LVL_1;
+				return LVLConstructor::LVLs::LVL_1;
 				
 			case bMod::LVL_2:
 				_state.SetState(States::LVL_SELECTED);
-				return CLoader::LVLs::LVL_2;
+				return LVLConstructor::LVLs::LVL_2;
 				
 			case bMod::LVL_3:
 				_state.SetState(States::LVL_SELECTED);
-				return CLoader::LVLs::LVL_3;
+				return LVLConstructor::LVLs::LVL_3;
 				
 			case bMod::LVL_4:
 				_state.SetState(States::LVL_SELECTED);
-				return CLoader::LVLs::LVL_4;
+				return LVLConstructor::LVLs::LVL_4;
 				
 			case bMod::LVL_5:
 				_state.SetState(States::LVL_SELECTED);
-				return CLoader::LVLs::LVL_5;	// Lvl selected }
+				return LVLConstructor::LVLs::LVL_5;	// Lvl selected }
 					
 
 			case bMod::MAIN_MENU:

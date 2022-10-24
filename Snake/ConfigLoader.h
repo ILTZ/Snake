@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <vector>
-#include <unordered_map>
 #include <nlohmann/json.hpp>
 
 #include "LevelConstructor.h"
@@ -33,35 +32,6 @@ namespace CLoader
 		const std::string nameWidgetTexture = "NAME_WIDGET";
 		const std::string leader			= "LEADERS";
 	}
-
-	enum class ConfigKey
-	{
-		SNAKE_T		= 0,
-		SNAKE_H		= 1,
-		APLE		= 3,
-		LVL_P		= 4,
-		RESOLUTION	= 5,
-		BTN_PRESS	= 6,
-		BTN_RELEASE = 7,
-		TEXT_FONT	= 8,
-		HUD			= 9,
-		BASE_WIDGET = 10,
-		NAME_WIDGET	= 11,
-		LEADERS		= 12,
-	};
-
-	enum class LVLs
-	{
-		LVL_1 = 0,
-		LVL_2 = 1,
-		LVL_3 = 2,
-		LVL_4 = 3,
-		LVL_5 = 4,
-
-		LVL_MAX = 5
-	};
-	LVLs operator++(LVLs& _x);
-
 
 	struct SnakePaths
 	{
@@ -133,13 +103,16 @@ namespace CLoader
 		class JsonParseException : public BaseException
 		{
 		private:
-			const std::string guilty;
 			const std::string message;
+			const std::string fileName;
+			const std::string guilty;
 
 		public:
-			JsonParseException(int _line,
+			JsonParseException(
+				int _line,
 				const char* _file,
 				const std::string& _errorText,
+				const char* _fileName,
 				const char* _guilty);
 
 		public:
@@ -164,7 +137,7 @@ namespace CLoader
 		const unsigned int GetLvlCount() const;
 
 	public:
-		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLs _level);
+		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLConstructor::LVLs _level);
 
 	public:
 		const SnakePaths GetSnakePaths(const char* _pathToConfig = nullptr)		const;
@@ -181,9 +154,46 @@ namespace CLoader
 		const nlohmann::json getParseFile(const char* _pathToConfig = nullptr)	const;
 		
 	private:
-		const std::string getLvlString(LVLs _lvl) const;
+		const std::string getLvlString(LVLConstructor::LVLs _lvl) const;
 
+	private:
+		template <typename T>
+		const void extractValue(
+			const nlohmann::json& _file,
+			const char* _key,
+			const char* _path,
+			T& _value, 
+			int _index = -1) const;
 	};
+
+	template<typename T>
+	inline const void Loader::extractValue( 
+		const nlohmann::json& _file, 
+		const char* _key, 
+		const char* _path,
+		T& _value,
+		int _index) const
+	{
+		try
+		{
+			if (_file.find(_key) == _file.end())
+				throw std::exception();
+
+			if (_index >= 0) // when we try to extract value from array
+				_value = static_cast<T>(_file[_key][_index]);
+			else
+				_value = static_cast<T>(_file[_key]);
+		}
+		catch (std::exception&)
+		{
+			throw CLoader::Loader::JsonParseException(
+				__LINE__,
+				__FILE__,
+				std::string("File currupted: "),
+				_path,
+				_key);
+		}
+	}
 }
 
 #endif

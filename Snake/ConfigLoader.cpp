@@ -26,17 +26,7 @@
 	}																		\
 																			\
 }																			\
-
-#define THROW_PARSE_EXCEPTION(path)								\
-{																\
-	throw CLoader::Loader::LoaderException(						\
-		__LINE__,												\
-		__FILE__,												\
-		std::string("File currapted: ") + std::string(path));	\
-}																\
-
-
-
+																	
 
 #include <sstream>
 #include <exception>
@@ -63,29 +53,29 @@ const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) co
 	return file;
 }
 
-const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
+const std::string CLoader::Loader::getLvlString(LVLConstructor::LVLs _lvl) const
 {
 	std::string ls = "";
 
 	switch (_lvl)
 	{
-	case CLoader::LVLs::LVL_1:
+	case LVLConstructor::LVLs::LVL_1:
 		ls = "Lvl1.json";
 		break;
 
-	case CLoader::LVLs::LVL_2:
+	case LVLConstructor::LVLs::LVL_2:
 		ls = "Lvl2.json";
 		break;
 
-	case CLoader::LVLs::LVL_3:
+	case LVLConstructor::LVLs::LVL_3:
 		ls = "Lvl3.json";
 		break;
 
-	case CLoader::LVLs::LVL_4:
+	case LVLConstructor::LVLs::LVL_4:
 		ls = "Lvl4.json";
 		break;
 
-	case CLoader::LVLs::LVL_5:
+	case LVLConstructor::LVLs::LVL_5:
 		ls = "Lvl5.json";
 		break;
 
@@ -97,35 +87,35 @@ const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 }
 
 
-
-std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
+std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::LVLs _level)
 {
 	std::string path = CLoader::ConstPaths::pathToLvlvs;
 	path += getLvlString(_level);
 
 	json file = getParseFile(path.c_str());
+
+	using namespace LVLConstructor::LVLPropertiesKeyes;
+
+	std::string tempMode;
+	extractValue(file, mode.c_str(), path.c_str(), tempMode);
+
 	LVLConstructor::LVLConfigs conf;
 
+	if (tempMode == "hand")
+		conf.autoContr = false;
+	else
+		conf.autoContr = true;
 
-	try
-	{
-		using namespace LVLConstructor::LVLPropertiesKeyes;
+	extractValue(file, width.c_str(),	 path.c_str(), conf.width);
+	extractValue(file, height.c_str(),	 path.c_str(), conf.height);
+	extractValue(file, startPos.c_str(), path.c_str(), conf.startPosX, 0);
+	extractValue(file, startPos.c_str(), path.c_str(), conf.startPosY, 1);
+	
+	extractValue(file, flor.c_str(),  path.c_str(), conf.pathToFlor);
+	extractValue(file, wall.c_str(),  path.c_str(), conf.pathToWall);
+	extractValue(file, water.c_str(), path.c_str(), conf.pathToWater);
 
-		if (file[mode] == "hand")
-			conf.autoContr = false;
-		else
-			conf.autoContr = true;
-
-		conf.width			= file[width];
-		conf.height			= file[height];
-		conf.startPosX		= file[startPos][0];
-		conf.startPosY		= file[startPos][1];
-
-		conf.pathToFlor		= file[flor];
-		conf.pathToWall		= file[wall];
-		conf.pathToWater	= file[water];
-
-		auto getAuto = [&](const std::string& _mode)
+	auto getAuto = [&](const std::string& _mode)
 		{
 			if (_mode == "none")
 				return LVLConstructor::AutoConstr::NONE;
@@ -142,13 +132,15 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 			return LVLConstructor::AutoConstr::NONE;
 		};
 
-		conf.wallPos	= getAuto(file["wallPos"]);
-		conf.waterPos	= getAuto(file["waterPos"]);
-	}
-	catch (std::exception&)
-	{
-		THROW_PARSE_EXCEPTION(path);
-	}
+	std::string tempWallPos;
+	std::string tempWaterPos;
+
+	extractValue(file, "wallPos",	path.c_str(), tempWallPos);
+	extractValue(file, "waterPos",	path.c_str(), tempWaterPos);
+
+	conf.wallPos	= getAuto(tempWallPos);
+	conf.waterPos	= getAuto(tempWaterPos);
+	
 
 	return std::make_shared<LVLConstructor::Level>(conf);
 }
@@ -158,7 +150,7 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 	std::ifstream f;
 	unsigned int count = 0;
 
-	for (LVLs lvl = LVLs::LVL_1; lvl < LVLs::LVL_MAX; ++lvl)
+	for (LVLConstructor::LVLs lvl = LVLConstructor::LVLs::LVL_1; lvl < LVLConstructor::LVLs::LVL_MAX; ++lvl)
 	{
 		f.open(CLoader::ConstPaths::pathToLvlvs + getLvlString(lvl));
 		if (f.good())
@@ -174,16 +166,9 @@ const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConf
 	auto file = getParseFile(pathToConf.c_str());
 	SnakePaths temp;
 
-	try
-	{
-		temp.pathToAple		= file[CLoader::JsonKeys::apple];
-		temp.pathToHead		= file[CLoader::JsonKeys::snakeHead];
-		temp.pathToTorso	= file[CLoader::JsonKeys::snakeTorso];
-	}
-	catch (json::exception&)
-	{
-		THROW_PARSE_EXCEPTION(pathToConf.c_str());
-	}
+	extractValue(file, CLoader::JsonKeys::apple.c_str(),		pathToConf.c_str(),		temp.pathToAple);
+	extractValue(file, CLoader::JsonKeys::snakeHead.c_str(),	pathToConf.c_str(),		temp.pathToHead);
+	extractValue(file, CLoader::JsonKeys::snakeTorso.c_str(),	 pathToConf.c_str(),	temp.pathToTorso);
 
 	return temp;
 }
@@ -193,23 +178,17 @@ const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig
 	auto file = getParseFile(pathToConf.c_str());
 	HudConfigs temp;
 
-	try
-	{
-		temp.width				= file[CLoader::JsonKeys::windowResolution][0];
-		temp.height				= file[CLoader::JsonKeys::windowResolution][1];
-
-		temp.pathToPressBtn		= file[CLoader::JsonKeys::btnPressTexture];
-		temp.pathToReleaseBtn	= file[CLoader::JsonKeys::btnReleaseTexture];
-		temp.pathToTextFont		= file[CLoader::JsonKeys::textFont];
-		temp.pathToHud			= file[CLoader::JsonKeys::hudTexture];
-		temp.pathToBaseWidget	= file[CLoader::JsonKeys::baseWidgetTexture];
-		temp.pathToNameWidget	= file[CLoader::JsonKeys::nameWidgetTexture];
-	}
-	catch (json::exception&)
-	{
-		THROW_PARSE_EXCEPTION(pathToConf.c_str());
-	}
-
+	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.width,		0);
+	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.height,	1);
+	
+	extractValue(file, CLoader::JsonKeys::btnPressTexture.c_str(),		pathToConf.c_str(), temp.pathToPressBtn);
+	extractValue(file, CLoader::JsonKeys::btnReleaseTexture.c_str(),	pathToConf.c_str(), temp.pathToReleaseBtn);
+	extractValue(file, CLoader::JsonKeys::textFont.c_str(),				pathToConf.c_str(), temp.pathToTextFont);
+		
+	extractValue(file, CLoader::JsonKeys::hudTexture.c_str(),			pathToConf.c_str(), temp.pathToHud);
+	extractValue(file, CLoader::JsonKeys::baseWidgetTexture.c_str(),	pathToConf.c_str(), temp.pathToBaseWidget);
+	extractValue(file, CLoader::JsonKeys::nameWidgetTexture.c_str(),	pathToConf.c_str(), temp.pathToNameWidget);
+		
 	return temp;
 }
 
@@ -218,16 +197,9 @@ const CLoader::WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConf
 	auto file = getParseFile(pathToConf.c_str());
 	WndConfigs temp;
 
-	try
-	{
-		temp.width		= file[CLoader::JsonKeys::windowResolution][0];
-		temp.height		= file[CLoader::JsonKeys::windowResolution][1];
-	}
-	catch (json::exception&)
-	{
-		THROW_PARSE_EXCEPTION(pathToConf.c_str());
-	}
-
+	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.width, 0);
+	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.height, 1);
+	
 	return temp;
 }
 
@@ -306,7 +278,6 @@ CLoader::LeadersInfo::LeadersInfo(const char* _error) :
 {
 
 }
-
 const std::string CLoader::LeadersInfo::TimeToString() const
 {
 	std::ostringstream ss;
@@ -324,14 +295,10 @@ const std::string CLoader::LeadersInfo::TimeToString() const
 	return ss.str();
 }
 
-CLoader::LVLs CLoader::operator++(LVLs& _x)
-{
-	return _x = static_cast<LVLs>(std::underlying_type<LVLs>::type(_x) + 1);
-}
-
-
 
 // Exception {
+
+	// File exist exception {
 CLoader::Loader::LoaderException::LoaderException(
 	int _line,
 	const char* _file,
@@ -360,4 +327,45 @@ const std::string CLoader::Loader::LoaderException::GetErrorString() const noexc
 {
 	return message;
 }
+	// File exist exception }
+
+	// File parse exception {
+CLoader::Loader::JsonParseException::JsonParseException(
+	int _line,
+	const char* _file,
+	const std::string& _errorText,
+	const char* _fileName,
+	const char* _guilty) :
+	BaseException(_line, _file),
+	message{ _errorText },
+	fileName{_fileName},
+	guilty{ _guilty }
+{
+
+}
+const char* CLoader::Loader::JsonParseException::what() const noexcept
+{
+	std::ostringstream os;
+	os << GetType() << std::endl;
+	os << "[Error String] " << GetErrorString() << std::endl;
+	os << "[File name] " << fileName << std::endl;
+	os << "[Check the key]: " << guilty << std::endl;
+
+	os << GetOriginString();
+	whatBuffer = os.str();
+
+	return whatBuffer.c_str();
+}
+const char* CLoader::Loader::JsonParseException::GetType() const noexcept
+{
+	return "FILE PARSE EXCEPTION";
+}
+const std::string CLoader::Loader::JsonParseException::GetErrorString() const noexcept
+{
+	return message;
+}
+	// File parse exception }
+	
 // Exception }
+
+

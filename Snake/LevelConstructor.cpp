@@ -8,9 +8,8 @@ LVLConstructor::Level::Level(const LVLConfigs& _configs) :
 	configs{_configs}
 {
 	for (unsigned int i = 0; i < configs.width; ++i)
-	{
 		lvlMAP.push_back(std::vector<LVLblock>(configs.height));
-	}
+	
 
 	if (configs.autoContr)
 	{
@@ -188,4 +187,9 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 
 void LVLConstructor::Level::setStartPos(lvlmap& _vec, int _xPos, int _yPos)
 {
+}
+
+LVLs LVLConstructor::operator++(LVLs& _x)
+{
+	return _x = static_cast<LVLs>(std::underlying_type<LVLs>::type(_x) + 1);
 }

@@ -41,6 +41,17 @@ namespace LVLConstructor
 		NONE	= 3
 	};
 
+	enum class LVLs
+	{
+		LVL_1 = 0,
+		LVL_2 = 1,
+		LVL_3 = 2,
+		LVL_4 = 3,
+		LVL_5 = 4,
+
+		LVL_MAX = 5
+	};
+	LVLs operator++(LVLs& _x);
 
 	namespace LVLPropertiesKeyes
 	{
