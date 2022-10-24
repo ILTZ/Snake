@@ -55,15 +55,18 @@ namespace LVLConstructor
 
 	namespace LVLPropertiesKeyes
 	{
-		const std::string mode = "mode";
+		const std::string mode		= "mode";
 
-		const std::string width = "width";
-		const std::string height = "height";
-		const std::string startPos = "startPos";
+		const std::string width		= "width";
+		const std::string height	= "height";
+		const std::string startPos	= "startPos";
 
-		const std::string flor = "florPath";
-		const std::string water = "waterPath";
-		const std::string wall = "wallPath";
+		const std::string flor		= "florPath";
+		const std::string water		= "waterPath";
+		const std::string wall		= "wallPath";
+
+		const std::string waterPos	= "waterPos";
+		const std::string wallPos	= "wallPos";
 	}
 
 

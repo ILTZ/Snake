@@ -34,7 +34,7 @@
 //using namespace CLoader;
 using json = nlohmann::json;
 
-CLoader::Loader::Loader(const std::string& _path) :
+CLoader::Loader::Loader(const std::string& _path) noexcept :
 	pathToConf{_path}
 {
 
@@ -106,14 +106,14 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::L
 	else
 		conf.autoContr = true;
 
-	extractValue(file, width.c_str(),	 path.c_str(), conf.width);
-	extractValue(file, height.c_str(),	 path.c_str(), conf.height);
-	extractValue(file, startPos.c_str(), path.c_str(), conf.startPosX, 0);
-	extractValue(file, startPos.c_str(), path.c_str(), conf.startPosY, 1);
+	extractValue(file, width.c_str(),		path.c_str(), conf.width);
+	extractValue(file, height.c_str(),		path.c_str(), conf.height);
+	extractValue(file, startPos.c_str(),	path.c_str(), conf.startPosX, 0);
+	extractValue(file, startPos.c_str(),	path.c_str(), conf.startPosY, 1);
 	
-	extractValue(file, flor.c_str(),  path.c_str(), conf.pathToFlor);
-	extractValue(file, wall.c_str(),  path.c_str(), conf.pathToWall);
-	extractValue(file, water.c_str(), path.c_str(), conf.pathToWater);
+	extractValue(file, flor.c_str(),		path.c_str(), conf.pathToFlor);
+	extractValue(file, wall.c_str(),		path.c_str(), conf.pathToWall);
+	extractValue(file, water.c_str(),		path.c_str(), conf.pathToWater);
 
 	auto getAuto = [&](const std::string& _mode)
 		{
@@ -135,8 +135,8 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::L
 	std::string tempWallPos;
 	std::string tempWaterPos;
 
-	extractValue(file, "wallPos",	path.c_str(), tempWallPos);
-	extractValue(file, "waterPos",	path.c_str(), tempWaterPos);
+	extractValue(file, wallPos.c_str(),		path.c_str(), tempWallPos);
+	extractValue(file, waterPos.c_str(),	path.c_str(), tempWaterPos);
 
 	conf.wallPos	= getAuto(tempWallPos);
 	conf.waterPos	= getAuto(tempWaterPos);
@@ -166,9 +166,9 @@ const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConf
 	auto file = getParseFile(pathToConf.c_str());
 	SnakePaths temp;
 
-	extractValue(file, CLoader::JsonKeys::apple.c_str(),		pathToConf.c_str(),		temp.pathToAple);
-	extractValue(file, CLoader::JsonKeys::snakeHead.c_str(),	pathToConf.c_str(),		temp.pathToHead);
-	extractValue(file, CLoader::JsonKeys::snakeTorso.c_str(),	 pathToConf.c_str(),	temp.pathToTorso);
+	extractValue(file, CLoader::JsonKeys::apple.c_str(),		 pathToConf.c_str(),		temp.pathToAple);
+	extractValue(file, CLoader::JsonKeys::snakeHead.c_str(),	 pathToConf.c_str(),		temp.pathToHead);
+	extractValue(file, CLoader::JsonKeys::snakeTorso.c_str(),	 pathToConf.c_str(),		temp.pathToTorso);
 
 	return temp;
 }
@@ -178,8 +178,8 @@ const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig
 	auto file = getParseFile(pathToConf.c_str());
 	HudConfigs temp;
 
-	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.width,		0);
-	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.height,	1);
+	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(),		pathToConf.c_str(), temp.width,		0);
+	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(),		pathToConf.c_str(), temp.height,	1);
 	
 	extractValue(file, CLoader::JsonKeys::btnPressTexture.c_str(),		pathToConf.c_str(), temp.pathToPressBtn);
 	extractValue(file, CLoader::JsonKeys::btnReleaseTexture.c_str(),	pathToConf.c_str(), temp.pathToReleaseBtn);

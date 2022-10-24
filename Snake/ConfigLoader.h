@@ -122,12 +122,11 @@ namespace CLoader
 			const std::string GetErrorString()	const noexcept;
 		};
 
-
 	private:
 		const std::string pathToConf;
 
 	public:
-		Loader(const std::string& _path = ConstPaths::pathToConfigs);
+		Loader(const std::string& _path = ConstPaths::pathToConfigs) noexcept;
 
 	public:
 		Loader(const Loader&)				= delete;
@@ -140,9 +139,9 @@ namespace CLoader
 		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLConstructor::LVLs _level);
 
 	public:
-		const SnakePaths GetSnakePaths(const char* _pathToConfig = nullptr)		const;
-		const HudConfigs GetHudPaths(const char* _pathToConfig = nullptr)		const;
-		const WndConfigs GetWndConfigs(const char* _pathToConfigs = nullptr)	const;
+		const SnakePaths GetSnakePaths(const char* _pathToConfig = nullptr)					const;
+		const HudConfigs GetHudPaths(const char* _pathToConfig = nullptr)					const;
+		const WndConfigs GetWndConfigs(const char* _pathToConfigs = nullptr)				const;
 		const std::vector<LeadersInfo> GetLeaders(const char* _pathToFile = nullptr)		const;
 		void AddLeaderInLeaderBord(
 			const char* _name, 
@@ -177,19 +176,40 @@ namespace CLoader
 		try
 		{
 			if (_file.find(_key) == _file.end())
-				throw std::exception();
+				throw std::exception("There is no such key in the file (or the key is written incorrectly).");
 
 			if (_index >= 0) // when we try to extract value from array
-				_value = static_cast<T>(_file[_key][_index]);
+			{
+				if (_file[_key].is_array())
+				{
+					if (_file[_key].size() > _index)
+					{
+						_value = static_cast<T>(_file[_key][_index]);
+					}
+					else
+					{
+						throw std::exception(
+							(std::string("No index [") + 
+								std::to_string(_index) + 
+								std::string("] in array"))
+							.c_str());
+					}
+				}
+				else
+				{
+					throw std::exception("An array is assumed, but it is not!");
+				}
+
+			}
 			else
 				_value = static_cast<T>(_file[_key]);
 		}
-		catch (std::exception&)
+		catch (std::exception& _ex)
 		{
 			throw CLoader::Loader::JsonParseException(
 				__LINE__,
 				__FILE__,
-				std::string("File currupted: "),
+				std::string(_ex.what()),
 				_path,
 				_key);
 		}

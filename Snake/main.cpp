@@ -1,10 +1,11 @@
 #include <iostream>
 #include <exception>
 
-
+#include <Windows.h>
+#undef min
+#undef max
 
 #include "App.h"
-
 
 //Цели блять:
 //1. Лидерборд - готово
@@ -20,8 +21,12 @@ int main()
 		App app;
 		return app.Run();
 	}
+	catch (BaseException& _ex)
+	{
+		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
+	}
 	catch (std::exception& _ex)
 	{
-		std::cout << _ex.what() << std::endl;
+		MessageBoxA(nullptr, _ex.what(), "Other exception", MB_OK | MB_ICONERROR);
 	}
 }

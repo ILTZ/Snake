@@ -27,10 +27,9 @@ App::App()
 		wndConfigs	= loader->GetWndConfigs();
 		cfg			= loader->GetHudPaths();
 	}
-	catch (BaseException& _ex)
+	catch (CLoader::Loader::JsonParseException& _ex)
 	{
-		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
-		throw std::exception(_ex.what());
+		throw _ex;
 	}
 
 	// Window configurate {
