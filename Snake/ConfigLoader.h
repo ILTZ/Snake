@@ -152,7 +152,6 @@ namespace CLoader
 
 	private:
 		const std::string pathToConf;
-		//mutable std::unordered_map<ConfigKey, std::string> jsonKeys;
 
 	public:
 		Loader(const std::string& _path = ConstPaths::pathToConfigs);

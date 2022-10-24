@@ -47,17 +47,7 @@ using json = nlohmann::json;
 CLoader::Loader::Loader(const std::string& _path) :
 	pathToConf{_path}
 {
-	/*jsonKeys[ConfigKey::APLE]			= "APLE";
-	jsonKeys[ConfigKey::SNAKE_T]		= "SNAKE_TORSO";
-	jsonKeys[ConfigKey::SNAKE_H]		= "SNAKE_HEAD";
-	jsonKeys[ConfigKey::LVL_P]			= "LVL_PATH";
-	jsonKeys[ConfigKey::RESOLUTION]		= "RESOLUTION";
-	jsonKeys[ConfigKey::BTN_PRESS]		= "BTN_PRESS";
-	jsonKeys[ConfigKey::BTN_RELEASE]	= "BTN_RELEASE";
-	jsonKeys[ConfigKey::TEXT_FONT]		= "TEXT_FONT";
-	jsonKeys[ConfigKey::HUD]			= "HUD";
-	jsonKeys[ConfigKey::BASE_WIDGET]	= "BASE_WIDGET";
-	jsonKeys[ConfigKey::NAME_WIDGET]	= "NAME_WIDGET";*/
+
 }
 
 const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) const
