@@ -50,12 +50,13 @@ namespace Snake
 	public:
 
 		//<BasePawn> funcs {
-		void Move()								override;
-		void SetDir(BaseP::Direction _dir)		override;
-		void DoSomeSpecifyActions()				override;
-		void SetPos(const sf::Vector2u& _pos)	override;
-		sf::Vector2u const GetPos() const		override;
+		void Move()											override;
+		void SetDir(BaseP::Direction _dir)					override;
+		void DoSomeSpecifyActions()							override;
+		void SetPos(const sf::Vector2u& _pos)				override;
+		sf::Vector2u const GetPos() const					override;
 		//<BasePawn> funcs }
+		virtual void SetStartPos(const sf::Vector2u& _startPos)	override;
 		// 
 		// <Base::BasePlayerControlObj> funcs }
 

@@ -128,7 +128,7 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 		sp.pathToHead.c_str(),
 		sp.pathToTorso.c_str());
 
-	snake->SetPos(sf::Vector2u(
+	snake->SetStartPos(sf::Vector2u(
 		level->GetConfigs().startPosX,
 		level->GetConfigs().startPosY));
 	//

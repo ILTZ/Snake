@@ -6,6 +6,6 @@
     "florPath": ".\\ResourcesConfigs\\Flor\\grass.png",
     "wallPath": ".\\ResourcesConfigs\\Shape\\wallA.png",
     "waterPath":".\\ResourcesConfigs\\Water\\water.png",
-    "wallPos": "edges",
+    "wallPos": "none",
     "waterPos":"none"
 }

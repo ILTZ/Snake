@@ -9,7 +9,7 @@ namespace Base
 	class BasePlayerControlObj : public BaseDrawable, public BaseP::BasePawn
 	{
 	public:
-
+		virtual void SetStartPos(const sf::Vector2u& _startPos) = 0;
 
 	};
 }

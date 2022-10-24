@@ -87,6 +87,7 @@ namespace GAME_SESSION
 	private:
 		// Chouse the position of <Apple> and set it coords on the <LogicField>
 		void spawnApple(bool _appleOnBoard);
+		void relocSnake();
 
 	private:
 		void wndDraw(const APP_STATE::AppState& _state);

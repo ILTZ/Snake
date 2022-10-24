@@ -97,9 +97,8 @@ void GameSession::MovePawn(const APP_STATE::AppState& _state)
 {
 	if (_state.GetState() == APP_STATE::States::GAME_PROCESS)
 	{
-		timeWidget->WorkCycle(!pause);
-		if (timer.CheckInterval(stepTime * speedMyltiply))
 			snake->Move();
+		}		
 	}
 }
 

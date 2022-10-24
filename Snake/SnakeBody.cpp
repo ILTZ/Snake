@@ -128,18 +128,31 @@ void Snake::SnakeBody::GrowUp()
 
 void Snake::SnakeBody::SetPos(const sf::Vector2u& _pos)
 {
-	for (unsigned int i = 0; i < body.size(); ++i)
+	/*for (unsigned int i = 0; i < body.size(); ++i)
 	{
 		body[i].SetPos(sf::Vector2u(
 			_pos.x,
 			_pos.y + i
 		));
-	}
+	}*/
+
+	body[0].SetPos(_pos);
 }
 
 sf::Vector2u const Snake::SnakeBody::GetPos() const
 {
 	return this->GetHeadPos();
+}
+
+void Snake::SnakeBody::SetStartPos(const sf::Vector2u& _startPos)
+{
+	for (unsigned int i = 0; i < body.size(); ++i)
+	{
+		body[i].SetPos(sf::Vector2u(
+			_startPos.x,
+			_startPos.y + i
+		));
+	}
 }
 
 const sf::Vector2u Snake::SnakeBody::GetHeadPos() const
