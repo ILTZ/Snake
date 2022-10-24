@@ -31,7 +31,7 @@
 #include <sstream>
 #include <exception>
 
-//using namespace CLoader;
+
 using json = nlohmann::json;
 
 CLoader::Loader::Loader(const std::string& _path) noexcept :
@@ -85,7 +85,6 @@ const std::string CLoader::Loader::getLvlString(LVLConstructor::LVLs _lvl) const
 
 	return ls;
 }
-
 
 std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::LVLs _level)
 {
@@ -296,15 +295,15 @@ const std::string CLoader::LeadersInfo::TimeToString() const
 }
 
 
-// Exception {
+#pragma region LoaderExceptions
 
-	// File exist exception {
+// File exist exception {
 CLoader::Loader::LoaderException::LoaderException(
 	int _line,
 	const char* _file,
 	const std::string& _errorText) :
 	BaseException(_line, _file),
-	message{_errorText}
+	message{ _errorText }
 {
 
 }
@@ -327,9 +326,9 @@ const std::string CLoader::Loader::LoaderException::GetErrorString() const noexc
 {
 	return message;
 }
-	// File exist exception }
+// File exist exception }
 
-	// File parse exception {
+// File parse exception {
 CLoader::Loader::JsonParseException::JsonParseException(
 	int _line,
 	const char* _file,
@@ -338,7 +337,7 @@ CLoader::Loader::JsonParseException::JsonParseException(
 	const char* _guilty) :
 	BaseException(_line, _file),
 	message{ _errorText },
-	fileName{_fileName},
+	fileName{ _fileName },
 	guilty{ _guilty }
 {
 
@@ -364,8 +363,9 @@ const std::string CLoader::Loader::JsonParseException::GetErrorString() const no
 {
 	return message;
 }
-	// File parse exception }
-	
-// Exception }
+// File parse exception }
+ 
+#pragma endregion
+
 
 
