@@ -106,12 +106,13 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	
 	std::shared_ptr<LVLConstructor::Level>	level;
 	CLoader::SnakePaths						sp;
+
 	try
 	{
 		level	= loader->GetLVL(lvlSelected);
 		sp		= loader->GetSnakePaths();
 	}
-	catch (CLoader::Loader::LoaderException& _ex)
+	catch (BaseException& _ex)
 	{
 		MessageBoxA(nullptr, _ex.what(), _ex.GetType(), MB_OK | MB_ICONERROR);
 		return nullptr;

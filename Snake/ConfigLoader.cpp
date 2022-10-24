@@ -27,11 +27,6 @@
 																			\
 }																			\
 																	
-
-#include <sstream>
-#include <exception>
-
-
 using json = nlohmann::json;
 
 CLoader::Loader::Loader(const std::string& _path) noexcept :
