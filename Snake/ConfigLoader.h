@@ -15,7 +15,7 @@ namespace CLoader
 	{
 		const std::string pathToConfigs = ".\\ResourcesConfigs\\Configs.json";
 		const std::string pathToLeaders = ".\\ResourcesConfigs\\LeaderBord.json";
-		const std::string pathToLvlvs	= ".\\ResourcesConfigs\\LVLs";
+		const std::string pathToLvlvs	= ".\\ResourcesConfigs\\LVLs\\";
 	}
 
 	namespace JsonKeys
@@ -32,19 +32,6 @@ namespace CLoader
 		const std::string baseWidgetTexture = "BASE_WIDGET";
 		const std::string nameWidgetTexture = "NAME_WIDGET";
 		const std::string leader			= "LEADERS";
-	}
-
-	namespace
-	{
-		const char* mode = "mode";
-
-		const char* width = "width";
-		const char* height = "height";
-		const char* startPos = "startPos";
-
-		const char* flor	= "florPath";
-		const char* water	= "waterPath";
-		const char* wall	= "wallPath";
 	}
 
 	enum class ConfigKey
@@ -165,7 +152,7 @@ namespace CLoader
 
 	private:
 		const std::string pathToConf;
-		mutable std::unordered_map<ConfigKey, std::string> jsonKeys;
+		//mutable std::unordered_map<ConfigKey, std::string> jsonKeys;
 
 	public:
 		Loader(const std::string& _path = ConstPaths::pathToConfigs);
@@ -199,4 +186,5 @@ namespace CLoader
 
 	};
 }
+
 #endif

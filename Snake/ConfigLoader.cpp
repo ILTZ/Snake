@@ -47,7 +47,7 @@ using json = nlohmann::json;
 CLoader::Loader::Loader(const std::string& _path) :
 	pathToConf{_path}
 {
-	jsonKeys[ConfigKey::APLE]			= "APLE";
+	/*jsonKeys[ConfigKey::APLE]			= "APLE";
 	jsonKeys[ConfigKey::SNAKE_T]		= "SNAKE_TORSO";
 	jsonKeys[ConfigKey::SNAKE_H]		= "SNAKE_HEAD";
 	jsonKeys[ConfigKey::LVL_P]			= "LVL_PATH";
@@ -57,7 +57,7 @@ CLoader::Loader::Loader(const std::string& _path) :
 	jsonKeys[ConfigKey::TEXT_FONT]		= "TEXT_FONT";
 	jsonKeys[ConfigKey::HUD]			= "HUD";
 	jsonKeys[ConfigKey::BASE_WIDGET]	= "BASE_WIDGET";
-	jsonKeys[ConfigKey::NAME_WIDGET]	= "NAME_WIDGET";
+	jsonKeys[ConfigKey::NAME_WIDGET]	= "NAME_WIDGET";*/
 }
 
 const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) const
@@ -80,23 +80,23 @@ const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 	switch (_lvl)
 	{
 	case CLoader::LVLs::LVL_1:
-		ls = "\\Lvl1.json";
+		ls = "Lvl1.json";
 		break;
 
 	case CLoader::LVLs::LVL_2:
-		ls = "\\Lvl2.json";
+		ls = "Lvl2.json";
 		break;
 
 	case CLoader::LVLs::LVL_3:
-		ls = "\\Lvl3.json";
+		ls = "Lvl3.json";
 		break;
 
 	case CLoader::LVLs::LVL_4:
-		ls = "\\Lvl4.json";
+		ls = "Lvl4.json";
 		break;
 
 	case CLoader::LVLs::LVL_5:
-		ls = "\\Lvl5.json";
+		ls = "Lvl5.json";
 		break;
 
 	default:
@@ -110,8 +110,7 @@ const std::string CLoader::Loader::getLvlString(LVLs _lvl) const
 
 std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 {
-	std::string path = getParseFile(
-		pathToConf.c_str())[jsonKeys[ConfigKey::LVL_P]];
+	std::string path = CLoader::ConstPaths::pathToLvlvs;
 	path += getLvlString(_level);
 
 	json file = getParseFile(path.c_str());
@@ -120,6 +119,8 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 
 	try
 	{
+		using namespace LVLConstructor::LVLPropertiesKeyes;
+
 		if (file[mode] == "hand")
 			conf.autoContr = false;
 		else
@@ -151,8 +152,8 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLs _level)
 			return LVLConstructor::AutoConstr::NONE;
 		};
 
-		conf.wallPos = getAuto(file["wallPos"]);
-		conf.waterPos = getAuto(file["waterPos"]);
+		conf.wallPos	= getAuto(file["wallPos"]);
+		conf.waterPos	= getAuto(file["waterPos"]);
 	}
 	catch (std::exception&)
 	{
@@ -185,9 +186,9 @@ const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConf
 
 	try
 	{
-		temp.pathToAple = file[jsonKeys[ConfigKey::APLE]];
-		temp.pathToHead = file[jsonKeys[ConfigKey::SNAKE_H]];
-		temp.pathToTorso = file[jsonKeys[ConfigKey::SNAKE_T]];
+		temp.pathToAple		= file[CLoader::JsonKeys::apple];
+		temp.pathToHead		= file[CLoader::JsonKeys::snakeHead];
+		temp.pathToTorso	= file[CLoader::JsonKeys::snakeTorso];
 	}
 	catch (json::exception&)
 	{
@@ -204,15 +205,15 @@ const CLoader::HudConfigs CLoader::Loader::GetHudPaths(const char* _pathToConfig
 
 	try
 	{
-		temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
-		temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
+		temp.width				= file[CLoader::JsonKeys::windowResolution][0];
+		temp.height				= file[CLoader::JsonKeys::windowResolution][1];
 
-		temp.pathToPressBtn = file[jsonKeys[ConfigKey::BTN_PRESS]];
-		temp.pathToReleaseBtn = file[jsonKeys[ConfigKey::BTN_RELEASE]];
-		temp.pathToTextFont = file[jsonKeys[ConfigKey::TEXT_FONT]];
-		temp.pathToHud = file[jsonKeys[ConfigKey::HUD]];
-		temp.pathToBaseWidget = file[jsonKeys[ConfigKey::BASE_WIDGET]];
-		temp.pathToNameWidget = file[jsonKeys[ConfigKey::NAME_WIDGET]];	
+		temp.pathToPressBtn		= file[CLoader::JsonKeys::btnPressTexture];
+		temp.pathToReleaseBtn	= file[CLoader::JsonKeys::btnReleaseTexture];
+		temp.pathToTextFont		= file[CLoader::JsonKeys::textFont];
+		temp.pathToHud			= file[CLoader::JsonKeys::hudTexture];
+		temp.pathToBaseWidget	= file[CLoader::JsonKeys::baseWidgetTexture];
+		temp.pathToNameWidget	= file[CLoader::JsonKeys::nameWidgetTexture];
 	}
 	catch (json::exception&)
 	{
@@ -229,8 +230,8 @@ const CLoader::WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConf
 
 	try
 	{
-		temp.width = file[jsonKeys[ConfigKey::RESOLUTION]][0];
-		temp.height = file[jsonKeys[ConfigKey::RESOLUTION]][1];
+		temp.width		= file[CLoader::JsonKeys::windowResolution][0];
+		temp.height		= file[CLoader::JsonKeys::windowResolution][1];
 	}
 	catch (json::exception&)
 	{

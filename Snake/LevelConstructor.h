@@ -41,6 +41,21 @@ namespace LVLConstructor
 		NONE	= 3
 	};
 
+
+	namespace LVLPropertiesKeyes
+	{
+		const std::string mode = "mode";
+
+		const std::string width = "width";
+		const std::string height = "height";
+		const std::string startPos = "startPos";
+
+		const std::string flor = "florPath";
+		const std::string water = "waterPath";
+		const std::string wall = "wallPath";
+	}
+
+
 	struct LVLConfigs
 	{
 		unsigned int width		= 0;

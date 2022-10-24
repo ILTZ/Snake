@@ -6,7 +6,7 @@
     "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
     "BASE_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
     "NAME_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\nameWidget.png",
-    "APLE": ".\\ResourcesConfigs\\Apls\\repa.png",
+    "APPLE": ".\\ResourcesConfigs\\Apls\\repa.png",
     "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\head3.png",
     "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\body3.png",
     "LVL_PATH": ".\\ResourcesConfigs\\LVLs"
