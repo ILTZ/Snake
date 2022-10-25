@@ -1,7 +1,7 @@
 {
     "mode":     "auto",
     "width":    20,
-    "height":   20,,
+    "height":   20,
     "startPos": [10,10],
     "florPath": ".\\ResourcesConfigs\\Flor\\grass.png",
     "wallPath": ".\\ResourcesConfigs\\Shape\\wallA.png",

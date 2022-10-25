@@ -3,9 +3,9 @@
     "width":    30,
     "height":   30,
     "startPos": [15,15],
-    "florPath": ".\\ResourcesConfigs\\Flor\\flor.png",
-    "wallPath": ".\\ResourcesConfigs\\Shape\\wall.png",
+    "florPath": ".\\ResourcesConfigs\\Flor\\metalicFlor.png",
+    "wallPath": ".\\ResourcesConfigs\\Shape\\rock2.png",
     "waterPath":".\\ResourcesConfigs\\Water\\water.png",
     "wallPos": "edges",
-    "waterPos":"edges"
+    "waterPos":"none"
 }
