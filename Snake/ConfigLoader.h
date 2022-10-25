@@ -100,10 +100,9 @@ namespace CLoader
 
 		};
 
-		class JsonParseException : public BaseException
+		class JsonParseException : public LoaderException
 		{
 		private:
-			const std::string message;
 			const std::string fileName;
 			const std::string guilty;
 
@@ -120,6 +119,26 @@ namespace CLoader
 			const char* GetType()			const noexcept override;
 
 			const std::string GetErrorString()	const noexcept;
+		};
+
+		class JsonFileStructCurruptedException : public LoaderException
+		{
+		private:
+			const std::string fileName;
+
+		public:
+			JsonFileStructCurruptedException(
+				int _line,
+				const char* _file,
+				const std::string& _message,
+				const char* _fileName) noexcept;
+
+		public:
+			const char* what()				const noexcept override;
+			const char* GetType()			const noexcept override;
+
+			const std::string GetErrorString()	const noexcept;
+			const std::string GetFileName()		const noexcept;
 		};
 
 	private:
@@ -163,6 +182,17 @@ namespace CLoader
 			const char* _path,
 			T& _value, 
 			int _index = -1) const;
+
+	private:
+		const void tryToOpenFile(
+			std::ifstream& _iFlofw, 
+			const char* _path) const;
+
+		const void tryToParseFile(
+			nlohmann::json& _jFile, 
+			std::ifstream& _iFlow, 
+			const char* _path) const;
+
 	};
 
 	template<typename T>
@@ -203,6 +233,7 @@ namespace CLoader
 			}
 			else
 				_value = static_cast<T>(_file[_key]);
+
 		}
 		catch (std::exception& _ex)
 		{
@@ -214,6 +245,9 @@ namespace CLoader
 				_key);
 		}
 	}
+
+
+	
 }
 
 #endif

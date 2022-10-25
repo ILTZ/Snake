@@ -43,9 +43,10 @@ void Snake::SnakeBody::Move()
 		));
 	}
 
-	body[0].SetPos(sf::Vector2i(
-		body[0].GetPos().x + static_cast<unsigned int>(xDir),
-		body[0].GetPos().y + static_cast<unsigned int>(yDir)
+	body.front().SetCurrentRotation(headRotation);
+	body.front().SetPos(sf::Vector2i(
+		body.front().GetPos().x + static_cast<unsigned int>(xDir),
+		body.front().GetPos().y + static_cast<unsigned int>(yDir)
 	));
 
 }
@@ -67,6 +68,7 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 			{
 				yDir = -1;
 				xDir = 0;
+				headRotation = ROTATING_BASE::Rotation::G_0;
 			}
 			break;
 
@@ -75,6 +77,7 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 			{
 				yDir = 1;
 				xDir = 0;
+				headRotation = ROTATING_BASE::Rotation::G_180;
 			}
 			break;
 
@@ -83,6 +86,7 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 			{
 				xDir = 1;
 				yDir = 0;
+				headRotation = ROTATING_BASE::Rotation::G_90;
 			}
 			break;
 
@@ -91,6 +95,7 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 			{
 				xDir = -1;
 				yDir = 0;
+				headRotation = ROTATING_BASE::Rotation::G_270;
 			}
 			break;
 
@@ -180,14 +185,20 @@ void Snake::SnakeBody::fillBody(
 		if (i < 1)
 		{
 			body.emplace_back(SnakePart(_pathToHead));
-			body.back().SetPos(sf::Vector2i());
+			body.back().SetAutoRotation(false);
+			body.back().SetCurrentRotation(ROTATING_BASE::Rotation::G_0);
 			continue;
 		}
 
 		body.emplace_back(SnakePart(_pathToTorso));
-		body.back().SetPos(sf::Vector2i());
+		body.back().SetAutoRotation(true);
 	}
 
+}
+
+void Snake::SnakeBody::setHeadRotatinon(ROTATING_BASE::Rotation _rot)
+{
+	body.front().SetCurrentRotation(_rot);
 }
 
 void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
@@ -204,5 +215,6 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 		body.emplace_back(SnakePart(_pathToTorso));
 		body.back().SetPos(pos);
 		body.back().SetScale(scale);
+		body.back().SetAutoRotation(true);
 	}
 }

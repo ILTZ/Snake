@@ -23,8 +23,9 @@ namespace Snake
 		bool	firstMove	= false;
 
 	private:
-		std::vector<SnakePart>	body;
+		std::vector<SnakePart>					body;
 		const unsigned int						snakeStartSize	= 4;
+		ROTATING_BASE::Rotation					headRotation	= ROTATING_BASE::Rotation::G_0;
 
 	private:
 		std::mutex defMt;
@@ -70,6 +71,7 @@ namespace Snake
 		const size_t		GetCurLen()							const;
 
 	private:
+		void setHeadRotatinon(ROTATING_BASE::Rotation _rot);
 		void addTorsoSection(const char* _pathToTorso);
 		void clearBody();
 		void fillBody(

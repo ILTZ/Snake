@@ -56,6 +56,8 @@ namespace LVLConstructor
 	namespace LVLPropertiesKeyes
 	{
 		const std::string mode		= "mode";
+		const std::string handM		= "hand";
+		const std::string autoM		= "auto";
 
 		const std::string width		= "width";
 		const std::string height	= "height";
@@ -67,25 +69,36 @@ namespace LVLConstructor
 
 		const std::string waterPos	= "waterPos";
 		const std::string wallPos	= "wallPos";
-	}
 
+		const std::string map		= "map";
+
+		// if we have autoMode
+		namespace BrickKeyes
+		{
+			const char wall		= 'B'; //like brick
+			const char flor		= 'F';
+			const char water	= 'W';
+		}
+	}
 
 	struct LVLConfigs
 	{
 		unsigned int width		= 0;
 		unsigned int height		= 0;
 
-		std::string pathToWall = "";
-		std::string pathToFlor = "";
+		std::string pathToWall	= "";
+		std::string pathToFlor	= "";
 		std::string pathToWater = "";
 
-		unsigned int startPosX = 0;
-		unsigned int startPosY = 0;
+		unsigned int startPosX	= 0;
+		unsigned int startPosY	= 0;
 
-		AutoConstr wallPos	= AutoConstr::NONE;
-		AutoConstr waterPos = AutoConstr::NONE;
+		AutoConstr wallPos		= AutoConstr::NONE;
+		AutoConstr waterPos		= AutoConstr::NONE;
 
-		bool autoContr = true;
+		bool autoContr			= true;
+
+		std::vector<std::string> map;
 	};
 
 	//
@@ -105,9 +118,9 @@ namespace LVLConstructor
 		Level& operator=(const Level&)			= delete;
 
 	public:
-		const LVLConfigs& GetConfigs()				const;
-		const LVLblock& GetBlock(int _x, int _y)	const;
-		const lvlmap& GetLvlMap()					const;
+		const LVLConfigs&	GetConfigs()				const;
+		const LVLblock&		GetBlock(int _x, int _y)	const;
+		const lvlmap&		GetLvlMap()					const;
 
 	private:
 		lvlmap lvlMAP;
@@ -115,6 +128,10 @@ namespace LVLConstructor
 		void fillFlor(lvlmap& _vec);
 		void fillWall(lvlmap& _vec,		AutoConstr _wallPos = AutoConstr::NONE);
 		void fillWater(lvlmap& _vec,	AutoConstr _waterPos = AutoConstr::NONE);
+
+	private:
+		// Return FLOOR if no matches.
+		const LVLblock keyToBlock(const char _blockKey) const;
 	};
 
 }

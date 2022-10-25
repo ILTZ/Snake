@@ -17,6 +17,12 @@ LVLConstructor::Level::Level(const LVLConfigs& _configs) :
 		fillWall(lvlMAP, configs.wallPos);
 		//fillWater(lvlMAP, configs.waterPos);
 	}
+	else
+	{
+		for (size_t i = 0; i < lvlMAP.size(); ++i)
+			for (size_t j = 0; j < lvlMAP[i].size(); ++j)
+				lvlMAP[i][j] = keyToBlock(configs.map[j][i]);
+	}
 }
 
 
@@ -148,6 +154,21 @@ void LVLConstructor::Level::fillWater(lvlmap& _vec, AutoConstr _waterPos)
 			fillW(_vec, i, j);
 		}
 	}
+}
+
+const LVLblock LVLConstructor::Level::keyToBlock(const char _blockKey) const
+{
+	if (_blockKey == LVLPropertiesKeyes::BrickKeyes::flor)
+		return LVLblock::FLOR;
+
+	if (_blockKey == LVLPropertiesKeyes::BrickKeyes::wall)
+		return LVLblock::WALL;
+
+	if (_blockKey == LVLPropertiesKeyes::BrickKeyes::water)
+		return LVLblock::WATER;
+
+
+	return LVLblock::FLOR;
 }
 
 LVLs LVLConstructor::operator++(LVLs& _x)

@@ -202,6 +202,7 @@
     <ClInclude Include="MoveOnBoardBaseObj.h" />
     <ClInclude Include="LeaderRecordWidget.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="RotaitingBase.h" />
     <ClInclude Include="ScaleDeterminant.h" />
     <ClInclude Include="ScoreWidget.h" />
     <ClInclude Include="SmartPointer.h" />

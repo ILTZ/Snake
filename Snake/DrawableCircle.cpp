@@ -79,7 +79,9 @@ const sf::Vector2f DrawableCircle::GetPosition() const
 void DrawableCircle::SetPosition(const sf::Vector2f& _newPos)
 {
 	baseFigure->setPosition(_newPos);
-	changeRotation(_newPos);
+
+	if (autoRotation)
+		changeRotation(_newPos);
 
 	currentPosition = _newPos;
 }
@@ -106,6 +108,41 @@ void DrawableCircle::SetScale(const sf::Vector2f& _newScale)
 void DrawableCircle::Draw(sf::RenderWindow& _target)
 {
 	_target.draw(*baseFigure);
+}
+
+void DrawableCircle::SetCurrentRotation(ROTATING_BASE::Rotation _rot)
+{
+	if (currentRotation == _rot)
+		return;
+
+	currentRotation = _rot;
+
+	switch (_rot)
+	{
+	case ROTATING_BASE::Rotation::G_0:
+		baseFigure->setRotation(0.f);
+		break;
+
+	case ROTATING_BASE::Rotation::G_90:
+		baseFigure->setRotation(90.f);
+		break;
+
+	case ROTATING_BASE::Rotation::G_180:
+		baseFigure->setRotation(180.f);
+		break;
+
+	case ROTATING_BASE::Rotation::G_270:
+		baseFigure->setRotation(270.f);
+		break;
+
+	default:
+		break;
+	}
+}
+
+const ROTATING_BASE::Rotation DrawableCircle::GetCurrentRotation() const
+{
+	return ROTATING_BASE::Rotation();
 }
 
 const sf::Vector2f DrawableCircle::GetSize() const

@@ -6,8 +6,9 @@
 
 #include "SmartPointer.h"
 #include "BaseDrawable.h"
+#include "RotaitingBase.h"
 
-class DrawableCircle : public BaseDrawable
+class DrawableCircle : public BaseDrawable, public ROTATING_BASE::RotatingBase
 {
 protected:
 	SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
@@ -25,7 +26,11 @@ public:
 	virtual ~DrawableCircle();
 
 public:
-	virtual void Draw(sf::RenderWindow& _target)				override;
+	virtual void Draw(sf::RenderWindow& _target)					override;
+
+public:
+	virtual void SetCurrentRotation(ROTATING_BASE::Rotation _rot)	override;
+	virtual const ROTATING_BASE::Rotation GetCurrentRotation()		const override;
 
 public:
 	virtual const sf::Vector2f GetScale()						const override;

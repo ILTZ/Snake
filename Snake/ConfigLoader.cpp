@@ -12,20 +12,7 @@
 
 #endif // !NDEBUG
 																
-#include "ConfigLoader.h"
-
-#define TRY_OPEN_FILE_EXCEPTION(streamFlow, path)							\
-{																			\
-	if (streamFlow.bad())													\
-	{																		\
-		streamFlow.close();													\
-		throw CLoader::Loader::LoaderException(								\
-			__LINE__,														\
-			__FILE__,														\
-			std::string("No such file or directory: ") + std::string(path));\
-	}																		\
-																			\
-}																			\
+#include "ConfigLoader.h"																		\
 																	
 using json = nlohmann::json;
 
@@ -38,13 +25,12 @@ CLoader::Loader::Loader(const std::string& _path) noexcept :
 const nlohmann::json CLoader::Loader::getParseFile(const char* _pathToConfig) const
 {
 	std::ifstream f;
-	f.open(_pathToConfig);
+	tryToOpenFile(f, _pathToConfig);
 
-	TRY_OPEN_FILE_EXCEPTION(f, _pathToConfig);
+	json file;
+	tryToParseFile(file, f, _pathToConfig);
 
-	json file = json::parse(f);
 	f.close();
-
 	return file;
 }
 
@@ -81,6 +67,38 @@ const std::string CLoader::Loader::getLvlString(LVLConstructor::LVLs _lvl) const
 	return ls;
 }
 
+const void CLoader::Loader::tryToOpenFile(std::ifstream& _iFlofw, const char* _path) const
+{
+	_iFlofw.open(_path);
+
+	if (!_iFlofw.is_open())
+	{
+		_iFlofw.close();
+
+		throw CLoader::Loader::LoaderException(
+			__LINE__, 
+			__FILE__, 
+			std::string("No such file or directory: ") + std::string(_path)); 
+	}
+}
+const void CLoader::Loader::tryToParseFile(nlohmann::json& _jFile, std::ifstream& _iFlow, const char* _path) const
+{
+	try
+	{
+		_jFile = json::parse(_iFlow);
+	}
+	catch (json::exception& _ex)
+	{
+		_iFlow.close();
+
+		throw CLoader::Loader::JsonFileStructCurruptedException(
+			__LINE__,
+			__FILE__,
+			_ex.what(),
+			_path);
+	}
+}
+
 std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::LVLs _level)
 {
 	std::string path = CLoader::ConstPaths::pathToLvlvs;
@@ -95,9 +113,9 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::L
 
 	LVLConstructor::LVLConfigs conf;
 
-	if (tempMode == "hand")
+	if (tempMode == LVLConstructor::LVLPropertiesKeyes::handM)
 		conf.autoContr = false;
-	else
+	else if (tempMode == LVLConstructor::LVLPropertiesKeyes::autoM)
 		conf.autoContr = true;
 
 	extractValue(file, width.c_str(),		path.c_str(), conf.width);
@@ -109,32 +127,44 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::L
 	extractValue(file, wall.c_str(),		path.c_str(), conf.pathToWall);
 	extractValue(file, water.c_str(),		path.c_str(), conf.pathToWater);
 
-	auto getAuto = [&](const std::string& _mode)
-		{
-			if (_mode == "none")
+	// Auto mode {
+	if (conf.autoContr)
+	{
+		auto getAuto = [&](const std::string& _mode)
+			{
+				if (_mode == "none")
+					return LVLConstructor::AutoConstr::NONE;
+
+				if (_mode == "edges")
+					return LVLConstructor::AutoConstr::EDGES;
+
+				if (_mode == "corner")
+					return LVLConstructor::AutoConstr::CORNER;
+
+				if (_mode == "discret")
+					return LVLConstructor::AutoConstr::DISCRET;
+
 				return LVLConstructor::AutoConstr::NONE;
+			};
 
-			if (_mode == "edges")
-				return LVLConstructor::AutoConstr::EDGES;
+		std::string tempWallPos;
+		std::string tempWaterPos;
 
-			if (_mode == "corner")
-				return LVLConstructor::AutoConstr::CORNER;
+		extractValue(file, wallPos.c_str(),		path.c_str(), tempWallPos);
+		extractValue(file, waterPos.c_str(),	path.c_str(), tempWaterPos);
 
-			if (_mode == "discret")
-				return LVLConstructor::AutoConstr::DISCRET;
-
-			return LVLConstructor::AutoConstr::NONE;
-		};
-
-	std::string tempWallPos;
-	std::string tempWaterPos;
-
-	extractValue(file, wallPos.c_str(),		path.c_str(), tempWallPos);
-	extractValue(file, waterPos.c_str(),	path.c_str(), tempWaterPos);
-
-	conf.wallPos	= getAuto(tempWallPos);
-	conf.waterPos	= getAuto(tempWaterPos);
-	
+		conf.wallPos	= getAuto(tempWallPos);
+		conf.waterPos	= getAuto(tempWaterPos);
+	}// Auto mode }
+	else
+	{
+		for (unsigned int i = 0; i < conf.height; ++i)
+		{
+			std::string temp;
+			extractValue(file, map.c_str(), path.c_str(), temp, i);
+			conf.map.push_back(temp);
+		}
+	}
 
 	return std::make_shared<LVLConstructor::Level>(conf);
 }
@@ -305,9 +335,10 @@ CLoader::Loader::LoaderException::LoaderException(
 const char* CLoader::Loader::LoaderException::what() const noexcept
 {
 	std::ostringstream os;
-	os << GetType() << std::endl
-		<< "[Error String] " << GetErrorString() << std::endl;
+	os << GetType() << std::endl;
+	os << "[Error String] " << GetErrorString() << std::endl << std::endl;
 
+	os << "EXCEPTION IS THROW:" << std::endl;
 	os << GetOriginString();
 	whatBuffer = os.str();
 
@@ -330,8 +361,7 @@ CLoader::Loader::JsonParseException::JsonParseException(
 	const std::string& _errorText,
 	const char* _fileName,
 	const char* _guilty) :
-	BaseException(_line, _file),
-	message{ _errorText },
+	LoaderException(_line, _file, _errorText),
 	fileName{ _fileName },
 	guilty{ _guilty }
 {
@@ -343,8 +373,9 @@ const char* CLoader::Loader::JsonParseException::what() const noexcept
 	os << GetType() << std::endl;
 	os << "[Error String] " << GetErrorString() << std::endl;
 	os << "[File name] " << fileName << std::endl;
-	os << "[Check the key]: " << guilty << std::endl;
+	os << "[Check the key]: " << guilty << std::endl << std::endl;
 
+	os << "EXCEPTION IS THROW:" << std::endl;
 	os << GetOriginString();
 	whatBuffer = os.str();
 
@@ -360,7 +391,43 @@ const std::string CLoader::Loader::JsonParseException::GetErrorString() const no
 }
 // File parse exception }
  
-#pragma endregion
+// File struct currupted exception {
+CLoader::Loader::JsonFileStructCurruptedException::JsonFileStructCurruptedException(
+	int _line,
+	const char* _file,
+	const std::string& _message,
+	const char* _fileName) noexcept :
+	LoaderException(_line, _file, _message),
+	fileName{ _fileName }
+{
+}
+const char* CLoader::Loader::JsonFileStructCurruptedException::what() const noexcept
+{
+	std::ostringstream os;
+	os << GetType() << std::endl;
+	os << "[Error String] " << GetErrorString() << std::endl;
+	os << "[File name] " << fileName << std::endl << std::endl;
 
+	os << "EXCEPTION IS THROW:" << std::endl;
+	os << GetOriginString();
+	whatBuffer = os.str();
+
+	return whatBuffer.c_str();
+}
+const char* CLoader::Loader::JsonFileStructCurruptedException::GetType() const noexcept
+{
+	return "FILE STRUCT CURRUPTED EXCEPTION";
+}
+const std::string CLoader::Loader::JsonFileStructCurruptedException::GetErrorString() const noexcept
+{
+	return message;
+}
+const std::string CLoader::Loader::JsonFileStructCurruptedException::GetFileName() const noexcept
+{
+	return fileName;
+}
+// File struct currupted exception }
+
+#pragma endregion
 
 
