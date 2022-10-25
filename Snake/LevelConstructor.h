@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "BaseException.h"
+
 namespace LVLConstructor
 {
 	enum class LVLblock
@@ -107,6 +109,28 @@ namespace LVLConstructor
 
 	class Level
 	{
+	public:
+		class LevelConstructorException : public BaseException
+		{
+		protected:
+			const std::string message;
+			const std::string errorString;
+
+		public:
+			LevelConstructorException(
+				int _line,
+				const char* _file,
+				const char* _message,
+				const char* _errorString);
+
+		public:
+			const char* what()				const noexcept override;
+			const char* GetType()			const noexcept override;
+
+			const std::string GetErrorString()	const noexcept;
+			const std::string GetMessage()		const noexcept;
+		};
+
 	private:
 		LVLConfigs configs;
 
@@ -132,6 +156,10 @@ namespace LVLConstructor
 	private:
 		// Return FLOOR if no matches.
 		const LVLblock keyToBlock(const char _blockKey) const;
+
+	private:
+	
+		const bool checkLvlConfigs(const LVLConfigs& cfg) const;
 	};
 
 }

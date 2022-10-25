@@ -1,7 +1,5 @@
 #include "BaseException.h"
 
-#include <sstream>
-
 
 BaseException::BaseException(int _line, const char* _file) noexcept
 	: line(_line), file(_file)
