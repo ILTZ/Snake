@@ -20,7 +20,7 @@ namespace MainWin
 
 	private:
 		sf::RenderWindow			wnd;
-		std::shared_ptr<UI::Ui>	hud;
+		std::shared_ptr<UI::Ui>		hud;
 
 	public:
 		MainWindow(
@@ -54,8 +54,8 @@ namespace MainWin
 
 
 	private:
-		MS::Mouse mouse;
-		Keyboard::Keyboard kb;
+		MS::Mouse			mouse;
+		Keyboard::Keyboard	kb;
 
 	};
 }
