@@ -188,10 +188,7 @@ void App::wndProcesses()
 	wnd->get().display();
 }
 
-void App::drawMenu()
-{
-	
-}
+
 
 
 

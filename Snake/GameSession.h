@@ -85,7 +85,7 @@ namespace GAME_SESSION
 		void spawnApple(bool _appleOnBoard);
 
 	private:
-		void wndDraw(const APP_STATE::AppState& _state);
+		void wndProcesses(const APP_STATE::AppState& _state);
 	};
 
 }

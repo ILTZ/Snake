@@ -62,7 +62,7 @@ std::optional<GameSessionResults> GameSession::GameProcess(APP_STATE::AppState& 
 
 		spawnApple(appleOnBoard);
 
-		wndDraw(_state);
+		wndProcesses(_state);
 
 		DoLogic(_state);
 
@@ -155,7 +155,7 @@ void GameSession::spawnApple(bool _appleOnBoard)
 	appleOnBoard = true;
 }
 
-void GameSession::wndDraw(const APP_STATE::AppState& _state)
+void GameSession::wndProcesses(const APP_STATE::AppState& _state)
 {
 	wnd->get().clear();
 

@@ -43,7 +43,7 @@ private:
 
 private:
 	void wndProcesses();
-	void drawMenu();
+
 
 };
 
