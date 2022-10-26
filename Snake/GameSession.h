@@ -55,9 +55,6 @@ namespace GAME_SESSION
 		unsigned int	curPoints		= 0u;
 		bool			appleOnBoard	= false;
 
-	private:
-		bool pause = false;
-
 	public:
 		GameSession(
 			MainWin::MainWindow*						_wnd, 

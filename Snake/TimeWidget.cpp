@@ -42,11 +42,8 @@ void TimeWidget::SetPosition(const sf::Vector2f& _newPosition)
     widgetText->SetPos(_newPosition);
 }
 
-void TimeWidget::WorkCycle(bool _isWork)
+void TimeWidget::WorkCycle()
 {
-    if (!_isWork)
-        return;
-
     if (time.CheckInterval(timerInterval))
     {
         increaseTime();

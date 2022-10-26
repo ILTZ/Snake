@@ -27,7 +27,7 @@ public:
 	void SetScale(const sf::Vector2f& _newScale)		override;
 	void SetPosition(const sf::Vector2f& _newPosition)	override;
 
-	void WorkCycle(bool _isWork);
+	void WorkCycle();
 
 	const unsigned int GetMinuts()		const;
 	const unsigned int GetSeconds()		const;
