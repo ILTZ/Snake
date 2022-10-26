@@ -91,18 +91,11 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::L
 	path += getLvlString(_level);
 
 	json file = getParseFile(path.c_str());
-
 	using namespace LVLConstructor::LVLPropertiesKeyes;
 
-	std::string tempMode;
-	extractValue(file, mode.c_str(), path.c_str(), tempMode);
 
 	LVLConstructor::LVLConfigs conf;
 
-	if (tempMode == LVLConstructor::LVLPropertiesKeyes::handM)
-		conf.autoContr = false;
-	else if (tempMode == LVLConstructor::LVLPropertiesKeyes::autoM)
-		conf.autoContr = true;
 
 	extractValue(file, width.c_str(),		path.c_str(), conf.width);
 	extractValue(file, height.c_str(),		path.c_str(), conf.height);
@@ -113,44 +106,14 @@ std::shared_ptr<LVLConstructor::Level> CLoader::Loader::GetLVL(LVLConstructor::L
 	extractValue(file, wall.c_str(),		path.c_str(), conf.pathToWall);
 	extractValue(file, water.c_str(),		path.c_str(), conf.pathToWater);
 
-	// Auto mode {
-	if (conf.autoContr)
+	
+	for (unsigned int i = 0; i < conf.height; ++i)
 	{
-		auto getAuto = [&](const std::string& _mode)
-			{
-				if (_mode == "none")
-					return LVLConstructor::AutoConstr::NONE;
-
-				if (_mode == "edges")
-					return LVLConstructor::AutoConstr::EDGES;
-
-				if (_mode == "corner")
-					return LVLConstructor::AutoConstr::CORNER;
-
-				if (_mode == "discret")
-					return LVLConstructor::AutoConstr::DISCRET;
-
-				return LVLConstructor::AutoConstr::NONE;
-			};
-
-		std::string tempWallPos;
-		std::string tempWaterPos;
-
-		extractValue(file, wallPos.c_str(),		path.c_str(), tempWallPos);
-		extractValue(file, waterPos.c_str(),	path.c_str(), tempWaterPos);
-
-		conf.wallPos	= getAuto(tempWallPos);
-		conf.waterPos	= getAuto(tempWaterPos);
-	}// Auto mode }
-	else
-	{
-		for (unsigned int i = 0; i < conf.height; ++i)
-		{
-			std::string temp;
-			extractValue(file, map.c_str(), path.c_str(), temp, i);
-			conf.map.push_back(temp);
-		}
+		std::string temp;
+		extractValue(file, map.c_str(), path.c_str(), temp, i);
+		conf.map.push_back(temp);
 	}
+	
 
 	return std::make_shared<LVLConstructor::Level>(conf);
 }

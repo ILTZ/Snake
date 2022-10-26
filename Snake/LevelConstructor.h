@@ -17,32 +17,6 @@ namespace LVLConstructor
 		SNAKE_T	= 4
 	};
 
-	enum class AutoConstr
-	{
-		// xxxxxxxxxxxx
-		// x	      x
-		// x		  x
-		// x          x
-		// xxxxxxxxxxxx
-		EDGES	= 0,
-
-		// xx        xx
-		// x          x
-		//
-		// x          x
-		// xx        xx
-		CORNER	= 1,
-
-		// x          x
-		//   x      x
-		//    x    x
-		//   x      x
-		// x          x
-		DISCRET = 2,
-
-		NONE	= 3
-	};
-
 	enum class LVLs
 	{
 		LVL_1 = 0,
@@ -95,11 +69,6 @@ namespace LVLConstructor
 		unsigned int startPosX	= 0;
 		unsigned int startPosY	= 0;
 
-		AutoConstr wallPos		= AutoConstr::NONE;
-		AutoConstr waterPos		= AutoConstr::NONE;
-
-		bool autoContr			= true;
-
 		std::vector<std::string> map;
 	};
 
@@ -149,17 +118,13 @@ namespace LVLConstructor
 	private:
 		lvlmap lvlMAP;
 
-		void fillFlor(lvlmap& _vec);
-		void fillWall(lvlmap& _vec,		AutoConstr _wallPos = AutoConstr::NONE);
-		void fillWater(lvlmap& _vec,	AutoConstr _waterPos = AutoConstr::NONE);
-
 	private:
 		// Return FLOOR if no matches.
 		const LVLblock keyToBlock(const char _blockKey) const;
 
 	private:
-	
-		const bool checkLvlConfigs(const LVLConfigs& cfg) const;
+		const void checkLvlConfigs(const LVLConfigs& cfg) const;
+
 	};
 
 }
