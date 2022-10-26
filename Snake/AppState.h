@@ -40,16 +40,17 @@ namespace APP_STATE
 		AppState& operator=(AppState&&)			= delete;
 
 	public:
-		const States GetState()				const;
-		void	SetState(States _state);
+		const	States GetState()				const noexcept;
+		void	SetState(States _state)			noexcept;
 
-		const bool CheckMainMenuState()		const;
-		const bool CheckGameProcessStates()	const;
-		const bool CheckMovebleStates()		const;
+		const bool CheckMainMenuState()			const noexcept;
+		const bool CheckGameProcessStates()		const noexcept;
+		const bool CheckMovebleStates()			const noexcept;
+		const bool CheckTabuForLogicStates()	const noexcept;
 
 	public:
-		void ExitApp();
-		const bool ToExit() const;
+		void ExitApp()							noexcept;
+		const bool ToExit()						const noexcept;
 
 	private:
 

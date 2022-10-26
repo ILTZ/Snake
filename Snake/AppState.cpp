@@ -17,7 +17,7 @@ void APP_STATE::AppState::SetState(States _state)
     currentState = _state;
 }
 
-const bool APP_STATE::AppState::CheckMainMenuState() const
+const bool APP_STATE::AppState::CheckMainMenuState() const noexcept
 {
 	std::lock_guard<std::mutex> lg(defMutex);
 
@@ -33,7 +33,7 @@ const bool APP_STATE::AppState::CheckMainMenuState() const
 	return false;
 }
 
-const bool APP_STATE::AppState::CheckGameProcessStates() const 
+const bool APP_STATE::AppState::CheckGameProcessStates() const noexcept
 {
 	std::lock_guard<std::mutex> lg(defMutex);
 
@@ -49,7 +49,7 @@ const bool APP_STATE::AppState::CheckGameProcessStates() const
     return false;
 }
 
-const bool APP_STATE::AppState::CheckMovebleStates() const
+const bool APP_STATE::AppState::CheckMovebleStates() const noexcept
 {
 	std::lock_guard<std::mutex> lg(defMutex);
 
@@ -59,13 +59,29 @@ const bool APP_STATE::AppState::CheckMovebleStates() const
 	return false;
 }
 
-void APP_STATE::AppState::ExitApp()
+const bool APP_STATE::AppState::CheckMovebleStates() const noexcept
 {
+	std::lock_guard<std::mutex> lg(defMutex);
+
+	switch (currentState)
+	{
+	case APP_STATE::States::GAME_PAUSE:
+	case APP_STATE::States::INPUT_NAME:
+	case APP_STATE::States::GAME_OVER:
+	case APP_STATE::States::MAIN_MENU:
+		return true;
+	}
+}
+
+void APP_STATE::AppState::ExitApp() noexcept
+{
+	std::lock_guard<std::mutex> lg(defMutex);
+
 	currentState = States::EXIT;
 	switchLock = true;
 }
 
-const bool APP_STATE::AppState::ToExit() const
+const bool APP_STATE::AppState::ToExit() const noexcept
 {
 	return (currentState == States::EXIT) ? true : false;
 }
