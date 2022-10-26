@@ -4,10 +4,7 @@
 
 #include <cassert>
 
-
-
 using namespace UI;
-
 
 UI::Ui::Ui(CLoader::HudConfigs& _configs) :
 	pathToBtnReleased{_configs.pathToReleaseBtn},
@@ -35,63 +32,54 @@ UI::Ui::Ui(CLoader::HudConfigs& _configs) :
 	widgetLayout->SetDistanceBeetwenObjcts(hudSprite->getGlobalBounds().height / 10.f);
 }
 
+#pragma region DrawProcesses
+
 void UI::Ui::DrawUI(sf::RenderWindow& _wnd, APP_STATE::States _state)
 {
 	std::lock_guard lk(defMutex);
 
 	switch (_state)
 	{
-		case APP_STATE::States::MAIN_MENU:
-			DrawButtons(_wnd);
-			break;
+	case APP_STATE::States::MAIN_MENU:
+	case APP_STATE::States::LVL_SELECT:
+	case APP_STATE::States::LVL_SELECTED:
+	case APP_STATE::States::LEADERS_VIEW:
+		DrawMainLayout(_wnd);
+		break;
 
-		case APP_STATE::States::LVL_SELECT:
-			DrawButtons(_wnd);
-			break;
+	case APP_STATE::States::GAME_PROCESS:
+		DrawHUDSprite(_wnd);
+		DrawWidgetLayout(_wnd);
+		break;
 
-		case APP_STATE::States::LVL_SELECTED:
-			DrawButtons(_wnd);
-			break;
+	case APP_STATE::States::GAME_PAUSE:
+	case APP_STATE::States::INPUT_NAME:
+	case APP_STATE::States::GAME_OVER:
+		DrawHUDSprite(_wnd);
+		DrawWidgetLayout(_wnd);
+		DrawMainLayout(_wnd);
+		break;
 
-		case APP_STATE::States::GAME_PROCESS:
-			DrawHUD(_wnd);
-			break;
 
-		case APP_STATE::States::GAME_PAUSE:
-			DrawHUD(_wnd);
-			DrawButtons(_wnd);
-			break;
-
-		case APP_STATE::States::INPUT_NAME:
-			DrawHUD(_wnd);
-			DrawButtons(_wnd);
-			break;
-
-		case APP_STATE::States::GAME_OVER:
-			DrawHUD(_wnd);
-			DrawButtons(_wnd);
-			break;
-
-		case APP_STATE::States::LEADERS_VIEW:
-			DrawButtons(_wnd);
-			break;
-
-		default:
-			break;
+	default:
+		break;
 	}
 }
 
-
-void Ui::DrawHUD(sf::RenderWindow& _wnd)
+void Ui::DrawHUDSprite(sf::RenderWindow& _wnd)
 {
 	_wnd.draw(*hudSprite);
+}
+void Ui::DrawWidgetLayout(sf::RenderWindow& _wnd)
+{
 	widgetLayout->Draw(_wnd);
 }
-
-void UI::Ui::DrawButtons(sf::RenderWindow& _wnd)
-{ 
+void UI::Ui::DrawMainLayout(sf::RenderWindow& _wnd)
+{
 	mainLayout->Draw(_wnd);
 }
+
+#pragma endregion
 
 void UI::Ui::SetScale(const sf::Vector2f& _newScale)
 {
@@ -277,7 +265,6 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 	}
 
 }
-
 
 std::optional<InputNameWidget*> UI::Ui::GetInputNameWidget()
 {

@@ -79,6 +79,9 @@ int App::Run()
 			auto session = createGameSession();
 			if (session.get())
 			{
+				wnd->GetHUD().ClearBtnsLogicArr();
+				wnd->GetHUD().ClearMainLayout();
+
 				appState.SetState(APP_STATE::States::GAME_PROCESS);
 
 				auto result = session->GameProcess(appState);

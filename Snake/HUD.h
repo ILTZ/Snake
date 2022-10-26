@@ -1,12 +1,6 @@
 #ifndef HUD_H
 #define HUD_H
 
-#include <vector>
-#include <string>
-#include <optional>
-#include <mutex>
-
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Button.h"
@@ -61,10 +55,17 @@ namespace UI
 		Ui(const Ui&)				= delete;
 		Ui& operator=(const Ui&)	= delete;
 
+		// Draw {
 	public:
 		void DrawUI(sf::RenderWindow& _wnd, APP_STATE::States _state);
-		void DrawHUD		(sf::RenderWindow& _wnd);
-		void DrawButtons	(sf::RenderWindow& _wnd);
+
+	private:
+		void DrawHUDSprite		(sf::RenderWindow& _wnd);
+		void DrawWidgetLayout	(sf::RenderWindow& _wnd);
+		void DrawMainLayout		(sf::RenderWindow& _wnd);
+		// Draw }
+
+	public:
 		void SetScale		(const sf::Vector2f& _newScale);
 		
 	private:
