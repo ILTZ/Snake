@@ -23,6 +23,8 @@ namespace ROTATING_BASE
 		virtual void SetCurrentRotation(Rotation _rot)		= 0;
 
 		virtual const Rotation GetCurrentRotation() const	= 0;
+
+		virtual ~RotatingBase() {};
 	};
 
 

@@ -3,8 +3,7 @@
 
 #include <vector>
 #include <memory>
-
-#include "SFML/Graphics/RectangleShape.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "BaseDrawable.h"
 #include "ScaleDeterminant.h"

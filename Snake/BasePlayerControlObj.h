@@ -11,6 +11,7 @@ namespace Base
 	public:
 		virtual void SetStartPos(const sf::Vector2u& _startPos) = 0;
 
+		~BasePlayerControlObj() {};
 	};
 }
 

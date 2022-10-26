@@ -1,9 +1,7 @@
 #ifndef DRAWABLE_RECTANGLE_H
 #define DRAWABLE_RECTANGLE_H
 
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "SmartPointer.h"
 #include "BaseDrawable.h"

@@ -1,8 +1,10 @@
 #ifndef BASE_DRAWABLE_H
 #define BASE_DRAWABLE_H
 
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+
 
 class BaseDrawable
 {

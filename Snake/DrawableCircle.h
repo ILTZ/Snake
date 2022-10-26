@@ -1,7 +1,6 @@
 #ifndef DRAWABLE_CIRCLE_H
 #define DRAWABLE_CIRCLE_H
 
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "SmartPointer.h"
