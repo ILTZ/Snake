@@ -28,6 +28,8 @@ void EventHandler::HandleKeyEvent(
 
 	if (!_keyEvent.value().isPressed)
 	{
+		std::lock_guard lk(defMt);
+
 		switch (_keyEvent.value().key)
 		{
 		case sf::Keyboard::Key::W:
@@ -177,5 +179,14 @@ std::optional<LVLConstructor::LVLs> EventHandler::HandleMouseEvent(
 
 	return {};
 }
+
+void EventHandler::FlushBasePawn()
+{
+	std::lock_guard lk(defMt);
+
+	pawn.reset();
+}
+
+
 
 

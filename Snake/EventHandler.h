@@ -21,9 +21,11 @@ public:
 	};
 
 private:
-	std::shared_ptr<UI::Ui>			hud;
+	std::shared_ptr<UI::Ui>				hud;
 	std::shared_ptr<BaseP::BasePawn>	pawn;
 
+private:
+	std::mutex defMt;
 
 public:
 	EventHandler() = default;
@@ -52,7 +54,8 @@ public:
 		const std::optional<MS::MouseEvent>& _mouseEvent, 
 		APP_STATE::AppState& _state);
 
-	
+public:
+	void FlushBasePawn();
 
 private:
 

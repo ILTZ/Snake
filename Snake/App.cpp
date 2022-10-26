@@ -89,6 +89,8 @@ int App::Run()
 						result.value().points,
 						result.value().minuts,
 						result.value().seconds);
+
+				handler.FlushBasePawn();
 			}
 			else
 			{
