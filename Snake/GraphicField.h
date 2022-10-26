@@ -1,7 +1,6 @@
-#ifndef GRAPHICFIELD_H
-#define GRAPHICFIELD_H
+#ifndef GRAPHIC_FIELD_H
+#define GRAPHIC_FIELD_H
 
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <unordered_map>
 #include <memory>

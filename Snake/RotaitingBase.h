@@ -15,8 +15,8 @@ namespace ROTATING_BASE
 	class RotatingBase
 	{
 	protected:
-		bool autoRotation			= false;
-		Rotation currentRotation	= Rotation::G_0;
+		bool		autoRotation	= true;
+		Rotation	currentRotation	= Rotation::G_0;
 
 	public:
 		virtual void SetAutoRotation(bool _auto) { autoRotation = _auto; }

@@ -142,7 +142,7 @@ void DrawableCircle::SetCurrentRotation(ROTATING_BASE::Rotation _rot)
 
 const ROTATING_BASE::Rotation DrawableCircle::GetCurrentRotation() const
 {
-	return ROTATING_BASE::Rotation();
+	return currentRotation;
 }
 
 const sf::Vector2f DrawableCircle::GetSize() const

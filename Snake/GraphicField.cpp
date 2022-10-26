@@ -5,8 +5,8 @@ GraphicField::GraphicField::Sprite::Sprite(const char* _pTt)
 	mainText = new sf::Texture();
 	mainText->loadFromFile(_pTt);
 
-	width = static_cast<float>(mainText->getSize().x);
-	height = static_cast<float>(mainText->getSize().y);
+	width	= static_cast<float>(mainText->getSize().x);
+	height	= static_cast<float>(mainText->getSize().y);
 
 	mainSprite = new sf::Sprite(*mainText);
 }

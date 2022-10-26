@@ -13,8 +13,8 @@ protected:
 	SmartPointer::SmartPointer<sf::CircleShape>	baseFigure;
 	SmartPointer::SmartPointer<sf::Texture>		baseTexture;
 
-	float width = 0.f;
-	float height = 0.f;
+	float width		= 0.f;
+	float height	= 0.f;
 
 public:
 	DrawableCircle(const char* _pathToTexture);

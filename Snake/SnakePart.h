@@ -11,7 +11,7 @@ private:
 public:
 	SnakePart(const char* _pathToText);
 	SnakePart(const SnakePart& _other);
-	SnakePart(SnakePart&& _other)				noexcept;
+	SnakePart(SnakePart&& _other)					noexcept;
 
 public:
 	void SetPos(const sf::Vector2i& _newPos)		override;

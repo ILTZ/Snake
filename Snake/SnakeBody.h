@@ -42,11 +42,11 @@ namespace Snake
 		// <Base::BasePlayerControlObj> funcs {
 	public: 
 		//<BaseD> funcs {
-		void Draw(sf::RenderWindow& _wnd)						override;
-		void SetScale(const sf::Vector2f& _newScale)			override;
+		void Draw(sf::RenderWindow& _wnd)					override;
+		void SetScale(const sf::Vector2f& _newScale)		override;
 		//<BaseD> funcs }
 	private:
-		void SetPosition(const sf::Vector2f& _newPos) override{};
+		void SetPosition(const sf::Vector2f& _newPos)		override{};
 
 	public:
 

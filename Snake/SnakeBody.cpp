@@ -191,14 +191,13 @@ void Snake::SnakeBody::fillBody(
 		}
 
 		body.emplace_back(SnakePart(_pathToTorso));
-		body.back().SetAutoRotation(true);
 	}
 
 }
 
 void Snake::SnakeBody::setHeadRotatinon(ROTATING_BASE::Rotation _rot)
 {
-	body.front().SetCurrentRotation(_rot);
+	body[0].SetCurrentRotation(_rot);
 }
 
 void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
@@ -216,5 +215,6 @@ void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
 		body.back().SetPos(pos);
 		body.back().SetScale(scale);
 		body.back().SetAutoRotation(true);
+		
 	}
 }

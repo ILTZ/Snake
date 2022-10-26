@@ -11,7 +11,6 @@
 #include "SpeedWidget.h"
 
 #include "AppState.h"
-#include "BaseDrawable.h"
 #include "Apple.h"
 
 namespace GAME_SESSION
