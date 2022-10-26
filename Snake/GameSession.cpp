@@ -166,15 +166,12 @@ void GameSession::wndDraw(const APP_STATE::AppState& _state)
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);
-		wnd->DrawHUD();
 		break;
 
 	case APP_STATE::States::GAME_PAUSE:
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);
-		wnd->DrawHUD();
-		wnd->DrawButtons();
 		break;
 
 	case APP_STATE::States::GAME_OVER:
@@ -182,14 +179,14 @@ void GameSession::wndDraw(const APP_STATE::AppState& _state)
 		wnd->Draw(*gp);
 		wnd->Draw(*snake);
 		wnd->Draw(*apple);
-		wnd->DrawHUD();
-		wnd->DrawButtons();
 		break;
 
 	default:
 		return;
 		break;
 	}
+
+	wnd->DrawUI(_state.GetState());
 
 	wnd->get().display();
 }

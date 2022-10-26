@@ -47,6 +47,7 @@ namespace MainWin
 		UI::Ui&	GetHUD();
 		void		DrawHUD();
 		void		DrawButtons();
+		void		DrawUI(APP_STATE::States _cutState);
 
 	public:
 		const sf::Vector2u GetHudTargetSize()		const;

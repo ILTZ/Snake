@@ -180,36 +180,14 @@ void App::wndProcesses()
 		return;
 	}
 
-	drawMenu();
+	wnd->get().clear();
+	wnd->DrawUI(appState.GetState());
+	wnd->get().display();
 }
 
 void App::drawMenu()
 {
-	wnd->get().clear();
-
-	switch (appState.GetState())
-	{
-	case APP_STATE::States::MAIN_MENU:
-		wnd->DrawButtons();
-		break;
-
-	case APP_STATE::States::LVL_SELECT:
-		wnd->DrawButtons();
-		break;
-
-	case APP_STATE::States::LEADERS_VIEW:
-		wnd->DrawButtons();
-		break;
-
-	case APP_STATE::States::EXIT:
-		return;
-		break;
-
-	default:
-		break;
-	}
-
-	wnd->get().display();
+	
 }
 
 

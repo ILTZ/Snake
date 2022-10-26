@@ -31,6 +31,12 @@ void MainWin::MainWindow::DrawButtons()
 		hud->DrawButtons(wnd);	
 }
 
+void MainWin::MainWindow::DrawUI(APP_STATE::States _cutState)
+{
+	if (wnd.isOpen())
+		hud->DrawUI(wnd, _cutState);
+}
+
 const sf::Vector2u MainWin::MainWindow::GetHudTargetSize() const
 {
 	return sf::Vector2u(
@@ -52,6 +58,28 @@ void MainWin::MainWindow::Draw(BaseDrawable& _whatDraw)
 	_whatDraw.Draw(wnd);
 }
 
+
+
+sf::RenderWindow& MainWindow::get()
+{
+	return wnd;
+}
+
+void MainWin::MainWindow::SetHud(std::shared_ptr<UI::Ui> _hud)
+{
+	hud = _hud;
+	// Last quarter of the window
+	hud->SetHudSpritePosition(sf::Vector2f(
+		static_cast<float>(wnd.getSize().x) * (1.f - hudPart), 0.f));
+}
+
+UI::Ui& MainWin::MainWindow::GetHUD()
+{
+	return *hud;
+}
+
+#pragma region Events
+
 bool MainWindow::PollEvents()
 {
 	sf::Event ev;
@@ -71,7 +99,7 @@ bool MainWindow::PollEvents()
 		case sf::Event::MouseButtonReleased:
 			mouse.AddReleaseEvent(ev);
 			break;
-	
+
 		case sf::Event::KeyReleased:
 			kb.AddReleaseEvent(ev);
 			break;
@@ -86,46 +114,23 @@ bool MainWindow::PollEvents()
 		}
 
 	}
-
-
 	return true;
-}
-
-sf::RenderWindow& MainWindow::get()
-{
-	return wnd;
-}
-
-void MainWin::MainWindow::SetHud(std::shared_ptr<UI::Ui> _hud)
-{
-	hud = _hud;
-	// Last quarter of the window
-	hud->SetHudSpritePosition(sf::Vector2f(
-		static_cast<float>(wnd.getSize().x) * (1.f - hudPart), 0.f));
-	// Midle of the window
-	hud->SetButtonsPosition(sf::Vector2f(
-		static_cast<float>(wnd.getSize().x) / 2.f,
-		static_cast<float>(wnd.getSize().y)));
-}
-
-UI::Ui& MainWin::MainWindow::GetHUD()
-{
-	return *hud;
 }
 
 std::optional<Keyboard::KeyEvent> MainWin::MainWindow::GetKeyboardEvent()
 {
 	return kb.GetEvent();
 }
-
 std::optional<Keyboard::TextEvent> MainWin::MainWindow::GetTextEvent()
 {
 	return kb.GetCharEvent();
 }
-
 std::optional<MS::MouseEvent> MainWin::MainWindow::GetMouseEvent()
 {
 	return mouse.GetEvent();
 }
+
+#pragma endregion
+
 
 

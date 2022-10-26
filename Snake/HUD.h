@@ -46,7 +46,7 @@ namespace UI
 		std::vector <std::shared_ptr<Buttons::Button>>	btnsLogicArr;
 
 	private:
-		SmartPointer::SmartPointer<LAYOUT::Layout>		btnsLayout;
+		SmartPointer::SmartPointer<LAYOUT::Layout>		mainLayout;
 		SmartPointer::SmartPointer<LAYOUT::Layout>		widgetLayout;
 		std::shared_ptr<InputNameWidget>				nameWidget;
 
@@ -62,6 +62,7 @@ namespace UI
 		Ui& operator=(const Ui&)	= delete;
 
 	public:
+		void DrawUI(sf::RenderWindow& _wnd, APP_STATE::States _state);
 		void DrawHUD		(sf::RenderWindow& _wnd);
 		void DrawButtons	(sf::RenderWindow& _wnd);
 		void SetScale		(const sf::Vector2f& _newScale);
@@ -75,18 +76,19 @@ namespace UI
 		void SetHudSpritePosition(const sf::Vector2f& _newPos);
 
 	public:
-		const sf::Vector2f GetButtonsPosition()					const;
-		void SetButtonsPosition(const sf::Vector2f& _newPos);
 		void PrepButtons(APP_STATE::States _state, int _lvlCount = 0);
-
 		void RealeseButtons();
+
 		std::optional <Buttons::BtnPurpose>	CheckButtonsTouch(
 			float _x,
 			float _y);
 
 	public:
 		void AddWidget(std::shared_ptr<BaseDrawable> _widget);
+
 		void ClearWidgets();
+		void ClearBtnsLogicArr();
+		void ClearMainLayout();
 
 		std::optional<InputNameWidget*> GetInputNameWidget();
 		void ClearInputNameWidget();

@@ -24,8 +24,8 @@ UI::Ui::Ui(CLoader::HudConfigs& _configs) :
 		static_cast<float>(_configs.width),
 		static_cast<float>(_configs.height));
 
-	btnsLayout = new LAYOUT::Layout(wndSize, wndSize / 2.f);
-	btnsLayout->SetDistanceBeetwenObjcts(wndSize.y / 10.f);
+	mainLayout = new LAYOUT::Layout(wndSize, wndSize / 2.f);
+	mainLayout->SetDistanceBeetwenObjcts(wndSize.y / 10.f);
 
 	widgetLayout = new LAYOUT::Layout(
 		sf::Vector2f(
@@ -35,6 +35,53 @@ UI::Ui::Ui(CLoader::HudConfigs& _configs) :
 	widgetLayout->SetDistanceBeetwenObjcts(hudSprite->getGlobalBounds().height / 10.f);
 }
 
+void UI::Ui::DrawUI(sf::RenderWindow& _wnd, APP_STATE::States _state)
+{
+	std::lock_guard lk(defMutex);
+
+	switch (_state)
+	{
+		case APP_STATE::States::MAIN_MENU:
+			DrawButtons(_wnd);
+			break;
+
+		case APP_STATE::States::LVL_SELECT:
+			DrawButtons(_wnd);
+			break;
+
+		case APP_STATE::States::LVL_SELECTED:
+			DrawButtons(_wnd);
+			break;
+
+		case APP_STATE::States::GAME_PROCESS:
+			DrawHUD(_wnd);
+			break;
+
+		case APP_STATE::States::GAME_PAUSE:
+			DrawHUD(_wnd);
+			DrawButtons(_wnd);
+			break;
+
+		case APP_STATE::States::INPUT_NAME:
+			DrawHUD(_wnd);
+			DrawButtons(_wnd);
+			break;
+
+		case APP_STATE::States::GAME_OVER:
+			DrawHUD(_wnd);
+			DrawButtons(_wnd);
+			break;
+
+		case APP_STATE::States::LEADERS_VIEW:
+			DrawButtons(_wnd);
+			break;
+
+		default:
+			break;
+	}
+}
+
+
 void Ui::DrawHUD(sf::RenderWindow& _wnd)
 {
 	_wnd.draw(*hudSprite);
@@ -42,10 +89,8 @@ void Ui::DrawHUD(sf::RenderWindow& _wnd)
 }
 
 void UI::Ui::DrawButtons(sf::RenderWindow& _wnd)
-{
-	std::lock_guard<std::mutex> lk(defMutex);
-
-	btnsLayout->Draw(_wnd);
+{ 
+	mainLayout->Draw(_wnd);
 }
 
 void UI::Ui::SetScale(const sf::Vector2f& _newScale)
@@ -53,7 +98,7 @@ void UI::Ui::SetScale(const sf::Vector2f& _newScale)
 	currentScale = _newScale;
 	hudSprite->setScale(currentScale);
 
-	btnsLayout->SetScale(currentScale);
+	mainLayout->SetScale(currentScale);
 	widgetLayout->SetScale(currentScale);
 }
 
@@ -81,7 +126,7 @@ void UI::Ui::fillLeaderbord(LAYOUT::Layout& _layout)
 			_layout.AddObject(lead);
 			continue;
 		}
-		btnsLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str()));
+		mainLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str()));
 	}
 
 }
@@ -105,16 +150,6 @@ void UI::Ui::SetHudSpritePosition(const sf::Vector2f& _newPos)
 		_newPos.y + hudSprite->getGlobalBounds().height / 2.f });
 }
 
-const sf::Vector2f UI::Ui::GetButtonsPosition() const
-{
-	return buttonsPos;
-}
-
-void UI::Ui::SetButtonsPosition(const sf::Vector2f& _newPos)
-{
-	buttonsPos = _newPos;
-}
-
 std::optional <Buttons::BtnPurpose> UI::Ui::CheckButtonsTouch(float _x, float _y)
 {
 	for (size_t i = 0; i < btnsLogicArr.size(); ++i)
@@ -135,11 +170,6 @@ void UI::Ui::AddWidget(std::shared_ptr<BaseDrawable> _widget)
 	widgetLayout->AddObject(_widget);
 }
 
-void UI::Ui::ClearWidgets()
-{
-	widgetLayout->ClearLayout();
-}
-
 void UI::Ui::RealeseButtons()
 {
 	for (auto& el : btnsLogicArr)
@@ -152,8 +182,8 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 {
 	std::lock_guard<std::mutex> lock(defMutex);
 
-	btnsLogicArr.clear();
-	btnsLayout->ClearLayout();
+	ClearBtnsLogicArr();
+	ClearMainLayout();
 
 	switch (_state)
 	{
@@ -161,15 +191,15 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 		{
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::START, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Start"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::LEADER_BORD, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Leaderbord"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 		}
 		break;
@@ -187,20 +217,20 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 				));
 				++tempB;
 
-				btnsLayout->AddObject(btnsLogicArr.back());
+				mainLayout->AddObject(btnsLogicArr.back());
 			}
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Back"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
 		case APP_STATE::States::LEADERS_VIEW:
 		{
-			fillLeaderbord(*btnsLayout);
+			fillLeaderbord(*mainLayout);
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::BACK, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Back"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
@@ -208,37 +238,37 @@ void UI::Ui::PrepButtons(APP_STATE::States _state, int _lvlCount)
 		{
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::CONTINUE, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Continue"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Main Menu"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
 		case APP_STATE::States::INPUT_NAME:
 		{
-			btnsLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str(), "!-Enter your name-!"));
+			mainLayout->AddObject(std::make_shared<LeaderRecordWidget>(pathToNameWidget.c_str(), pathToFont.c_str(), "!-Enter your name-!"));
 
 			nameWidget = std::make_shared<InputNameWidget>
 				(pathToNameWidget.c_str(), pathToFont.c_str());
-			btnsLayout->AddObject(nameWidget);
+			mainLayout->AddObject(nameWidget);
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::NAME_ACEPT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Accept"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::MAIN_MENU, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Main Menu"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 
 			btnsLogicArr.emplace_back(new Buttons::Button(Buttons::BtnPurpose::EXIT, pathToBtnReleased.c_str(), pathToBtnPressed.c_str(),
 				pathToFont.c_str(), "Exit"));
-			btnsLayout->AddObject(btnsLogicArr.back());
+			mainLayout->AddObject(btnsLogicArr.back());
 		}
 		break;
 
@@ -261,4 +291,19 @@ void UI::Ui::ClearInputNameWidget()
 {
 	if (nameWidget.get())
 		nameWidget.reset();
+}
+
+void UI::Ui::ClearWidgets()
+{
+	widgetLayout->ClearLayout();
+}
+
+void UI::Ui::ClearBtnsLogicArr()
+{
+	btnsLogicArr.clear();
+}
+
+void UI::Ui::ClearMainLayout()
+{
+	mainLayout->ClearLayout();
 }
