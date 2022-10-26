@@ -10,7 +10,7 @@ GameSession::GameSession(
 	std::shared_ptr<Base::BasePlayerControlObj> _pawn,
 	std::shared_ptr<BaseDrawable>				_gp,
 	std::shared_ptr<Logic::LogicField>			_lField,
-	std::shared_ptr<Apple>				_apple
+	std::shared_ptr<Apple>						_apple
 	) :
 	wnd{_wnd},
 	snake{_pawn}, 
@@ -21,6 +21,7 @@ GameSession::GameSession(
 	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 	auto configs = loader->GetHudPaths();
 
+	appleBorder = (_lField->GetLVLH() + _lField->GetLVLW()) / 2u;
 
 	scoreWidget = std::make_shared<ScoreWidget>(
 		configs.pathToBaseWidget.c_str(),
@@ -98,7 +99,7 @@ void GameSession::MovePawn(const APP_STATE::AppState& _state)
 	if (_state.GetState() == APP_STATE::States::GAME_PROCESS)
 	{
 		timeWidget->WorkCycle(!pause);
-		if (timer.CheckInterval(stepTime * speedMyltiply))
+		if (timer.CheckInterval(stepDelay * speedMyltiply))
 		{	
 			snake->Move();
 		}		

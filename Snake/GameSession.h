@@ -37,15 +37,15 @@ namespace GAME_SESSION
 		std::shared_ptr<Base::BasePlayerControlObj>		snake;
 		std::shared_ptr<BaseDrawable>					gp;
 		std::shared_ptr<Logic::LogicField>				logicField;
-		std::shared_ptr<Apple>					apple;
+		std::shared_ptr<Apple>							apple;
 
 		std::shared_ptr<ScoreWidget>	scoreWidget;
 		std::shared_ptr<TimeWidget>		timeWidget;
 		std::shared_ptr<SpeedWidget>	speedWidget;
 
 	private:
-		Timer	timer;
-		float			stepTime				= 0.75f;
+		Timer			timer;
+		float			stepDelay				= 0.75f;
 		float			speedMyltiply			= 1.f;
 		const float		botBorderSpeedMultiply	= 0.25f;
 		float			deltaSpeed				= 0.25f;
