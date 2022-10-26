@@ -1,5 +1,4 @@
 #include "MainWindow.h"
-#include "ConfigLoader.h"
 
 #include <SFML/Window/Event.hpp>
 
@@ -19,18 +18,10 @@ MainWindow::MainWindow(
 
 }
 
-void MainWin::MainWindow::DrawHUD()
+void MainWin::MainWindow::Draw(BaseDrawable& _whatDraw)
 {
-	if (wnd.isOpen())
-		hud->DrawHUD(wnd);	
+	_whatDraw.Draw(wnd);
 }
-
-void MainWin::MainWindow::DrawButtons()
-{
-	if (wnd.isOpen())
-		hud->DrawButtons(wnd);	
-}
-
 void MainWin::MainWindow::DrawUI(APP_STATE::States _cutState)
 {
 	if (wnd.isOpen())
@@ -44,7 +35,6 @@ const sf::Vector2u MainWin::MainWindow::GetHudTargetSize() const
 		wHeight
 	);
 }
-
 const sf::Vector2u MainWin::MainWindow::GetGameFieldTargetSize() const
 {
 	return sf::Vector2u(
@@ -53,18 +43,10 @@ const sf::Vector2u MainWin::MainWindow::GetGameFieldTargetSize() const
 	);
 }
 
-void MainWin::MainWindow::Draw(BaseDrawable& _whatDraw)
-{
-	_whatDraw.Draw(wnd);
-}
-
-
-
 sf::RenderWindow& MainWindow::get()
 {
 	return wnd;
 }
-
 void MainWin::MainWindow::SetHud(std::shared_ptr<UI::Ui> _hud)
 {
 	hud = _hud;
@@ -72,7 +54,6 @@ void MainWin::MainWindow::SetHud(std::shared_ptr<UI::Ui> _hud)
 	hud->SetHudSpritePosition(sf::Vector2f(
 		static_cast<float>(wnd.getSize().x) * (1.f - hudPart), 0.f));
 }
-
 UI::Ui& MainWin::MainWindow::GetHUD()
 {
 	return *hud;

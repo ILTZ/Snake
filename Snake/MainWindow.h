@@ -1,9 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <string>
-#include <unordered_map>
-
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "HUD.h"
@@ -38,16 +35,13 @@ namespace MainWin
 
 	public: //wnd funcs
 		void				Draw(BaseDrawable& _whatDraw);
-
+		void				DrawUI(APP_STATE::States _cutState);
 		bool				PollEvents();
 		sf::RenderWindow&	get();
 
 	public: //hud funcs
 		void		SetHud(std::shared_ptr<UI::Ui> _hud);
-		UI::Ui&	GetHUD();
-		void		DrawHUD();
-		void		DrawButtons();
-		void		DrawUI(APP_STATE::States _cutState);
+		UI::Ui&		GetHUD();
 
 	public:
 		const sf::Vector2u GetHudTargetSize()		const;
