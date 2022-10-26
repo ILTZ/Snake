@@ -47,7 +47,7 @@ namespace GAME_SESSION
 		Timer			timer;
 		float			stepDelay				= 0.75f;
 		float			speedMyltiply			= 1.f;
-		const float		botBorderSpeedMultiply	= 0.25f;
+		const float		botBorderSpeedMultiply	= 0.15f;
 		float			deltaSpeed				= 0.25f;
 		unsigned int	appleBorder				= 20u;
 

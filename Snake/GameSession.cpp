@@ -108,9 +108,7 @@ void GameSession::MovePawn(const APP_STATE::AppState& _state)
 
 void GameSession::DoLogic(APP_STATE::AppState& _state)
 {
-	if (_state.GetState() != APP_STATE::States::GAME_OVER && 
-		_state.GetState() != APP_STATE::States::INPUT_NAME && 
-		_state.GetState() != APP_STATE::States::MAIN_MENU)
+	if (!_state.CheckTabuForLogicStates())
 	{
 		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions())
 		{

@@ -1,13 +1,13 @@
 #include "AppState.h"
 
-const APP_STATE::States APP_STATE::AppState::GetState() const 
+const APP_STATE::States APP_STATE::AppState::GetState() const noexcept
 {
 	std::lock_guard<std::mutex> lg(defMutex);
 
     return currentState;
 }
 
-void APP_STATE::AppState::SetState(States _state)
+void APP_STATE::AppState::SetState(States _state) noexcept
 {
 	if (switchLock)
 		return;
@@ -59,7 +59,7 @@ const bool APP_STATE::AppState::CheckMovebleStates() const noexcept
 	return false;
 }
 
-const bool APP_STATE::AppState::CheckMovebleStates() const noexcept
+const bool APP_STATE::AppState::CheckTabuForLogicStates() const noexcept
 {
 	std::lock_guard<std::mutex> lg(defMutex);
 
@@ -71,6 +71,8 @@ const bool APP_STATE::AppState::CheckMovebleStates() const noexcept
 	case APP_STATE::States::MAIN_MENU:
 		return true;
 	}
+
+	return false;
 }
 
 void APP_STATE::AppState::ExitApp() noexcept
