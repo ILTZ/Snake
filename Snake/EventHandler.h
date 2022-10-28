@@ -13,13 +13,6 @@
 
 class EventHandler
 {
-public:
-	struct HandleResult
-	{
-		APP_STATE::States		gameMode;
-		LVLConstructor::LVLs	lvl;
-	};
-
 private:
 	std::shared_ptr<UI::Ui>				hud;
 	std::shared_ptr<BaseP::BasePawn>	pawn;

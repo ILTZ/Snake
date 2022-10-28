@@ -1,32 +1,65 @@
 #include "MainWindow.h"
+#include "ScaleDeterminant.h"
 
-
+#include <SFML/Graphics/Image.hpp>
 
 using namespace MainWin;
 
-MainWindow::MainWindow(
-	unsigned int _width, 
-	unsigned int _height, 
+MainWin::MainWindow::MainWindow(
+	CLoader::Loader* _loder, 
 	const std::string& _title, 
 	int32_t _style, 
-	const sf::ContextSettings& _settings) :
-	wWidth{_width}, 
-	wHeight{_height},
-	wnd{sf::VideoMode(_width, _height), _title, _style, _settings}
+	const sf::ContextSettings& _settings)
 {
+	auto wndConf = _loder->GetWndConfigs();
 
+	wWidth		= wndConf.width;
+	wHeight		= wndConf.height;
+	pathToFont	= wndConf.pathToFont;
 
+	background = new Background(wndConf.pathToBackgound, wWidth, wHeight);
+
+	wnd.create(sf::VideoMode(wWidth, wHeight), wndConf.title, _style, _settings);
+	
+	sf::Image icon;
+	icon.loadFromFile(wndConf.pathToIcon);
+	wnd.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
+
 
 void MainWin::MainWindow::Draw(BaseDrawable& _whatDraw)
 {
 	_whatDraw.Draw(wnd);
 }
-void MainWin::MainWindow::DrawUI(APP_STATE::States _cutState)
+void MainWin::MainWindow::DrawUI(const APP_STATE::AppState& _curState)
 {
 	if (wnd.isOpen())
-		hud->DrawUI(wnd, _cutState);
+	{
+		if (_curState.CheckMainMenuState())
+			background->Draw(wnd);
+
+
+		hud->DrawUI(wnd, _curState.GetState());
+	}
 }
+void MainWin::MainWindow::DrawLoadingScreen()
+{
+	BaseText lText(
+		pathToFont.c_str(), 
+		"Loading...", 
+		wHeight / 10u, 
+		sf::Color::White, 
+		sf::Text::Italic);
+
+	lText.SetPos(sf::Vector2f(
+		static_cast<float>(wnd.getSize().x / 2u),
+		static_cast<float>(wnd.getSize().y / 2u)));
+
+	wnd.clear();
+	lText.Draw(wnd);
+	wnd.display();
+}
+
 
 const sf::Vector2u MainWin::MainWindow::GetHudTargetSize() const
 {
@@ -54,7 +87,7 @@ void MainWin::MainWindow::SetHud(std::shared_ptr<UI::Ui> _hud)
 	hud->SetHudSpritePosition(sf::Vector2f(
 		static_cast<float>(wnd.getSize().x) * (1.f - hudPart), 0.f));
 }
-UI::Ui& MainWin::MainWindow::GetHUD()
+UI::Ui& MainWin::MainWindow::GetUI()
 {
 	return *hud;
 }
@@ -113,5 +146,27 @@ std::optional<MS::MouseEvent> MainWin::MainWindow::GetMouseEvent()
 
 #pragma endregion
 
+MainWin::MainWindow::Background::Background(
+	const std::string& _pathToTexture, 
+	unsigned int _width, 
+	unsigned int _height)
+{
+	bText.loadFromFile(_pathToTexture);
+	bSprite.setTexture(bText);
 
+	ScaleDeterminant det;
 
+	auto scale = det.CalculateAbsoluteScale(
+		sf::Vector2u(
+		static_cast<unsigned int>(bSprite.getGlobalBounds().width),
+		static_cast<unsigned int>(bSprite.getGlobalBounds().height)),
+
+		sf::Vector2u(_width, _height));
+
+	bSprite.setScale(scale);
+}
+
+void MainWin::MainWindow::Background::Draw(sf::RenderWindow& _wnd)
+{
+	_wnd.draw(bSprite);
+}

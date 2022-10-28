@@ -27,6 +27,7 @@ namespace SmartPointer
 
 	public:
 		T* Release();
+		T* Get();
 		bool IsValid();
 		void Reset();
 
@@ -86,6 +87,12 @@ namespace SmartPointer
 		obj = nullptr;
 
 		return temp;
+	}
+
+	template<class T>
+	inline T* SmartPointer<T>::Get()
+	{
+		return obj;
 	}
 
 	template<class T>

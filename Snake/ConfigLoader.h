@@ -31,6 +31,9 @@ namespace CLoader
 		const std::string baseWidgetTexture = "BASE_WIDGET";
 		const std::string nameWidgetTexture = "NAME_WIDGET";
 		const std::string leader			= "LEADERS";
+		const std::string title				= "TITLE";
+		const std::string bckground			= "BACKGROUND";
+		const std::string icon				= "ICON";
 	}
 
 	struct SnakePaths
@@ -44,6 +47,11 @@ namespace CLoader
 	{
 		unsigned int width = 0u;
 		unsigned int height = 0u;
+
+		std::string title;
+		std::string pathToFont;
+		std::string pathToBackgound;
+		std::string pathToIcon;
 	};
 
 	struct HudConfigs

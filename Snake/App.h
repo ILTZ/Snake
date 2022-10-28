@@ -12,9 +12,8 @@ using namespace MainWin;
 class App final
 {
 private:
-	std::unique_ptr<MainWindow>							wnd;
-	SmartPointer::SmartPointer<CLoader::Loader>	loader;
-	EventHandler										handler;
+	std::unique_ptr<MainWindow>	wnd;
+	EventHandler				handler;
 
 private:
 	APP_STATE::AppState		appState;

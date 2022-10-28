@@ -1,12 +1,15 @@
 {
-    "RESOLUTION": [1400,1000],
-    "BTN_PRESS": ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed.png",
-    "BTN_RELEASE": ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
-    "TEXT_FONT": ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
-    "HUD": ".\\ResourcesConfigs\\HUD\\HUD.png",
-    "BASE_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
-    "NAME_WIDGET": ".\\ResourcesConfigs\\HUD\\Widgets\\nameWidget.png",
-    "APPLE": ".\\ResourcesConfigs\\Apls\\repa.png",
-    "SNAKE_HEAD": ".\\ResourcesConfigs\\Snake\\head3.png",
-    "SNAKE_TORSO": ".\\ResourcesConfigs\\Snake\\body3.png" 
+    "RESOLUTION"    : [1400,1000],
+    "TITLE"         : "Snake2D",
+    "BACKGROUND"    : ".\\ResourcesConfigs\\HUD\\Other\\bck.png",
+    "ICON"          : ".\\ResourcesConfigs\\HUD\\Other\\snake.png",
+    "BTN_PRESS"     : ".\\ResourcesConfigs\\HUD\\Btns\\buttonPressed.png",
+    "BTN_RELEASE"   : ".\\ResourcesConfigs\\HUD\\Btns\\buttonStay.png",
+    "TEXT_FONT"     : ".\\ResourcesConfigs\\Fonts\\Maler.ttf",
+    "HUD"           : ".\\ResourcesConfigs\\HUD\\HUD.png",
+    "BASE_WIDGET"   : ".\\ResourcesConfigs\\HUD\\Widgets\\widgetBase.png",
+    "NAME_WIDGET"   : ".\\ResourcesConfigs\\HUD\\Widgets\\nameWidget.png",
+    "APPLE"         : ".\\ResourcesConfigs\\Apls\\repa.png",
+    "SNAKE_HEAD"    : ".\\ResourcesConfigs\\Snake\\head3.png",
+    "SNAKE_TORSO"   : ".\\ResourcesConfigs\\Snake\\body3.png" 
 }

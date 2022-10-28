@@ -37,16 +37,16 @@ GameSession::GameSession(
 		configs.pathToTextFont.c_str()
 		);
 
-	_wnd->GetHUD().AddWidget(scoreWidget);
-	_wnd->GetHUD().AddWidget(speedWidget);
-	_wnd->GetHUD().AddWidget(timeWidget);
+	_wnd->GetUI().AddWidget(scoreWidget);
+	_wnd->GetUI().AddWidget(speedWidget);
+	_wnd->GetUI().AddWidget(timeWidget);
 }
 
 GameSession::~GameSession()
 {
 	snake.reset();
 	gp.reset();
-	wnd->GetHUD().ClearWidgets();
+	wnd->GetUI().ClearWidgets();
 }
 
 std::optional<GameSessionResults> GameSession::GameProcess(APP_STATE::AppState& _state)
@@ -74,7 +74,7 @@ std::optional<GameSessionResults> GameSession::GameProcess(APP_STATE::AppState& 
 
 const std::optional<GameSessionResults> GameSession::FormGameSessionResults() const
 {
-	auto nameWidget = wnd->GetHUD().GetInputNameWidget();
+	auto nameWidget = wnd->GetUI().GetInputNameWidget();
 
 	if (nameWidget.has_value())
 	{
@@ -89,7 +89,7 @@ const std::optional<GameSessionResults> GameSession::FormGameSessionResults() co
 		}
 	}
 	
-	wnd->GetHUD().ClearInputNameWidget();
+	wnd->GetUI().ClearInputNameWidget();
 
 	return {};
 }
@@ -113,7 +113,7 @@ void GameSession::DoLogic(APP_STATE::AppState& _state)
 		if (!logicField->checkOnEmpty(snake->GetPos()) || logicField->CheckSnakeCollisions())
 		{
 			_state.SetState(APP_STATE::States::INPUT_NAME);
-			wnd->GetHUD().PrepButtons(_state.GetState());
+			wnd->GetUI().PrepButtons(_state.GetState());
 		}
 		else if (logicField->CheckSnakeGowUp(snake->GetPos()))
 		{
@@ -185,7 +185,7 @@ void GameSession::wndProcesses(const APP_STATE::AppState& _state)
 		break;
 	}
 
-	wnd->DrawUI(_state.GetState());
+	wnd->DrawUI(_state);
 
 	wnd->get().display();
 }

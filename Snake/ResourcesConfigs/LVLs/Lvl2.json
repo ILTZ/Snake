@@ -1,7 +1,7 @@
 {
     "width":    20,
     "height":   20,
-    "startPos": [5,5],
+    "startPos": [2,2],
     "florPath": ".\\ResourcesConfigs\\Flor\\metalicFlor.png",
     "wallPath": ".\\ResourcesConfigs\\Shape\\rock2.png",
     "corner":   ".\\ResourcesConfigs\\Shape\\rock2.png",

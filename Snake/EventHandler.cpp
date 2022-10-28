@@ -126,6 +126,8 @@ std::optional<LVLConstructor::LVLs> EventHandler::HandleMouseEvent(
 				break;
 
 			case bMod::CONTINUE:
+				hud->ClearMainLayout();
+				hud->ClearBtnsLogicArr();
 				_state.SetState(States::GAME_PROCESS);
 				break;
 
@@ -140,28 +142,39 @@ std::optional<LVLConstructor::LVLs> EventHandler::HandleMouseEvent(
 				break;
 			
 			case bMod::NAME_ACEPT:
+				FlushBasePawn();
 				_state.SetState(States::MAIN_MENU);
 				hud->PrepButtons(_state.GetState());
 				break;
 
 			// Lvl selected {
 			case bMod::LVL_1:
+				hud->ClearMainLayout();
+				hud->ClearBtnsLogicArr();
 				_state.SetState(States::LVL_SELECTED);
 				return LVLConstructor::LVLs::LVL_1;
 				
 			case bMod::LVL_2:
+				hud->ClearMainLayout();
+				hud->ClearBtnsLogicArr();
 				_state.SetState(States::LVL_SELECTED);
 				return LVLConstructor::LVLs::LVL_2;
 				
 			case bMod::LVL_3:
+				hud->ClearMainLayout();
+				hud->ClearBtnsLogicArr();
 				_state.SetState(States::LVL_SELECTED);
 				return LVLConstructor::LVLs::LVL_3;
 				
 			case bMod::LVL_4:
+				hud->ClearMainLayout();
+				hud->ClearBtnsLogicArr();
 				_state.SetState(States::LVL_SELECTED);
 				return LVLConstructor::LVLs::LVL_4;
 				
 			case bMod::LVL_5:
+				hud->ClearMainLayout();
+				hud->ClearBtnsLogicArr();
 				_state.SetState(States::LVL_SELECTED);
 				return LVLConstructor::LVLs::LVL_5;	// Lvl selected }
 					
@@ -184,7 +197,8 @@ void EventHandler::FlushBasePawn()
 {
 	std::lock_guard lk(defMt);
 
-	pawn.reset();
+	if (pawn.get())
+		pawn.reset();
 }
 
 

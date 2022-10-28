@@ -17,16 +17,16 @@
 
 App::App() 
 {
-	loader = new CLoader::Loader();
+	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 
 	CLoader::WndConfigs wndConfigs;
 	CLoader::HudConfigs cfg;
 
-	// Its required data. 
-	try
+
+	try 	// Its required data
 	{
-		wndConfigs	= loader->GetWndConfigs();
-		cfg			= loader->GetHudPaths();
+		cfg	= loader->GetHudPaths();
+		wnd = std::make_unique<MainWin::MainWindow>(loader.Get());
 	}
 	catch (CLoader::Loader::JsonParseException& _ex)
 	{
@@ -35,18 +35,9 @@ App::App()
 	catch (CLoader::Loader::LoaderException& _ex)
 	{
 		throw _ex;
-	} // Without them there is no point in running the application
-
+	}		// Without them there is no point in running the application
 	
-	auto style = sf::Style::Titlebar | sf::Style::Close;
-
-	wnd = std::make_unique<MainWin::MainWindow>(
-		wndConfigs.width, 
-		wndConfigs.height,
-		"Snake2D", 
-		style);
 	
-
 	SmartPointer::SmartPointer<ScaleDeterminant> det = new ScaleDeterminant();
 
 	auto hud = std::make_shared<UI::Ui>(cfg);
@@ -58,7 +49,6 @@ App::App()
 	hud->SetScale(hudScale);
 	hud->PrepButtons(APP_STATE::States::MAIN_MENU);
 	
-
 	wnd->SetHud(hud);
 	handler.SetHud(hud);
 
@@ -79,26 +69,27 @@ int App::Run()
 			auto session = createGameSession();
 			if (session.get())
 			{
-				wnd->GetHUD().ClearBtnsLogicArr();
-				wnd->GetHUD().ClearMainLayout();
+				wnd->DrawLoadingScreen();
 
 				appState.SetState(APP_STATE::States::GAME_PROCESS);
 
 				auto result = session->GameProcess(appState);
 
 				if (result.has_value())
+				{
+					auto loader = new CLoader::Loader();
 					loader->AddLeaderInLeaderBord(
 						result.value().playerName.c_str(),
 						result.value().points,
 						result.value().minuts,
 						result.value().seconds);
+				}
 
-				handler.FlushBasePawn();
 			}
 			else
 			{
 				appState.SetState(APP_STATE::States::MAIN_MENU);
-				wnd->GetHUD().PrepButtons(appState.GetState());
+				wnd->GetUI().PrepButtons(appState.GetState());
 			}
 		}
 	}
@@ -113,6 +104,8 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 {
 	std::lock_guard<std::mutex> lk(defMt);
 	
+	auto loader = new CLoader::Loader();
+
 	std::shared_ptr<LVLConstructor::Level>	level;
 	CLoader::SnakePaths						sp;
 
@@ -144,6 +137,7 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	auto gf		= std::make_shared<GraphicField::GraphicField>(level);
 	auto lf		= std::make_shared<Logic::LogicField>(level, snake);
 	auto apple	= std::make_shared<Apple>(sp.pathToAple.c_str());
+	apple->SetAutoRotation(false);
 
 	#pragma region Rescale_game_objects
 	//
@@ -184,7 +178,7 @@ void App::wndProcesses()
 	}
 
 	wnd->get().clear();
-	wnd->DrawUI(appState.GetState());
+	wnd->DrawUI(appState);
 	wnd->get().display();
 }
 

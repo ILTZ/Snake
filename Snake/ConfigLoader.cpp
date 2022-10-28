@@ -173,6 +173,11 @@ const CLoader::WndConfigs CLoader::Loader::GetWndConfigs(const char* _pathToConf
 	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.width, 0);
 	extractValue(file, CLoader::JsonKeys::windowResolution.c_str(), pathToConf.c_str(), temp.height, 1);
 	
+	extractValue(file, CLoader::JsonKeys::title.c_str(),		pathToConf.c_str(), temp.title);
+	extractValue(file, CLoader::JsonKeys::textFont.c_str(),		pathToConf.c_str(), temp.pathToFont);
+	extractValue(file, CLoader::JsonKeys::bckground.c_str(),	pathToConf.c_str(), temp.pathToBackgound);
+	extractValue(file, CLoader::JsonKeys::icon.c_str(),			pathToConf.c_str(), temp.pathToIcon);
+
 	return temp;
 }
 
