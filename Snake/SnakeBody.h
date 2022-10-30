@@ -43,7 +43,6 @@ namespace Snake
 	public:
 		SnakeBody(const SnakeBody&)					= delete;
 		SnakeBody& operator=(const SnakeBody&)		= delete;
-		~SnakeBody();
 
 	public:
 		// <Base::BasePlayerControlObj> funcs {

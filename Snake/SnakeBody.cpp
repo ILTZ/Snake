@@ -11,10 +11,6 @@ Snake::SnakeBody::SnakeBody(
 	fillBody(snakeStartSize, headTPath.c_str(), torsoTPath.c_str());
 }
 
-Snake::SnakeBody::~SnakeBody()
-{
-	int x;
-}
 void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd)
 {
 	std::lock_guard<std::mutex> lg(defMt);
