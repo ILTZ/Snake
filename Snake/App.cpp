@@ -85,6 +85,7 @@ int App::Run()
 						result.value().seconds);
 				}
 
+				handler.FlushBasePawn();
 			}
 			else
 			{
@@ -104,7 +105,7 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 {
 	std::lock_guard<std::mutex> lk(defMt);
 	
-	auto loader = new CLoader::Loader();
+	SmartPointer::SmartPointer<CLoader::Loader> loader = new CLoader::Loader();
 
 	std::shared_ptr<LVLConstructor::Level>	level;
 	CLoader::SnakePaths						sp;

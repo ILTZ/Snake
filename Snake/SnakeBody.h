@@ -18,14 +18,19 @@ namespace Snake
 		const std::string torsoTPath;
 
 	private:
-		int		xDir		= 0;
-		int		yDir		= 0;
-		bool	firstMove	= false;
+		int		xDir			= 0;
+		int		yDir			= 0;
+		
+		bool	firstMove		= false;
+		// So that when changing direction quickly, 
+		// the coordinates of the head do not coincide
+		// with the coordinates of the body.
+		bool	setDirLock		= false;
 
 	private:
-		std::vector<SnakePart>					body;
-		const unsigned int						snakeStartSize	= 4;
-		ROTATING_BASE::Rotation					headRotation	= ROTATING_BASE::Rotation::G_0;
+		std::vector<SnakePart>		body;
+		const unsigned int			snakeStartSize	= 4;
+		ROTATING_BASE::Rotation		headRotation	= ROTATING_BASE::Rotation::G_0;
 
 	private:
 		std::mutex defMt;
@@ -38,7 +43,9 @@ namespace Snake
 	public:
 		SnakeBody(const SnakeBody&)					= delete;
 		SnakeBody& operator=(const SnakeBody&)		= delete;
+		~SnakeBody();
 
+	public:
 		// <Base::BasePlayerControlObj> funcs {
 	public: 
 		//<BaseD> funcs {

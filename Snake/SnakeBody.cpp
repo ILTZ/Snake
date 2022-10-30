@@ -11,7 +11,11 @@ Snake::SnakeBody::SnakeBody(
 	fillBody(snakeStartSize, headTPath.c_str(), torsoTPath.c_str());
 }
 
-void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd) 
+Snake::SnakeBody::~SnakeBody()
+{
+	int x;
+}
+void Snake::SnakeBody::Draw(sf::RenderWindow& _wnd)
 {
 	std::lock_guard<std::mutex> lg(defMt);
 
@@ -34,6 +38,9 @@ void Snake::SnakeBody::Move()
 	if (!firstMove)
 		return;
 
+	if (setDirLock)
+		setDirLock = false;
+
 	// From end to start of a body..
 	for (size_t i = body.size() - 1; i > 0; --i)
 	{
@@ -45,8 +52,8 @@ void Snake::SnakeBody::Move()
 
 	body.front().SetCurrentRotation(headRotation);
 	body.front().SetPos(sf::Vector2i(
-		body.front().GetPos().x + static_cast<unsigned int>(xDir),
-		body.front().GetPos().y + static_cast<unsigned int>(yDir)
+		body.front().GetPos().x + xDir,
+		body.front().GetPos().y + yDir
 	));
 
 }
@@ -61,8 +68,12 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 		firstMove = true;
 	}
 
-	switch (_dir)
+	if (!setDirLock)
 	{
+		setDirLock = true;
+
+		switch (_dir)
+		{
 		case BaseP::Direction::TOP:
 			if (yDir != -1 && yDir != 1)
 			{
@@ -101,7 +112,9 @@ void Snake::SnakeBody::SetDir(BaseP::Direction _dir)
 
 		default:
 			break;
+		}
 	}
+	
 }
 
 void Snake::SnakeBody::DoSomeSpecifyActions()
@@ -192,12 +205,11 @@ void Snake::SnakeBody::fillBody(
 
 		body.emplace_back(SnakePart(_pathToTorso));
 	}
-
 }
 
 void Snake::SnakeBody::setHeadRotatinon(ROTATING_BASE::Rotation _rot)
 {
-	body[0].SetCurrentRotation(_rot);
+	body.front().SetCurrentRotation(_rot);
 }
 
 void Snake::SnakeBody::addTorsoSection(const char* _pathToTorso)
