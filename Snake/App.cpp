@@ -113,7 +113,7 @@ std::unique_ptr<GAME_SESSION::GameSession> App::createGameSession()
 	try
 	{
 		level	= loader->GetLVL(lvlSelected);
-		sp		= loader->GetSnakePaths();
+		sp		= loader->GetSnakePaths(lvlSelected);
 	}
 	catch (BaseException& _ex)
 	{

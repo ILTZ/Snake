@@ -31,24 +31,20 @@ namespace LVLConstructor
 
 	namespace LVLPropertiesKeyes
 	{
-		const std::string mode		= "mode";
-		const std::string handM		= "hand";
-		const std::string autoM		= "auto";
+		const std::string width		= "WIDTH";
+		const std::string height	= "HEIGHT";
+		const std::string startPos	= "START_POS";
 
-		const std::string width		= "width";
-		const std::string height	= "height";
-		const std::string startPos	= "startPos";
+		const std::string flor		= "FLOR_PATH";
+		const std::string water		= "WATER_PATH";
+		const std::string wall		= "WALL_PATH";
 
-		const std::string flor		= "florPath";
-		const std::string water		= "waterPath";
-		const std::string wall		= "wallPath";
+		const std::string map		= "MAP";
+		
+		const std::string apple			= "APPLE";
+		const std::string snakeTorso	= "SNAKE_TORSO";
+		const std::string snakeHead		= "SNAKE_HEAD";
 
-		const std::string waterPos	= "waterPos";
-		const std::string wallPos	= "wallPos";
-
-		const std::string map		= "map";
-
-		// if we have autoMode
 		namespace BrickKeyes
 		{
 			const char wall		= 'B'; //like brick

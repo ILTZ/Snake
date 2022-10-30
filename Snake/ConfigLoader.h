@@ -19,9 +19,6 @@ namespace CLoader
 
 	namespace JsonKeys
 	{
-		const std::string apple				= "APPLE";
-		const std::string snakeTorso		= "SNAKE_TORSO";
-		const std::string snakeHead			= "SNAKE_HEAD";
 		const std::string lvlPath			= "LVL_PATH";
 		const std::string windowResolution	= "RESOLUTION";
 		const std::string btnPressTexture	= "BTN_PRESS";
@@ -166,7 +163,7 @@ namespace CLoader
 		std::shared_ptr<LVLConstructor::Level> GetLVL(LVLConstructor::LVLs _level);
 
 	public:
-		const SnakePaths GetSnakePaths(const char* _pathToConfig = nullptr)					const;
+		const SnakePaths GetSnakePaths(LVLConstructor::LVLs _level)							const;
 		const HudConfigs GetHudPaths(const char* _pathToConfig = nullptr)					const;
 		const WndConfigs GetWndConfigs(const char* _pathToConfigs = nullptr)				const;
 		const std::vector<LeadersInfo> GetLeaders(const char* _pathToFile = nullptr)		const;

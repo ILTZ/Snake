@@ -134,14 +134,17 @@ const unsigned int CLoader::Loader::GetLvlCount() const
 	return count;
 }
 
-const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(const char* _pathToConfig) const
+const CLoader::SnakePaths CLoader::Loader::GetSnakePaths(LVLConstructor::LVLs _level) const
 {
-	auto file = getParseFile(pathToConf.c_str());
-	SnakePaths temp;
+	std::string path = CLoader::ConstPaths::pathToLvlvs;
+	path += getLvlString(_level);
 
-	extractValue(file, CLoader::JsonKeys::apple.c_str(),		 pathToConf.c_str(),		temp.pathToAple);
-	extractValue(file, CLoader::JsonKeys::snakeHead.c_str(),	 pathToConf.c_str(),		temp.pathToHead);
-	extractValue(file, CLoader::JsonKeys::snakeTorso.c_str(),	 pathToConf.c_str(),		temp.pathToTorso);
+	json file = getParseFile(path.c_str());
+
+	SnakePaths temp;
+	extractValue(file, LVLConstructor::LVLPropertiesKeyes::apple.c_str(),		path.c_str(), temp.pathToAple);
+	extractValue(file, LVLConstructor::LVLPropertiesKeyes::snakeHead.c_str(),	path.c_str(), temp.pathToHead);
+	extractValue(file, LVLConstructor::LVLPropertiesKeyes::snakeTorso.c_str(),	path.c_str(), temp.pathToTorso);
 
 	return temp;
 }
