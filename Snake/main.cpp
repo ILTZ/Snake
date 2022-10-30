@@ -1,18 +1,6 @@
-#include <iostream>
-#include <exception>
-
-#include <Windows.h>
-#undef min
-#undef max
 
 #include "App.h"
-
-//Цели блять:
-//1. Лидерборд - готово
-//2. Фикс бага с резким перемещением змейки
-//3. Добалвение режима использование либо дефолтных, либо пользовательских ассетов. - нахуй надо
-
-
+#include <Windows.h>
 
 int main()
 {
